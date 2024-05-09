@@ -1,14 +1,11 @@
 import React from "react";
-import Header from "./Components/Header/Header";
-import "./styles/Global.css"
-
-
+import "./styles/Global.css";
+import { Support } from "./pages/Support";
 
 function App() {
   return (
     <div className="App">
-
-    <Header />
+      <Support />
     </div>
   );
 }
