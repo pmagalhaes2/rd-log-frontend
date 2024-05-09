@@ -1,0 +1,81 @@
+/* styles.module.scss */
+
+.headerContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 24px;
+    background-color: #ffff;
+    color: #000000;
+    height: 120.27px;
+}
+
+.logo{
+    width: 276px;
+    height: 120px;
+}
+
+/* INPUT SEARCH */
+
+.searchContainer {
+    position: relative; 
+    width: 406.5px; 
+    padding-left: 20px; 
+}
+
+.searchInput {
+    width: 100%; 
+    height: 50.52px;
+    border-radius: 12px;
+    border: solid 1px #545767;
+    cursor: pointer;
+    padding-left: 20px; 
+}
+
+.searchIcon {
+    position: absolute; 
+    right: 0; 
+    top: 50%;
+    transform: translateY(-50%);
+    color: #004E16;
+    font-size: 22.52px;
+    cursor: pointer;
+}
+
+/* USER SECTION */
+
+.userSection {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.userText {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.userSection span {
+    font-size: 18px;
+}
+
+.userIcon {
+    color: #004E16;
+    font-size: 50px;
+  
+}
+
+.personContainer {
+    font-weight: bold;
+    margin-left: 25px;
+
+}
+
+.separator {
+    width: 1px; /* Largura da linha vertical */
+    height: 73px; /* Altura da linha vertical */
+    background-color: #ccc; /* Cor da linha vertical */
+    margin: 0 10px; /* Espaçamento ao redor da linha vertical */
+  }
+
