@@ -23,7 +23,6 @@ export const Support = () => {
             <div>
               <Input
                 placeholder={"Digite um campo para buscar"}
-                onChange={(e) => console.log(e.target.value)}
               />
             </div>
           </div>
@@ -39,8 +38,8 @@ export const Support = () => {
             ]}
           />
         </div>
-        <Footer />
       </div>
+      <Footer />
     </>
   );
 };
