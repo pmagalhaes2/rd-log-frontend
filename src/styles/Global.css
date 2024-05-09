@@ -1,0 +1,10 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, button, input, option, textarea {
+  font-family: "Open Sans", sans-serif;
+  outline: none;
+}
