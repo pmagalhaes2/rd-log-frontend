@@ -4,6 +4,7 @@ import questionIcon from "../../assets/images/question-icon.svg";
 import styles from "./Suporte.module.scss";
 import { Questions } from "../../Components/Questions";
 import { Input } from "../../Components/Input";
+import Footer from "../../Components/Footer/Footer";
 
 export const Support = () => {
   return (
@@ -37,6 +38,7 @@ export const Support = () => {
           ]}
         />
       </div>
+      <Footer/>
     </div>
   );
 };
