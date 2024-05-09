@@ -1,0 +1,22 @@
+.container {
+  align-items: center;
+  border: 1px solid #545767;
+  border-radius: 0.75rem;
+  display: flex;
+  gap: 1rem;
+  padding: 0.875rem 1.25rem;
+
+  input {
+    border: none;
+    font-weight: 400;
+    width: 20rem;
+
+    &::placeholder {
+      color: #898989;
+    }
+  }
+
+  img {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  div {
+    align-items: center;
+    background-color: #F4F4F4;
+    border-radius: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.875rem 1.25rem;
+
+    p {
+      font-size: 1rem;
+      font-family: "Roboto", sans-serif;
+    }
+
+    img {
+      cursor: pointer;
+    }
+  }
+}

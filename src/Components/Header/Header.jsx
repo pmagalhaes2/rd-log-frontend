@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from "./styles.module.scss";
 import { Icon } from '@iconify/react';
-import userIcon from '@iconify-icons/mdi/user-outline';
 import searchIcon from '@iconify-icons/mdi/magnify';
-import rdlog from './rdlog.png';
-// import arrowDownIcon from '@iconify-icons/ion/arrow-down';
+import rdlog from '../../assets/images/rdlog.png';
+import userIcon from "../../assets/images/user-icon.svg";
+import expandArrowIcon from "../../assets/images/expand-header-icon.svg";
 
 export default function Header() {
   return (
@@ -17,17 +17,18 @@ export default function Header() {
       </div>
       <div className={styles.separator}></div>
 
-      <div className={styles.userSection}>
+
+
+      <div className={styles.userSection}>  
+        <img src={userIcon} alt='UserIcon'  className={styles.userIcon}/>
+     
         <div className={styles.userText}>
-          <Icon icon={userIcon} className={styles.userIcon} />
-          <span>Bem-vinda,</span>
+          <span >Bem-vinda,</span>
+          <span className={styles.personContainer} >Cristina!</span>
         </div>
-        <div className={styles.personContainer}>
-          <span>Cristina!</span>
-          {/* <Icon icon={arrowDownIcon} className={styles.expandIcon} /> */}
-        </div>
+        <img className={styles.expandIcon} src={expandArrowIcon} alt='ExpandIcon'/>
       </div>
+
     </header>
   )
 }
-
