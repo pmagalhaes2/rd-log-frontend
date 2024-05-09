@@ -6,15 +6,14 @@ import { Questions } from "../../Components/Questions";
 import { Input } from "../../Components/Input";
 import Footer from "../../Components/Footer/Footer";
 import Header from "../../Components/Header/Header";
+import MenuComponent from '../../Components/Menu/Menu';
 
 export const Support = () => {
   return (
     <>
       <Header />
       <div className={styles.container}>
-        <div className={styles.menu}>
-          <p>Menu Lateral</p>
-        </div>
+        <MenuComponent /> 
         <div className={styles.questions_container}>
           <div className={styles.questions_heading}>
             <span>
@@ -28,7 +27,6 @@ export const Support = () => {
               />
             </div>
           </div>
-
           <Questions
             questions={[
               "Quais são os horários de funcionamento da nossa empresa de logística?",

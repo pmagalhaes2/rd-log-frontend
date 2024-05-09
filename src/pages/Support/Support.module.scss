@@ -6,21 +6,11 @@
   padding: 2rem;
   width: 100%;
 
-  .menu {
-    align-items: center;
-    display: flex;
-    background-color: #ffffff;
-    border-radius: 1.25rem;
-    height: 500px;
-    justify-content: center;
-    width: 250px;
-  }
-
   .questions_container {
     background-color: #ffffff;
     border-radius: 1.25rem;
     display: flex;
-    flex-direction:column;
+    flex-direction: column; /* Corrigido aqui */
     gap: 4rem;
     padding: 2rem;
     width: 65rem;
@@ -42,3 +32,4 @@
     }
   }
 }
+
