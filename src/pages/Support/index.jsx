@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import questionIcon from "../../assets/images/question-icon.svg";
 
 import styles from "./Support.module.scss";
@@ -8,7 +8,24 @@ import Footer from "../../Components/Footer/Footer";
 import Header from "../../Components/Header/Header";
 import MenuComponent from "../../Components/Menu/Menu";
 
+import questions from "../../Components/Questions/questions";
+
 export const Support = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredQuestions =
+    searchTerm.length > 3
+      ? questions.filter(
+          (item) =>
+            item.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.answer.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      : questions;
+
   return (
     <>
       <Header />
@@ -17,24 +34,18 @@ export const Support = () => {
         <div className={styles.questions_container}>
           <div className={styles.questions_heading}>
             <span>
-              <img src={questionIcon} alt="" />
+              <img src={questionIcon} alt="Ícone de pergunta" />
               <h3>Perguntas Frequentes</h3>
             </span>
             <div>
-              <Input placeholder={"Digite um campo para buscar"} />
+              <Input
+                searchInput={true}
+                placeholder={"Digite um campo para buscar"}
+                onChange={handleSearch}
+              />
             </div>
           </div>
-          <Questions
-            questions={[
-              "Quais são os horários de funcionamento da nossa empresa de logística?",
-              "Como faço para rastrear minha entrega?",
-              "Quais são as opções de pagamento disponíveis para os serviços de entrega?",
-              "Qual é a distância máxima para as entregas ao cliente final?",
-              "Como posso solicitar um transporte para minha empresa?",
-              "Posso agendar uma coleta de produtos em minha empresa?",
-              "Quais documentos são necessários para contratar os serviços de transporte?",
-            ]}
-          />
+          <Questions questions={filteredQuestions} />
         </div>
       </div>
       <Footer />
