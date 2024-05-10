@@ -8,16 +8,23 @@ import Footer from "../../Components/Footer/Footer";
 import Header from "../../Components/Header/Header";
 import MenuComponent from "../../Components/Menu/Menu";
 
-import questions from '../../Components/Questions/questions'
+import questions from "../../Components/Questions/questions";
 
 export const Support = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
-  }
+  };
 
-  const filteredQuestions = searchTerm.length > 3 ? questions.filter((question) => question.toLowerCase().includes(searchTerm.toLowerCase())) : questions;
+  const filteredQuestions =
+    searchTerm.length > 3
+      ? questions.filter(
+          (item) =>
+            item.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.answer.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      : questions;
 
   return (
     <>
@@ -27,16 +34,18 @@ export const Support = () => {
         <div className={styles.questions_container}>
           <div className={styles.questions_heading}>
             <span>
-              <img src={questionIcon} alt="" />
+              <img src={questionIcon} alt="Ícone de pergunta" />
               <h3>Perguntas Frequentes</h3>
             </span>
             <div>
-              <Input placeholder={"Digite um campo para buscar"} onChange={handleSearch} />
+              <Input
+                searchInput={true}
+                placeholder={"Digite um campo para buscar"}
+                onChange={handleSearch}
+              />
             </div>
           </div>
-          <Questions
-            questions={filteredQuestions}
-          />
+          <Questions questions={filteredQuestions} />
         </div>
       </div>
       <Footer />

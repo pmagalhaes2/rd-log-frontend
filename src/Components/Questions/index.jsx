@@ -15,10 +15,10 @@ export const Questions = ({ questions }) => {
 
   return (
     <div className={styles.container}>
-      {questions.map((question, index) => (
+      {questions.map((item, index) => (
         <div key={index} className={styles.question_container}>
           <div className={styles.question_heading}>
-            <p>{question}</p>
+            <p>{item.question}</p>
             <Icon
               icon={openedId === index ? arrowUp : arrowDown}
               onClick={() => handleOpened(index)}
@@ -26,12 +26,7 @@ export const Questions = ({ questions }) => {
           </div>
           {openedId === index && (
             <div className={styles.answer_container}>
-              <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minima
-                repellendus quibusdam numquam animi modi officia nisi? Et, ab
-                obcaecati totam suscipit consequatur, libero tenetur ratione
-                adipisci, sit cumque autem recusandae?
-              </p>
+              <p>{item.answer}</p>
             </div>
           )}
         </div>
