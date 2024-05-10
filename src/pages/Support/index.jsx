@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import questionIcon from "../../assets/images/question-icon.svg";
 
 import styles from "./Support.module.scss";
@@ -6,14 +6,14 @@ import { Questions } from "../../Components/Questions";
 import { Input } from "../../Components/Input";
 import Footer from "../../Components/Footer/Footer";
 import Header from "../../Components/Header/Header";
-import MenuComponent from '../../Components/Menu/Menu';
+import MenuComponent from "../../Components/Menu/Menu";
 
 export const Support = () => {
   return (
     <>
       <Header />
       <div className={styles.container}>
-        <MenuComponent /> 
+        <MenuComponent />
         <div className={styles.questions_container}>
           <div className={styles.questions_heading}>
             <span>
@@ -21,9 +21,7 @@ export const Support = () => {
               <h3>Perguntas Frequentes</h3>
             </span>
             <div>
-              <Input
-                placeholder={"Digite um campo para buscar"}
-              />
+              <Input placeholder={"Digite um campo para buscar"} />
             </div>
           </div>
           <Questions

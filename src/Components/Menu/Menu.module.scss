@@ -1,6 +1,6 @@
 
   li {
-    margin: 10px;;
+    margin: 10px 0;
     padding: 20px; 
     margin-bottom: 10px; 
     background-color: #fff; 
@@ -8,12 +8,12 @@
     border-radius: 10px; 
     cursor: pointer; 
     display: flex; 
+    font-weight: 600;
     align-items: center; 
 
     &:hover,
     &:active {
-      background-color: #ABDEC2; 
-      transform: scale(1.1);
+      background-color: #ABDEC2;
     }
 
     &__icon {

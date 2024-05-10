@@ -23,7 +23,7 @@ export default function Header() {
         <img src={userIcon} alt='UserIcon'  className={styles.userIcon}/>
      
         <div className={styles.userText}>
-          <span >Bem-vinda,</span>
+          <span >Bem-vindo(a),</span>
           <span className={styles.personContainer} >Cristina!</span>
         </div>
         <img className={styles.expandIcon} src={expandArrowIcon} alt='ExpandIcon'/>
