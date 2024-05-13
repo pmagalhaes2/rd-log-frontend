@@ -30,7 +30,7 @@ export const Support = () => {
     <>
       <Header />
       <div className={styles.container}>
-        <MenuComponent />
+        <MenuComponent pageName={"FAQs"}/>
         <div className={styles.questions_container}>
           <div className={styles.questions_heading}>
             <span>
