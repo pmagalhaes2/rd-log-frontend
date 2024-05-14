@@ -1,26 +1,42 @@
 import React, { useState } from 'react';
 import styles from './Menu.module.scss'; 
 import menuIcon from '../../assets/images/image 7.png';
+import pack from '../../assets/images/Pack.png';
+import dash from '../../assets/images/Dash.png';
+import truck from '../../assets/images/Truck.png';
+import maps from '../../assets/images/maps.png';
+import faqs from '../../assets/images/FaQs.png';
 
-function MenuComponent() {
-  const [menuOpen, setMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
+function MenuComponent({ pageName }) {
   return (
-    <div className={`${styles['menu-lateral']} ${menuOpen ? styles['menu-open'] : ''}`}>
-      <div className={styles['menu-icon']} onClick={toggleMenu}>
+    <div>
+      <div className={styles["menu-icon"]}>
         <img src={menuIcon} alt="Menu" />
+        <h3>{pageName}</h3>
       </div>
-      <div className={styles['menu']}>
-        <ul className={styles['menu-list']}> 
-          <li className={styles['menu-item']}>Dashboard</li> 
-          <li className={styles['menu-item']}>Entrega Fornecedor</li>
-          <li className={styles['menu-item']}>Entrega Cliente</li>
-          <li className={styles['menu-item']}>Pedidos Entregues</li>
-          <li className={styles['menu-item']}>faQs</li>
+      <div>
+        <ul>
+          <li>
+            <img src={dash} alt="Dashboard" />
+            Dashboard
+          </li>
+          <li>
+            <img src={truck} alt="Histórico" />
+            Histórico
+          </li>
+          <li>
+            <img src={pack} alt="Solicitações" />
+            Solicitações
+          </li>
+          <li>
+            <img src={maps} alt="Mapas" />
+            Mapas
+          </li>
+          <li>
+            <img src={faqs} alt="FAQs" />
+            FAQs
+          </li>
         </ul>
       </div>
     </div>

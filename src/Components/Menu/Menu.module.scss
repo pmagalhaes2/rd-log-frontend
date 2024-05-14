@@ -1,25 +1,28 @@
+li {
+  margin: 14px 0;
+  padding: 20px; 
+  margin-bottom: 10px; 
+  background-color: #fff; 
+  border-radius: 10px; 
+  cursor: pointer; 
+  display: flex; 
+  font-weight: 600;
+  gap: 1.25rem;
+  align-items: center; 
 
-  li {
-    margin: 10px 0;
-    padding: 20px; 
-    margin-bottom: 10px; 
-    background-color: #fff; 
-    border: 1px solid #ccc; 
-    border-radius: 10px; 
-    cursor: pointer; 
-    display: flex; 
-    font-weight: 600;
-    align-items: center; 
-
-    &:hover,
-    &:active {
-      background-color: #ABDEC2;
-    }
-
-    &__icon {
-      margin-right: 8px; 
-    }
+  &:hover,
+  &:active {
+    background-color: #ABDEC2;
   }
+}
 
 
+.menu-icon h3 {
+  text-align: center;
+  margin: 20px;
+  padding: 10px;
+}
 
+.menu-icon img {
+  margin: 0; 
+}
