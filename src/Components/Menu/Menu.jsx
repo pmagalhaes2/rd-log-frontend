@@ -7,6 +7,8 @@ import truck from '../../assets/images/Truck.png';
 import maps from '../../assets/images/maps.png';
 import faqs from '../../assets/images/FaQs.png';
 
+
+
 function MenuComponent() {
   const [menuOpen, setMenuOpen] = useState(false);
 

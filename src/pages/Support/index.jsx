@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+
+
 import questionIcon from "../../assets/images/question-icon.svg";
 
 import styles from "./Support.module.scss";
@@ -9,6 +11,7 @@ import Header from "../../Components/Header/Header";
 import MenuComponent from "../../Components/Menu/Menu";
 
 import questions from "../../Components/Questions/questions";
+
 
 export const Support = () => {
   const [searchTerm, setSearchTerm] = useState("");
