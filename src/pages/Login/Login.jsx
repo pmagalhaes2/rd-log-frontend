@@ -4,6 +4,7 @@ import logoImage from "../../assets/images/rdlog.png";
 import loginImage from "../../assets/images/img-login.png";
 import { Input } from "../../Components/Input";
 import { Button } from "../../Components/Button";
+import { Error } from "../../Components/Error";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 
@@ -62,7 +63,7 @@ export const Login = () => {
             <option value="admin">Administrador</option>
             <option value="user">Usuário</option>
           </select>
-          {error && <p className={styles.error_message}>{error}</p>}
+          {error && <Error message={error} />}
           <Button title="Login" freeSize={true} onClick={handleLogin} />
 
           <p className={styles["register-link"]}>
