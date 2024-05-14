@@ -11,7 +11,6 @@ function Register() {
     phone_number: "",
     email: "",
     password: "",
-    confirm_password: "",
     accepts_dangerous_loads: false,
   });
   const [submitMessage, setSubmitMessage] = useState("");
@@ -27,6 +26,11 @@ function Register() {
     });
   };
 
+  const formatTime = (time) => {
+    const [hours, minutes] = time.split(":");
+    return `${hours}:${minutes}:00`;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
@@ -36,21 +40,24 @@ function Register() {
       formData.closing_hours.trim() === "" ||
       formData.phone_number.trim() === "" ||
       formData.email.trim() === "" ||
-      formData.password.trim() === "" ||
-      formData.confirm_password.trim() === ""
+      formData.password.trim() === ""
     ) {
       setError("Por favor, preencha todos os campos.");
     } else {
       try {
         setIsLoading(true);
         const response = await fetch(
-          "http://localhost:8080/api/logistic-companies",
+          "http://localhost:8080/logistic-companies",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(formData),
+            body: JSON.stringify({
+              ...formData,
+              opening_hours: formatTime(formData.opening_hours),
+              closing_hours: formatTime(formData.closing_hours),
+            }),
           }
         );
         if (response.ok) {
@@ -85,9 +92,7 @@ function Register() {
     <>
       <div className={styles["register-container"]}>
         <h2>Cadastre-se</h2>
-        {error && (
-          <Error message={error} />
-        )}
+        {error && <Error message={error} />}
         <form onSubmit={handleSubmit}>
           <div
             className={`${styles["form-row-full"]} ${
