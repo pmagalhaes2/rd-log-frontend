@@ -6,10 +6,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Register from "./pages/Register/Register";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
+import { UserProvider } from "./context/UserContext";
 
 function App() {
   return (
-    <>
+    <UserProvider>
       <BrowserRouter>
         <Header />
         <Routes>
@@ -19,7 +20,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <Footer />
-    </>
+    </UserProvider>
   );
 }
 
