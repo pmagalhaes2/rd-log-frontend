@@ -18,6 +18,7 @@ function App() {
       <BrowserRouter>
 
         <Routes>
+          <Route path="/" Component={Login} />
           <Route path="/login" Component={Login} />
           <Route path="/register" Component={Register} />
           <Route path="/requests" Component={Requests}/>

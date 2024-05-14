@@ -1,3 +1,10 @@
+/* Cores */
+:root {
+  --primary-color: #004e16;
+  --primary-color-dark: #003d12;
+  --border-color: #ccc;
+}
+
 .register-container {
   display: flex;
   flex-direction: column;
@@ -22,21 +29,23 @@ form {
   .form-row {
     display: flex;
     gap: 1rem;
-    width: 100%; // Garante que os campos ocupem toda a largura disponível
+    width: 100%;
     margin-bottom: 1rem;
 
     input[type="text"],
     input[type="email"],
-    input[type="senha"] {
-      flex: 1; // Ocupa todo o espaço disponível
+    input[type="password"],
+    input[type="time"],
+    input[type="checkbox"] {
+      flex: 1;
       padding: 0.5rem;
-      border: 1px solid #ccc;
+      border: 1px solid var(--border-color);
       border-radius: 0.25rem;
       font-size: 1rem;
 
       &:focus {
         outline: none;
-        border-color: #004e16;
+        border-color: var(--primary-color);
       }
     }
   }
@@ -49,9 +58,9 @@ form {
     input[type="password"],
     input[type="email"],
     input[type="checkbox"] {
-      width: 100%; // Ocupa toda a largura disponível
-      padding: 0.5rem; // Mantém o mesmo espaçamento interno
-      border: 1px solid #ccc; // Mantém a borda
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid var(--border-color);
       border-radius: 0.25rem;
       font-size: 1rem;
       margin-bottom: 20px;
@@ -67,13 +76,13 @@ form {
     margin-top: 1rem;
     border: none;
     border-radius: 0.25rem;
-    background-color: #004e16;
+    background-color: var(--primary-color);
     color: #fff;
     font-size: 1rem;
     cursor: pointer;
 
     &:hover {
-      background-color: #003d12;
+      background-color: var(--primary-color-dark);
     }
   }
 }

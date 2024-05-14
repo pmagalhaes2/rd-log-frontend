@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Error } from "../../Components/Error";
 import styles from "./Register.module.scss";
 
 function Register() {
@@ -14,6 +15,11 @@ function Register() {
     accepts_dangerous_loads: false,
   });
   const [submitMessage, setSubmitMessage] = useState("");
+<<<<<<< HEAD
+  const [isLoading, setIsLoading] = useState(false);
+=======
+  const [error, setError] = useState("");
+>>>>>>> 28bfa6c9447d8b8594c650bd9b30738dff449e44
 
   const handleChange = (e) => {
     const value =
@@ -24,7 +30,7 @@ function Register() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (
       formData.name.trim() === "" ||
@@ -36,19 +42,54 @@ function Register() {
       formData.password.trim() === "" ||
       formData.confirm_password.trim() === ""
     ) {
+<<<<<<< HEAD
       setSubmitMessage("Por favor, preencha todos os campos.");
+    } else if (formData.password !== formData.confirm_password) {
+      setSubmitMessage("As senhas não coincidem.");
+    } else if (formData.password.length < 8) {
+      setSubmitMessage("A senha deve ter no mínimo 8 caracteres.");
     } else {
-      // Tem que enviar o formulário para o backend
+      setIsLoading(true);
+      try {
+        const response = await fetch("http://localhost:8080/logistic-companies", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+        if (response.ok) {
+          setSubmitMessage("Cadastro realizado com sucesso!");
+        } else {
+          const errorData = await response.json();
+          setSubmitMessage(`Erro: ${errorData.message}`);
+        }
+      } catch (error) {
+        console.error("Erro ao enviar cadastro:", error);
+        setSubmitMessage("Erro ao enviar cadastro. Por favor, tente novamente.");
+      } finally {
+        setIsLoading(false);
+      }
+=======
+      setError("Por favor, preencha todos os campos.");
+    } else {
       setSubmitMessage("Formulário enviado com sucesso!");
+>>>>>>> 28bfa6c9447d8b8594c650bd9b30738dff449e44
     }
   };
+  
 
   return (
     <div className={styles["register-container"]}>
       <h2>Cadastre-se</h2>
+<<<<<<< HEAD
+      {submitMessage && <p className={styles["submit-message"]}>{submitMessage}</p>}
+=======
       {submitMessage && (
         <p className={styles["submit-message"]}>{submitMessage}</p>
       )}
+      {error && <Error message={error} />}
+>>>>>>> 28bfa6c9447d8b8594c650bd9b30738dff449e44
       <form onSubmit={handleSubmit}>
         <div
           className={`${styles["form-row-full"]} ${
@@ -57,7 +98,7 @@ function Register() {
         >
           <input
             type="text"
-            name="nome"
+            name="name"
             placeholder="Nome"
             value={formData.name}
             onChange={handleChange}
@@ -72,14 +113,14 @@ function Register() {
         </div>
         <div className={styles["form-row"]}>
           <input
-            type="text"
+            type="time"
             name="opening_hours"
             placeholder="Horário de Abertura"
             value={formData.opening_hours}
             onChange={handleChange}
           />
           <input
-            type="text"
+            type="time"
             name="closing_hours"
             placeholder="Horário de Fechamento"
             value={formData.closing_hours}
@@ -89,7 +130,7 @@ function Register() {
         <div className={styles["form-row"]}>
           <input
             type="text"
-            name="Telefone"
+            name="phone_number"
             placeholder="Telefone"
             value={formData.phone_number}
             onChange={handleChange}
@@ -104,15 +145,15 @@ function Register() {
         </div>
         <div className={styles["form-row"]}>
           <input
-            type="senha"
-            name="senha"
+            type="password"
+            name="password"
             placeholder="Senha"
             value={formData.password}
             onChange={handleChange}
           />
           <input
-            type="senha"
-            name="confirma senha"
+            type="password"
+            name="confirm_password"
             placeholder="Confirmar senha"
             value={formData.confirm_password}
             onChange={handleChange}
@@ -129,7 +170,9 @@ function Register() {
             Aceita carga perigosa
           </label>
         </div>
-        <button type="submit">Confirmar cadastro</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Enviando..." : "Confirmar cadastro"}
+        </button>
       </form>
     </div>
   );
