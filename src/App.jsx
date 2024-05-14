@@ -14,6 +14,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
+          <Route path="/" Component={Login} />
           <Route path="/login" Component={Login} />
           <Route path="/register" Component={Register} />
           <Route path="/support" Component={Support} />
