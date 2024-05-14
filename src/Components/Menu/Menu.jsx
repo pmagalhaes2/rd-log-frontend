@@ -6,8 +6,12 @@ import dash from "../../assets/images/Dash.png";
 import truck from "../../assets/images/Truck.png";
 import faqs from "../../assets/images/FaQs.png";
 import { NavLink } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 
 function MenuComponent({ pageName }) {
+  const { user } = useUser();
+  const { role } = user;
+
   return (
     <div>
       <div className={styles["menu-icon"]}>
@@ -30,13 +34,15 @@ function MenuComponent({ pageName }) {
             <img src={truck} alt="Histórico" />
             Histórico
           </NavLink>
-          <NavLink
-            to="/requests"
-            className={({ isActive }) => (isActive ? styles.active : "")}
-          >
-            <img src={pack} alt="Solicitações" />
-            Solicitações
-          </NavLink>
+          {role === "admin" && (
+            <NavLink
+              to="/requests"
+              className={({ isActive }) => (isActive ? styles.active : "")}
+            >
+              <img src={pack} alt="Solicitações" />
+              Solicitações
+            </NavLink>
+          )}
           <NavLink
             to="/support"
             className={({ isActive }) => (isActive ? styles.active : "")}
