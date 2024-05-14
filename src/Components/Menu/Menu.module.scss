@@ -1,21 +1,25 @@
-li {
+a {
   margin: 14px 0;
-  padding: 20px; 
-  margin-bottom: 10px; 
-  background-color: #fff; 
-  border-radius: 10px; 
-  cursor: pointer; 
-  display: flex; 
+  padding: 20px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
   font-weight: 600;
   gap: 1.25rem;
-  align-items: center; 
+  align-items: center;
+  text-decoration: none;
 
-  &:hover,
-  &:active {
-    background-color: #ABDEC2;
+  &:hover {
+    background-color: #abdec2;
+  }
+
+  &.active {
+    background-color: #abdec2;
   }
 }
-
 
 .menu-icon h3 {
   text-align: center;
@@ -24,5 +28,5 @@ li {
 }
 
 .menu-icon img {
-  margin: 0; 
+  margin: 0;
 }
