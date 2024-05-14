@@ -8,27 +8,35 @@ import maps from '../../assets/images/maps.png';
 import faqs from '../../assets/images/FaQs.png';
 
 
-
-function MenuComponent() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
+function MenuComponent({ pageName }) {
   return (
-    <div className={`${styles['menu-lateral']} ${menuOpen ? styles['menu-open'] : ''}`}>
-      <div className={styles['menu-icon']} onClick={toggleMenu}>
+    <div>
+      <div className={styles["menu-icon"]}>
         <img src={menuIcon} alt="Menu" />
-        <h3>Dashboard</h3>
+        <h3>{pageName}</h3>
       </div>
-      <div className={styles['menu']}>
-        <ul className={styles['menu-list']}> 
-          <li className={styles['menu-item']}> <img src={dash} alt="Dashboard" /> Dashboard</li> 
-          <li className={styles['menu-item']}> <img src={truck} alt="Pedidos" /> Pedidos</li>
-          <li className={styles['menu-item']}> <img src={pack} alt="Solicitações" /> Solicitações</li>
-          <li className={styles['menu-item']}> <img src={maps} alt="Mapas" /> Mapas</li>
-          <li className={styles['menu-item']}> <img src={faqs} alt="faQs" /> faQs</li>
+      <div>
+        <ul>
+          <li>
+            <img src={dash} alt="Dashboard" />
+            Dashboard
+          </li>
+          <li>
+            <img src={truck} alt="Histórico" />
+            Histórico
+          </li>
+          <li>
+            <img src={pack} alt="Solicitações" />
+            Solicitações
+          </li>
+          <li>
+            <img src={maps} alt="Mapas" />
+            Mapas
+          </li>
+          <li>
+            <img src={faqs} alt="FAQs" />
+            FAQs
+          </li>
         </ul>
       </div>
     </div>
