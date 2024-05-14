@@ -23,7 +23,6 @@ function App() {
       <Header />
       <Register/>
       <Footer />
->>>>>>> 9c792b431bb13d8f1954889dd300e88ab6558c47
     </div>
   );
 }
