@@ -30,6 +30,15 @@
   flex-direction: column;
 }
 
+.loginSection {
+  display: flex;
+  gap: 1rem;
+
+  a {
+    text-decoration: none;
+  }
+}
+
 .userSection span {
   font-size: 1rem;
   display: flex;
