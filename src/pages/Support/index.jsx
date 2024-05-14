@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 
-
 import questionIcon from "../../assets/images/question-icon.svg";
 
 import styles from "./Support.module.scss";
 import { Questions } from "../../Components/Questions";
 import { Input } from "../../Components/Input";
-import Footer from "../../Components/Footer/Footer";
-import Header from "../../Components/Header/Header";
 import MenuComponent from "../../Components/Menu/Menu";
 
 import questions from "../../Components/Questions/questions";
-
 
 export const Support = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,28 +26,24 @@ export const Support = () => {
       : questions;
 
   return (
-    <>
-      <Header />
-      <div className={styles.container}>
-        <MenuComponent pageName={"FAQs"}/>
-        <div className={styles.questions_container}>
-          <div className={styles.questions_heading}>
-            <span>
-              <img src={questionIcon} alt="Ícone de pergunta" />
-              <h3>Perguntas Frequentes</h3>
-            </span>
-            <div>
-              <Input
-                searchInput={true}
-                placeholder={"Digite um campo para buscar"}
-                onChange={handleSearch}
-              />
-            </div>
+    <div className={styles.container}>
+      <MenuComponent pageName={"FAQs"} />
+      <div className={styles.questions_container}>
+        <div className={styles.questions_heading}>
+          <span>
+            <img src={questionIcon} alt="Ícone de pergunta" />
+            <h3>Perguntas Frequentes</h3>
+          </span>
+          <div>
+            <Input
+              searchInput={true}
+              placeholder={"Digite um campo para buscar"}
+              onChange={handleSearch}
+            />
           </div>
-          <Questions questions={filteredQuestions} />
         </div>
+        <Questions questions={filteredQuestions} />
       </div>
-      <Footer />
-    </>
+    </div>
   );
 };

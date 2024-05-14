@@ -1,0 +1,79 @@
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  margin: 20px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .form-row {
+    display: flex;
+    gap: 1rem;
+    width: 100%; // Garante que os campos ocupem toda a largura disponível
+    margin-bottom: 1rem;
+
+    input[type="text"],
+    input[type="email"],
+    input[type="senha"] {
+      flex: 1; // Ocupa todo o espaço disponível
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 0.25rem;
+      font-size: 1rem;
+
+      &:focus {
+        outline: none;
+        border-color: #004e16;
+      }
+    }
+  }
+
+  .form-row-full {
+    width: 100%;
+    margin-bottom: 1rem;
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="checkbox"] {
+      width: 100%; // Ocupa toda a largura disponível
+      padding: 0.5rem; // Mantém o mesmo espaçamento interno
+      border: 1px solid #ccc; // Mantém a borda
+      border-radius: 0.25rem;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+  }
+
+  p {
+    margin: 0.5rem 0;
+  }
+
+  button[type="submit"] {
+    padding: 0.75rem;
+    margin-top: 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    background-color: #004e16;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #003d12;
+    }
+  }
+}
