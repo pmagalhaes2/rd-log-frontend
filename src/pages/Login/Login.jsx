@@ -6,6 +6,7 @@ import logoImage from "../../assets/images/rdlog.png";
 import loginImage from "../../assets/images/img-login.png";
 import { Input } from "../../Components/Input";
 import { Button } from "../../Components/Button";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
   return (
@@ -31,7 +32,9 @@ export const Login = () => {
 
             <p className={styles["register-link"]}>
               Ainda não tem conta?
-              <a href="#"> Cadastre-se</a>
+              <Link to='/register'>
+              Cadastre-se.
+              </Link>
             </p>
           </div>
         </div>

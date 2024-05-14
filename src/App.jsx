@@ -1,20 +1,22 @@
 import React from "react";
 import "./styles/Global.css";
 import { Support } from "./pages/Support";
-import Register from "./Components/Register/Register";
-import Footer from "./Components/Footer/Footer";
-import Header from "./Components/Header/Header";
+import { Login } from "./pages/Login/Login";
+import { Register } from "./pages/Register/Register";
+import { BrowserRouter,Route, Routes } from 'react-router-dom';
 
-
-
-function App() {
-  return (
-    <div className="App">
-      <Header />
-      <Register/>
-      <Footer />
-    </div>
-  );
-}
+  function App() {
+    return (
+      <BrowserRouter>
+      <div className="App">
+          <Routes>
+          <Route path='/login' Component={Login}/>
+          <Route path='/support' Component={Support}/>
+          <Route path='/register' Component={Register}/>
+          </Routes>
+      </div>
+      </BrowserRouter>
+    );
+  }
 
 export default App;

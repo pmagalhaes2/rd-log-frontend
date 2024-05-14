@@ -6,6 +6,7 @@ import dash from '../../assets/images/Dash.png';
 import truck from '../../assets/images/Truck.png';
 import maps from '../../assets/images/maps.png';
 import faqs from '../../assets/images/FaQs.png';
+import { Link } from 'react-router-dom';
 
 
 function MenuComponent({ pageName }) {
@@ -33,10 +34,10 @@ function MenuComponent({ pageName }) {
             <img src={maps} alt="Mapas" />
             Mapas
           </li>
-          <li>
+          <Link to='/support'>
             <img src={faqs} alt="FAQs" />
             FAQs
-          </li>
+          </Link>
         </ul>
       </div>
     </div>
