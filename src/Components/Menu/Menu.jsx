@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./Menu.module.scss";
 import menuIcon from "../../assets/images/image 7.png";
-import pack from "../../assets/images/Pack.png";
 import dash from "../../assets/images/Dash.png";
+import truckImg from "../../assets/images/truckImg.png";
 import truck from "../../assets/images/Truck.png";
 import faqs from "../../assets/images/FaQs.png";
 import { NavLink } from "react-router-dom";
@@ -39,7 +39,7 @@ function MenuComponent({ pageName }) {
               to="/requests"
               className={({ isActive }) => (isActive ? styles.active : "")}
             >
-              <img src={pack} alt="Solicitações" />
+              <img src={truckImg} alt="Solicitações" />
               Solicitações
             </NavLink>
           )}

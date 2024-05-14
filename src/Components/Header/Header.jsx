@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./styles.module.scss";
+import styles from "./Header.module.scss";
 import rdlog from "../../assets/images/rdlog.png";
 import userIcon from "../../assets/images/user-icon.svg";
 import expandArrowIcon from "../../assets/images/expand-header-icon.svg";
