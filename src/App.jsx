@@ -9,6 +9,8 @@ import Register from "./pages/Register/Register";
 
 
 import { UserProvider } from "./context/UserContext";
+import Header from "./Components/Header/Header";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   return (
@@ -16,7 +18,7 @@ function App() {
 
     <UserProvider>
       <BrowserRouter>
-
+        <Header />
         <Routes>
           <Route path="/" Component={Login} />
           <Route path="/login" Component={Login} />
@@ -25,6 +27,7 @@ function App() {
           <Route path="/support" Component={Support} />
         </Routes>
       </BrowserRouter>
+      <Footer />
     </UserProvider>
     </div>
   );
