@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Error } from "../../Components/Error";
 import styles from "./Register.module.scss";
+import Footer from "../../Components/Footer/Footer";
+import Header from "../../Components/Header/Header";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -39,37 +40,45 @@ function Register() {
       formData.confirm_password.trim() === ""
     ) {
       setSubmitMessage("Por favor, preencha todos os campos.");
-    } else if (formData.password !== formData.confirm_password) {
-      setSubmitMessage("As senhas não coincidem.");
-    } else if (formData.password.length < 8) {
-      setSubmitMessage("A senha deve ter no mínimo 8 caracteres.");
     } else {
-      setIsLoading(true);
       try {
-        const response = await fetch("http://localhost:8080/logistic-companies", {
-          method: "POST",
+        setIsLoading(true); // Ativar indicador de carregamento
+        const response = await fetch('http://localhost:8080/api/logistic-companies', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(formData)
         });
         if (response.ok) {
           setSubmitMessage("Cadastro realizado com sucesso!");
+          setFormData({ // Limpar campos do formulário após o envio bem-sucedido
+            name: "",
+            cnpj: "",
+            opening_hours: "",
+            closing_hours: "",
+            phone_number: "",
+            email: "",
+            password: "",
+            confirm_password: "",
+            accepts_dangerous_loads: false,
+          });
         } else {
           const errorData = await response.json();
           setSubmitMessage(`Erro: ${errorData.message}`);
         }
       } catch (error) {
-        console.error("Erro ao enviar cadastro:", error);
-        setSubmitMessage("Erro ao enviar cadastro. Por favor, tente novamente.");
+        console.error('Erro ao realizar cadastro:', error);
+        setSubmitMessage('Erro ao enviar formulário. Por favor, tente novamente.');
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Desativar indicador de carregamento, independentemente do resultado
       }
     }
   };
-  
-
+ <Header />
   return (
+    <>
+    <Header /> 
     <div className={styles["register-container"]}>
       <h2>Cadastre-se</h2>
       {submitMessage && <p className={styles["submit-message"]}>{submitMessage}</p>}
@@ -153,12 +162,17 @@ function Register() {
             Aceita carga perigosa
           </label>
         </div>
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Enviando..." : "Confirmar cadastro"}
+        <button type="submit" disabled={isLoading}> {/* Desabilitar botão durante o envio */}
+          {isLoading ? 'Enviando...' : 'Confirmar cadastro'}
         </button>
       </form>
     </div>
+    <Footer /> 
+    </>
+  
   );
 }
+
+
 
 export default Register;
