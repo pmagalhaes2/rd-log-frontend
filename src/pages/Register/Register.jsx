@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Error } from "../../Components/Error";
 import styles from "./Register.module.scss";
 
 function Register() {
@@ -14,6 +15,7 @@ function Register() {
     accepts_dangerous_loads: false,
   });
   const [submitMessage, setSubmitMessage] = useState("");
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const value =
@@ -36,9 +38,8 @@ function Register() {
       formData.password.trim() === "" ||
       formData.confirm_password.trim() === ""
     ) {
-      setSubmitMessage("Por favor, preencha todos os campos.");
+      setError("Por favor, preencha todos os campos.");
     } else {
-      // Tem que enviar o formulário para o backend
       setSubmitMessage("Formulário enviado com sucesso!");
     }
   };
@@ -49,6 +50,7 @@ function Register() {
       {submitMessage && (
         <p className={styles["submit-message"]}>{submitMessage}</p>
       )}
+      {error && <Error message={error} />}
       <form onSubmit={handleSubmit}>
         <div
           className={`${styles["form-row-full"]} ${
