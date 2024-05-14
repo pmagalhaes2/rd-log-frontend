@@ -3,10 +3,10 @@ import React, { createContext, useContext, useState } from 'react';
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({ role: '' });
+  const [user, setUser] = useState({ role: '', username: '' });
 
-  const login = (role) => {
-    setUser({ role });
+  const login = (role, username) => {
+    setUser({ role, username });
   };
 
   return (
