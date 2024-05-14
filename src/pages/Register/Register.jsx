@@ -15,11 +15,8 @@ function Register() {
     accepts_dangerous_loads: false,
   });
   const [submitMessage, setSubmitMessage] = useState("");
-<<<<<<< HEAD
   const [isLoading, setIsLoading] = useState(false);
-=======
   const [error, setError] = useState("");
->>>>>>> 28bfa6c9447d8b8594c650bd9b30738dff449e44
 
   const handleChange = (e) => {
     const value =
@@ -42,7 +39,6 @@ function Register() {
       formData.password.trim() === "" ||
       formData.confirm_password.trim() === ""
     ) {
-<<<<<<< HEAD
       setSubmitMessage("Por favor, preencha todos os campos.");
     } else if (formData.password !== formData.confirm_password) {
       setSubmitMessage("As senhas não coincidem.");
@@ -70,11 +66,7 @@ function Register() {
       } finally {
         setIsLoading(false);
       }
-=======
       setError("Por favor, preencha todos os campos.");
-    } else {
-      setSubmitMessage("Formulário enviado com sucesso!");
->>>>>>> 28bfa6c9447d8b8594c650bd9b30738dff449e44
     }
   };
   
@@ -82,14 +74,11 @@ function Register() {
   return (
     <div className={styles["register-container"]}>
       <h2>Cadastre-se</h2>
-<<<<<<< HEAD
       {submitMessage && <p className={styles["submit-message"]}>{submitMessage}</p>}
-=======
       {submitMessage && (
         <p className={styles["submit-message"]}>{submitMessage}</p>
       )}
       {error && <Error message={error} />}
->>>>>>> 28bfa6c9447d8b8594c650bd9b30738dff449e44
       <form onSubmit={handleSubmit}>
         <div
           className={`${styles["form-row-full"]} ${
