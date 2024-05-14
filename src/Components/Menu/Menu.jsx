@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import styles from './Menu.module.scss'; 
-import menuIcon from '../../assets/images/image 7.png';
-import pack from '../../assets/images/Pack.png';
-import dash from '../../assets/images/Dash.png';
-import truck from '../../assets/images/Truck.png';
-import maps from '../../assets/images/maps.png';
-import faqs from '../../assets/images/FaQs.png';
-import { Link } from 'react-router-dom';
-
+import React from "react";
+import styles from "./Menu.module.scss";
+import menuIcon from "../../assets/images/image 7.png";
+import pack from "../../assets/images/Pack.png";
+import dash from "../../assets/images/Dash.png";
+import truck from "../../assets/images/Truck.png";
+import faqs from "../../assets/images/FaQs.png";
+import { NavLink } from "react-router-dom";
 
 function MenuComponent({ pageName }) {
   return (
@@ -18,26 +16,34 @@ function MenuComponent({ pageName }) {
       </div>
       <div>
         <ul>
-          <li>
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) => (isActive ? styles.active : "")}
+          >
             <img src={dash} alt="Dashboard" />
             Dashboard
-          </li>
-          <li>
+          </NavLink>
+          <NavLink
+            to="/history"
+            className={({ isActive }) => (isActive ? styles.active : "")}
+          >
             <img src={truck} alt="Histórico" />
             Histórico
-          </li>
-          <li>
+          </NavLink>
+          <NavLink
+            to="/requests"
+            className={({ isActive }) => (isActive ? styles.active : "")}
+          >
             <img src={pack} alt="Solicitações" />
             Solicitações
-          </li>
-          <li>
-            <img src={maps} alt="Mapas" />
-            Mapas
-          </li>
-          <Link to='/support'>
+          </NavLink>
+          <NavLink
+            to="/support"
+            className={({ isActive }) => (isActive ? styles.active : "")}
+          >
             <img src={faqs} alt="FAQs" />
             FAQs
-          </Link>
+          </NavLink>
         </ul>
       </div>
     </div>
