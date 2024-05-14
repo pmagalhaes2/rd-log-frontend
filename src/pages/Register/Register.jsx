@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import styles from "./Register.module.scss";
-import Footer from "../../Components/Footer/Footer";
-import Header from "../../Components/Header/Header";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -16,7 +14,7 @@ function Register() {
     accepts_dangerous_loads: false,
   });
   const [submitMessage, setSubmitMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Adicionado estado para indicar se o formulário está sendo enviado
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const value =
@@ -42,7 +40,7 @@ function Register() {
       setSubmitMessage("Por favor, preencha todos os campos.");
     } else {
       try {
-        setIsLoading(true); // Ativar indicador de carregamento
+        setIsLoading(true);
         const response = await fetch('http://localhost:8080/api/logistic-companies', {
           method: 'POST',
           headers: {
@@ -52,7 +50,7 @@ function Register() {
         });
         if (response.ok) {
           setSubmitMessage("Cadastro realizado com sucesso!");
-          setFormData({ // Limpar campos do formulário após o envio bem-sucedido
+          setFormData({ 
             name: "",
             cnpj: "",
             opening_hours: "",
@@ -71,7 +69,7 @@ function Register() {
         console.error('Erro ao realizar cadastro:', error);
         setSubmitMessage('Erro ao enviar formulário. Por favor, tente novamente.');
       } finally {
-        setIsLoading(false); // Desativar indicador de carregamento, independentemente do resultado
+        setIsLoading(false);
       }
     }
   };

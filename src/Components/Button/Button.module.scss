@@ -4,7 +4,6 @@
 
   .button_container {
     align-items: center;
-    background-color: #0f8143;
     border: none;
     border-radius: 0.75rem;
     color: #ffffff;
@@ -22,6 +21,27 @@
       background-color: #aeaeae;
       cursor: not-allowed;
     }
+  }
+
+  .primary {
+    border: 2px solid #0f8143;
+    background-color: #0f8143;
+
+    &:hover {
+      border: 2px solid #004620;
+      background-color: #004620;
+    }
+  }
+
+  .secondary {
+    border: 2px solid #004620;
+    background-color: #ffffff;
+    color: #004620;
+  }
+
+  .tertiary {
+    border: 2px solid #004620;
+    background-color: #004620;
   }
 }
 

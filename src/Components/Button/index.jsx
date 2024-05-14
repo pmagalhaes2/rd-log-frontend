@@ -8,6 +8,7 @@ export const Button = ({
   title = "Button",
   type = "button",
   freeSize = false,
+  variant = "primary",
 }) => {
   return (
     <div
@@ -15,10 +16,17 @@ export const Button = ({
       freeSize={freeSize}
     >
       <button
-        className={styles.button_container}
+        className={`${styles.button_container} ${
+          variant === "primary"
+            ? styles.primary
+            : variant === "secondary"
+            ? styles.secondary
+            : styles.tertiary
+        }`}
         disabled={disabled}
         onClick={onClick}
         type={type}
+        variant={variant}
       >
         {title}
       </button>

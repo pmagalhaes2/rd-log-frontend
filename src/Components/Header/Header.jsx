@@ -4,8 +4,14 @@ import rdlog from "../../assets/images/rdlog.png";
 import userIcon from "../../assets/images/user-icon.svg";
 import expandArrowIcon from "../../assets/images/expand-header-icon.svg";
 import { Input } from "../Input";
+import { useUser } from "../../context/UserContext";
+import { Button } from "../Button";
+import { Link } from "react-router-dom";
 
 export default function Header() {
+  const { user } = useUser();
+const isLoggedIn = user && user.role !== "";
+
   return (
     <header className={styles.headerContainer}>
       <img className={styles.logo} src={rdlog} alt="RDLog" />
@@ -15,19 +21,29 @@ export default function Header() {
       </div>
       <div className={styles.separator}></div>
 
-      <div className={styles.userSection}>
-        <img src={userIcon} alt="UserIcon" className={styles.userIcon} />
-
-        <div className={styles.userText}>
-          <span>Bem-vindo(a),</span>
-          <span className={styles.personContainer}>Cristina!</span>
+      {isLoggedIn ? (
+        <div className={styles.userSection}>
+          <img src={userIcon} alt="UserIcon" className={styles.userIcon} />
+          <div className={styles.userText}>
+            <span>Bem-vindo(a),</span>
+            <span className={styles.personContainer}>{user.username}!</span>
+          </div>
+          <img
+            className={styles.expandIcon}
+            src={expandArrowIcon}
+            alt="ExpandIcon"
+          />
         </div>
-        <img
-          className={styles.expandIcon}
-          src={expandArrowIcon}
-          alt="ExpandIcon"
-        />
-      </div>
+      ) : (
+        <div className={styles.loginSection}>
+          <Link to="/login">
+            <Button title="Login" variant={"tertiary"} />
+          </Link>
+          <Link to="/register">
+            <Button title="Registre-se" variant={"secondary"} />
+          </Link>
+        </div>
+      )}
     </header>
   );
 }
