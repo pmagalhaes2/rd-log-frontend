@@ -1,23 +1,25 @@
-a {
-  margin: 14px 0;
-  padding: 20px;
-  margin-bottom: 10px;
-  background-color: #fff;
-  border-radius: 10px;
-  color: #000000;
-  cursor: pointer;
-  display: flex;
-  font-weight: 600;
-  gap: 1.25rem;
-  align-items: center;
-  text-decoration: none;
+ul {
+  a {
+    margin: 14px 0;
+    padding: 20px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    color: #000000;
+    cursor: pointer;
+    display: flex;
+    font-weight: 600;
+    gap: 1.25rem;
+    align-items: center;
+    text-decoration: none;
 
-  &:hover {
-    background-color: #abdec2;
-  }
+    &:hover {
+      background-color: #abdec2;
+    }
 
-  &.active {
-    background-color: #abdec2;
+    &.active {
+      background-color: #abdec2;
+    }
   }
 }
 
