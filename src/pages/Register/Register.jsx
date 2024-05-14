@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Register.module.scss";
+import { Error } from "../../Components/Error";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ function Register() {
   });
   const [submitMessage, setSubmitMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const value =
@@ -37,20 +39,23 @@ function Register() {
       formData.password.trim() === "" ||
       formData.confirm_password.trim() === ""
     ) {
-      setSubmitMessage("Por favor, preencha todos os campos.");
+      setError("Por favor, preencha todos os campos.");
     } else {
       try {
         setIsLoading(true);
-        const response = await fetch('http://localhost:8080/api/logistic-companies', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        });
+        const response = await fetch(
+          "http://localhost:8080/api/logistic-companies",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
         if (response.ok) {
           setSubmitMessage("Cadastro realizado com sucesso!");
-          setFormData({ 
+          setFormData({
             name: "",
             cnpj: "",
             opening_hours: "",
@@ -66,113 +71,110 @@ function Register() {
           setSubmitMessage(`Erro: ${errorData.message}`);
         }
       } catch (error) {
-        console.error('Erro ao realizar cadastro:', error);
-        setSubmitMessage('Erro ao enviar formulário. Por favor, tente novamente.');
+        console.error("Erro ao realizar cadastro:", error);
+        setSubmitMessage(
+          "Erro ao enviar formulário. Por favor, tente novamente."
+        );
       } finally {
         setIsLoading(false);
       }
     }
   };
- <Header />
+
   return (
     <>
-    <Header /> 
-    <div className={styles["register-container"]}>
-      <h2>Cadastre-se</h2>
-      {submitMessage && (
-        <p className={styles["submit-message"]}>{submitMessage}</p>
-      )}
-      <form onSubmit={handleSubmit}>
-        <div
-          className={`${styles["form-row-full"]} ${
-            !formData.name && styles["required"]
-          }`}
-        >
-          <input
-            type="text"
-            name="name"
-            placeholder="Nome"
-            value={formData.name}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="cnpj"
-            placeholder="CNPJ"
-            value={formData.cnpj}
-            onChange={handleChange}
-          />
-        </div>
-        <div className={styles["form-row"]}>
-          <input
-            type="time"
-            name="opening_hours"
-            placeholder="Horário de Abertura"
-            value={formData.opening_hours}
-            onChange={handleChange}
-          />
-          <input
-            type="time"
-            name="closing_hours"
-            placeholder="Horário de Fechamento"
-            value={formData.closing_hours}
-            onChange={handleChange}
-          />
-        </div>
-        <div className={styles["form-row"]}>
-          <input
-            type="text"
-            name="phone_number"
-            placeholder="Telefone"
-            value={formData.phone_number}
-            onChange={handleChange}
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div className={styles["form-row"]}>
-          <input
-            type="password"
-            name="password"
-            placeholder="Senha"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          <input
-            type="password"
-            name="confirm_password"
-            placeholder="Confirmar senha"
-            value={formData.confirm_password}
-            onChange={handleChange}
-          />
-        </div>
-        <div className={styles["form-row"]}>
-          <label>
+      <div className={styles["register-container"]}>
+        <h2>Cadastre-se</h2>
+        {error && (
+          <Error message={error} />
+        )}
+        <form onSubmit={handleSubmit}>
+          <div
+            className={`${styles["form-row-full"]} ${
+              !formData.name && styles["required"]
+            }`}
+          >
             <input
-              type="checkbox"
-              name="accepts_dangerous_loads"
-              checked={formData.accepts_dangerous_loads}
+              type="text"
+              name="name"
+              placeholder="Nome"
+              value={formData.name}
               onChange={handleChange}
             />
-            Aceita carga perigosa
-          </label>
-        </div>
-        <button type="submit" disabled={isLoading}> {/* Desabilitar botão durante o envio */}
-          {isLoading ? 'Enviando...' : 'Confirmar cadastro'}
-        </button>
-      </form>
-    </div>
-    <Footer /> 
+            <input
+              type="text"
+              name="cnpj"
+              placeholder="CNPJ"
+              value={formData.cnpj}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles["form-row"]}>
+            <input
+              type="time"
+              name="opening_hours"
+              placeholder="Horário de Abertura"
+              value={formData.opening_hours}
+              onChange={handleChange}
+            />
+            <input
+              type="time"
+              name="closing_hours"
+              placeholder="Horário de Fechamento"
+              value={formData.closing_hours}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles["form-row"]}>
+            <input
+              type="text"
+              name="phone_number"
+              placeholder="Telefone"
+              value={formData.phone_number}
+              onChange={handleChange}
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles["form-row"]}>
+            <input
+              type="password"
+              name="password"
+              placeholder="Senha"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <input
+              type="password"
+              name="confirm_password"
+              placeholder="Confirmar senha"
+              value={formData.confirm_password}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles["form-row"]}>
+            <label>
+              <input
+                type="checkbox"
+                name="accepts_dangerous_loads"
+                checked={formData.accepts_dangerous_loads}
+                onChange={handleChange}
+              />
+              Aceita carga perigosa
+            </label>
+          </div>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? "Enviando..." : "Confirmar cadastro"}
+          </button>
+        </form>
+      </div>
     </>
-  
   );
 }
-
-
 
 export default Register;
