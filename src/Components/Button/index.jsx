@@ -13,7 +13,6 @@ export const Button = ({
   return (
     <div
       className={`${styles.container} ${freeSize ? styles.freeSize : ""}`}
-      freeSize={freeSize}
     >
       <button
         className={`${styles.button_container} ${
