@@ -1,6 +1,4 @@
 import React from 'react'
-import Header from '../../Components/Header/Header'
-import Footer from '../../Components/Footer/Footer'
 import styles from './Requests.module.scss';
 import MenuComponent from '../../Components/Menu/Menu';
 import { Input } from '../../Components/Input';
