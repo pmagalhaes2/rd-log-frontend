@@ -8,8 +8,6 @@ import { Input } from '../../Components/Input';
 export default function Requests() {
     return (
       <>
-        <Header />
-  
         <div className={styles.container}>
           <MenuComponent />
           <div className={styles.formContainer}>
@@ -53,8 +51,6 @@ export default function Requests() {
                 <button className={styles.confirmButton}>Confirmar Solcitação</button>
           </div>
         </div>
-  
-        <Footer />
       </>
     );
   }
