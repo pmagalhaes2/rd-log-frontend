@@ -10,3 +10,6 @@ body, button, input, option, textarea {
   background-color: #f4f4f4;
 }
 
+a {
+  text-decoration: none;
+}
