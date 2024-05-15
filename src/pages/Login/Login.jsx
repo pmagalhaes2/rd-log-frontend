@@ -38,22 +38,22 @@ export const Login = () => {
             src={logoImage}
             alt="Login Logo"
           />
-          <p className={styles["text"]}>E-mail</p>
           <Input
             placeholder={"Digite seu e-mail"}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            label={"E-mail"}
           />
 
-          <p className={styles["text"]}>Senha</p>
           <Input
             type={"password"}
             placeholder={"Digite sua senha"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            label={"Senha"}
           />
 
-          <p className={styles["text"]}>Perfil</p>
+          <label>Perfil</label>
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}

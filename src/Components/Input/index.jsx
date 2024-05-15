@@ -9,12 +9,24 @@ export const Input = ({
   placeholder,
   type = "text",
   value,
-  required = true
+  required = true,
+  label,
 }) => {
   return (
-    <div className={styles.container}>
-      <input onChange={onChange} placeholder={placeholder} value={value} type={type} required={required} />
-      {searchInput && <Icon icon={searchIcon} className={styles.search_icon} />}
-    </div>
+    <>
+      {label && <label>{label}</label>}
+      <div className={styles.container}>
+        <input
+          onChange={onChange}
+          placeholder={placeholder}
+          value={value}
+          type={type}
+          required={required}
+        />
+        {searchInput && (
+          <Icon icon={searchIcon} className={styles.search_icon} />
+        )}
+      </div>
+    </>
   );
 };
