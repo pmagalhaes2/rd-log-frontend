@@ -22,7 +22,7 @@ export const Login = () => {
       return;
     }
 
-    login(role);
+    login(role, "Fulano");
     navigate("/support");
   };
 

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Register.module.scss";
-import Footer from "../../Components/Footer/Footer";
-import Header from "../../Components/Header/Header";
+import { Error } from "../../Components/Error";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -12,7 +11,6 @@ function Register() {
     phone_number: "",
     email: "",
     password: "",
-    confirm_password: "",
     accepts_dangerous_loads: false,
   });
   const [submitMessage, setSubmitMessage] = useState("");
@@ -27,6 +25,11 @@ function Register() {
     });
   };
 
+  const formatTime = (time) => {
+    const [hours, minutes] = time.split(":");
+    return `${hours}:${minutes}:00`;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
@@ -36,23 +39,29 @@ function Register() {
       formData.closing_hours.trim() === "" ||
       formData.phone_number.trim() === "" ||
       formData.email.trim() === "" ||
-      formData.password.trim() === "" ||
-      formData.confirm_password.trim() === ""
+      formData.password.trim() === ""
     ) {
-      setSubmitMessage("Por favor, preencha todos os campos.");
+      setError("Por favor, preencha todos os campos.");
     } else {
       try {
-        setIsLoading(true); // Ativar indicador de carregamento
-        const response = await fetch('http://localhost:8080/api/logistic-companies', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        });
+        setIsLoading(true);
+        const response = await fetch(
+          "http://localhost:8080/logistic-companies",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              ...formData,
+              opening_hours: formatTime(formData.opening_hours),
+              closing_hours: formatTime(formData.closing_hours),
+            }),
+          }
+        );
         if (response.ok) {
           setSubmitMessage("Cadastro realizado com sucesso!");
-          setFormData({ // Limpar campos do formulário após o envio bem-sucedido
+          setFormData({
             name: "",
             cnpj: "",
             opening_hours: "",
@@ -68,14 +77,16 @@ function Register() {
           setSubmitMessage(`Erro: ${errorData.message}`);
         }
       } catch (error) {
-        console.error('Erro ao realizar cadastro:', error);
-        setSubmitMessage('Erro ao enviar formulário. Por favor, tente novamente.');
+        console.error("Erro ao realizar cadastro:", error);
+        setSubmitMessage(
+          "Erro ao enviar formulário. Por favor, tente novamente."
+        );
       } finally {
-        setIsLoading(false); // Desativar indicador de carregamento, independentemente do resultado
+        setIsLoading(false);
       }
     }
   };
- <Header />
+
   return (
     <>
     <Header /> 
@@ -169,10 +180,7 @@ function Register() {
     </div>
     <Footer /> 
     </>
-  
   );
 }
-
-
 
 export default Register;
