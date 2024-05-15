@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles/Global.css";
-import Requests from "./pages/Requests";
+import Requests from "./pages/Requests/Requests";
 import { Support } from "./pages/Support";
 import { Login } from "./pages/Login/Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
