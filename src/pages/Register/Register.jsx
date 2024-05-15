@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Register.module.scss";
-import { Error } from "../../Components/Error";
+import { Message } from "../../Components/Message";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -13,9 +14,10 @@ function Register() {
     password: "",
     accepts_dangerous_loads: false,
   });
-  const [submitMessage, setSubmitMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const value =
@@ -42,7 +44,8 @@ function Register() {
       formData.email.trim() === "" ||
       formData.password.trim() === ""
     ) {
-      setError("Por favor, preencha todos os campos.");
+      setMessage("Por favor, preencha todos os campos.");
+      setError(true);
     } else {
       try {
         setIsLoading(true);
@@ -61,7 +64,8 @@ function Register() {
           }
         );
         if (response.ok) {
-          setSubmitMessage("Cadastro realizado com sucesso!");
+          setError(false);
+          setMessage("Cadastro realizado com sucesso!");
           setFormData({
             name: "",
             cnpj: "",
@@ -73,15 +77,16 @@ function Register() {
             confirm_password: "",
             accepts_dangerous_loads: false,
           });
+          navigate("/login");
         } else {
           const errorData = await response.json();
-          setSubmitMessage(`Erro: ${errorData.message}`);
+          setMessage(`Erro: ${errorData.message}`);
+          setError(true);
         }
       } catch (error) {
         console.error("Erro ao realizar cadastro:", error);
-        setSubmitMessage(
-          "Erro ao enviar formulário. Por favor, tente novamente."
-        );
+        setMessage("Erro ao enviar formulário. Por favor, tente novamente.");
+        setError(true);
       } finally {
         setIsLoading(false);
       }
@@ -92,7 +97,7 @@ function Register() {
     <>
       <div className={styles["register-container"]}>
         <h2>Cadastre-se</h2>
-        {error && <Error message={error} />}
+        {message && <Message message={message} isError={error} />}
         <form onSubmit={handleSubmit}>
           <div
             className={`${styles["form-row-full"]} ${
