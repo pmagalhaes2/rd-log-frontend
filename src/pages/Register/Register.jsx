@@ -4,7 +4,7 @@ import { Message } from "../../Components/Message";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
-import welcomeImage from '../../assets/images/welcome.svg'
+import welcomeImage from "../../assets/images/welcome.svg";
 
 function Register() {
   const nameRef = useRef(null);
@@ -96,12 +96,12 @@ function Register() {
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <div className={styles["register-container"]}>
         <img src={welcomeImage} alt="Imagem de boas vindas" />
         {message && <Message message={message} isError={error} />}
         <form onSubmit={handleSubmit}>
-        <h1>Formulário de Cadastro</h1>
+          <h1>Cadastro de Empresa de Logística</h1>
           <Input
             name="name"
             placeholder={"ex: Transportes XYZ"}
@@ -176,7 +176,7 @@ function Register() {
           />
         </form>
       </div>
-    </>
+    </div>
   );
 }
 
