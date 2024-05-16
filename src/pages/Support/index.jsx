@@ -39,6 +39,7 @@ export const Support = () => {
               searchInput={true}
               placeholder={"Digite um campo para buscar"}
               onChange={handleSearch}
+              freeSize={false}
             />
           </div>
         </div>
