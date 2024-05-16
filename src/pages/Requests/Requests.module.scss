@@ -15,11 +15,13 @@
         padding: 4rem;
         width: 1300px;
         height: 809px;
+       
 
         .form {
             display: flex;
             flex-direction: row;
             justify-content: space-around;
+           
         }
 
         .calcRoute {
@@ -37,33 +39,15 @@
             margin-top: 25px;
             margin-bottom: 30px;
             gap: 12px;
+            
            
             input[type="text" i] {
                 border-radius: 12px;
                 width: 158px;
                 height: 49px;
                 padding: 8px;
+                border: 0.5px solid;
             }
-        }
-
-        .calcButton{
-            border-radius: 12px;
-            width: 500px;
-            height: 49px;
-            padding: 8px;
-            background-color: #0F8143;
-            color: #ffff;
-            align-self: center;
-            cursor: pointer;
-            font-weight: 500;
-            border: none;
-        
-        }
-
-        .calcButton:hover {
-            background-color: #067236;
-            transition: 0.1s;
-            font-weight: 600;
         }
 
         .details {
@@ -93,29 +77,14 @@
             padding: 5px;
             color: #898989;
             margin-top: 5px;
+            margin-bottom: 200px;
           }
         }
-    
-        .confirmButton {
-            border-radius: 12px;
-            width: 289px;
-            height: 49px;
-            padding: 8px;
-            background-color: #AEAEAE;
-            color: #ffff;
-            align-self: flex-end;
-            position: absolute; 
-            bottom: 0; 
-            margin-top: 10px;
-            
-            cursor: pointer;
-            font-weight: 500;
-            border: none;
-        }
+      
 
-        .confirmButton:hover{
-            transition: 0.1s;
-            font-weight: 600;
-        }
+    }
+
+    .confirmButton {
+        border: none;
     }
 }
