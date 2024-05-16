@@ -1,32 +1,26 @@
+import React from "react";
+import styles from "./Input.module.scss";
 import { Icon } from "@iconify/react/dist/iconify";
 import searchIcon from "@iconify-icons/mdi/magnify";
 
-import styles from "./Input.module.scss";
-
-export const Input = ({
-  searchInput = false,
-  onChange,
-  placeholder,
-  type = "text",
-  value,
-  required = true,
-  label,
-}) => {
+export const Input = React.forwardRef(({ searchInput = false, onChange, placeholder, type = "text", value, required = true, label, freeSize = true }, ref) => {
   return (
-    <>
+    <div className={`${styles.container} ${freeSize ? styles.freeSize : ""}`}>
       {label && <label>{label}</label>}
-      <div className={styles.container}>
+      <div className={styles.input_container}>
         <input
+          ref={ref}
           onChange={onChange}
           placeholder={placeholder}
           value={value}
           type={type}
           required={required}
+          className={freeSize ? styles.fullWidth : ""}
         />
         {searchInput && (
           <Icon icon={searchIcon} className={styles.search_icon} />
         )}
       </div>
-    </>
+    </div>
   );
-};
+});

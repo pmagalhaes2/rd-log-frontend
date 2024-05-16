@@ -66,7 +66,7 @@ export const Login = () => {
             <option value="user">Usuário</option>
           </select>
           {error && <Message message={error} isError={true} />}
-          <Button title="Login" freeSize={true} onClick={handleLogin} />
+          <Button title="Login" freeSize onClick={handleLogin} />
 
           <p className={styles["register-link"]}>
             Ainda não tem conta?

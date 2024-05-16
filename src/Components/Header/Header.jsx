@@ -17,7 +17,7 @@ const isLoggedIn = user && user.role !== "";
       <img className={styles.logo} src={rdlog} alt="RDLog" />
 
       <div className={styles.searchContainer}>
-        <Input placeholder={"O que você precisa?"} searchInput={true} />
+        <Input placeholder={"O que você precisa?"} searchInput={true} freeSize={false} />
       </div>
       <div className={styles.separator}></div>
 
