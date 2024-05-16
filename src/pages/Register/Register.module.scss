@@ -3,86 +3,44 @@
   --primary-color: #004e16;
   --primary-color-dark: #003d12;
   --border-color: #ccc;
+  --dark-grey: #2d2d2d;
 }
 
 .register-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-top: 2rem;
+  justify-content: space-evenly;
   background-color: #fff;
   border-radius: 20px;
   padding: 30px;
   margin: 20px;
-}
 
-h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .form-row {
+  form {
     display: flex;
-    gap: 1rem;
-    width: 100%;
-    margin-bottom: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 40%;
 
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="time"],
-    input[type="checkbox"] {
-      flex: 1;
-      padding: 0.5rem;
-      border: 1px solid var(--border-color);
-      border-radius: 0.25rem;
-      font-size: 1rem;
-
-      &:focus {
-        outline: none;
-        border-color: var(--primary-color);
-      }
+    h1 {
+      color: var(--dark-grey);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
-  }
 
-  .form-row-full {
-    width: 100%;
-    margin-bottom: 1rem;
-
-    input[type="text"],
-    input[type="password"],
-    input[type="email"],
-    input[type="checkbox"] {
+    .form-row {
+      align-items: center;
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
       width: 100%;
-      padding: 0.5rem;
-      border: 1px solid var(--border-color);
-      border-radius: 0.25rem;
-      font-size: 1rem;
-      margin-bottom: 20px;
+    }
+
+    p {
+      margin: 0.5rem 0;
     }
   }
 
-  p {
-    margin: 0.5rem 0;
-  }
-
-  button[type="submit"] {
-    padding: 0.75rem;
-    margin-top: 1rem;
-    border: none;
-    border-radius: 0.25rem;
-    background-color: var(--primary-color);
-    color: #fff;
-    font-size: 1rem;
-    cursor: pointer;
-
-    &:hover {
-      background-color: var(--primary-color-dark);
-    }
+  img {
+    width: 40%;
   }
 }

@@ -1,32 +1,25 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./Register.module.scss";
 import { Message } from "../../Components/Message";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../../Components/Button";
+import { Input } from "../../Components/Input";
+import welcomeImage from '../../assets/images/welcome.svg'
 
 function Register() {
-  const [formData, setFormData] = useState({
-    name: "",
-    cnpj: "",
-    opening_hours: "",
-    closing_hours: "",
-    phone_number: "",
-    email: "",
-    password: "",
-    accepts_dangerous_loads: false,
-  });
+  const nameRef = useRef(null);
+  const cnpjRef = useRef(null);
+  const openingHoursRef = useRef(null);
+  const closingHoursRef = useRef(null);
+  const phoneNumberRef = useRef(null);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const acceptsDangerousLoadsRef = useRef(null);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    const value =
-      e.target.type === "checkbox" ? e.target.checked : e.target.value;
-    setFormData({
-      ...formData,
-      [e.target.name]: value,
-    });
-  };
 
   const formatTime = (time) => {
     const [hours, minutes] = time.split(":");
@@ -35,6 +28,18 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = {
+      name: nameRef.current.value,
+      cnpj: cnpjRef.current.value,
+      opening_hours: openingHoursRef.current.value,
+      closing_hours: closingHoursRef.current.value,
+      phone_number: phoneNumberRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+      accepts_dangerous_loads: acceptsDangerousLoadsRef.current.checked,
+    };
+
     if (
       formData.name.trim() === "" ||
       formData.cnpj.trim() === "" ||
@@ -66,17 +71,14 @@ function Register() {
         if (response.ok) {
           setError(false);
           setMessage("Cadastro realizado com sucesso!");
-          setFormData({
-            name: "",
-            cnpj: "",
-            opening_hours: "",
-            closing_hours: "",
-            phone_number: "",
-            email: "",
-            password: "",
-            confirm_password: "",
-            accepts_dangerous_loads: false,
-          });
+          nameRef.current.value = "";
+          cnpjRef.current.value = "";
+          openingHoursRef.current.value = "";
+          closingHoursRef.current.value = "";
+          phoneNumberRef.current.value = "";
+          emailRef.current.value = "";
+          passwordRef.current.value = "";
+          acceptsDangerousLoadsRef.current.checked = false;
           navigate("/login");
         } else {
           const errorData = await response.json();
@@ -96,75 +98,64 @@ function Register() {
   return (
     <>
       <div className={styles["register-container"]}>
-        <h2>Cadastre-se</h2>
+        <img src={welcomeImage} alt="Imagem de boas vindas" />
         {message && <Message message={message} isError={error} />}
         <form onSubmit={handleSubmit}>
-          <div
-            className={`${styles["form-row-full"]} ${
-              !formData.name && styles["required"]
-            }`}
-          >
-            <input
-              type="text"
-              name="name"
-              placeholder="Nome"
-              value={formData.name}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              name="cnpj"
-              placeholder="CNPJ"
-              value={formData.cnpj}
-              onChange={handleChange}
-            />
-          </div>
+        <h1>Formulário de Cadastro</h1>
+          <Input
+            name="name"
+            placeholder={"ex: Transportes XYZ"}
+            label={"Nome da empresa"}
+            ref={nameRef}
+          />
+          <Input
+            name="cnpj"
+            placeholder={"ex: 12.345.678/0001-90"}
+            label={"CNPJ"}
+            ref={cnpjRef}
+          />
           <div className={styles["form-row"]}>
-            <input
-              type="time"
+            <Input
+              type={"time"}
               name="opening_hours"
-              placeholder="Horário de Abertura"
-              value={formData.opening_hours}
-              onChange={handleChange}
+              label="Horário de Abertura"
+              ref={openingHoursRef}
             />
-            <input
+            <Input
               type="time"
               name="closing_hours"
-              placeholder="Horário de Fechamento"
-              value={formData.closing_hours}
-              onChange={handleChange}
+              label="Horário de Fechamento"
+              ref={closingHoursRef}
             />
           </div>
           <div className={styles["form-row"]}>
-            <input
-              type="text"
+            <Input
               name="phone_number"
-              placeholder="Telefone"
-              value={formData.phone_number}
-              onChange={handleChange}
+              label={"Telefone"}
+              placeholder="ex: (11) 98765-4321"
+              ref={phoneNumberRef}
             />
-            <input
+            <Input
               type="email"
               name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
+              label={"E-mail"}
+              placeholder="ex: mail@empresa.com"
+              ref={emailRef}
             />
           </div>
           <div className={styles["form-row"]}>
-            <input
+            <Input
               type="password"
               name="password"
-              placeholder="Senha"
-              value={formData.password}
-              onChange={handleChange}
+              label={"Senha"}
+              placeholder="ex: ********"
+              ref={passwordRef}
             />
-            <input
+            <Input
               type="password"
               name="confirm_password"
-              placeholder="Confirmar senha"
-              value={formData.confirm_password}
-              onChange={handleChange}
+              label={"Confirmação senha"}
+              placeholder="ex: ********"
             />
           </div>
           <div className={styles["form-row"]}>
@@ -172,15 +163,17 @@ function Register() {
               <input
                 type="checkbox"
                 name="accepts_dangerous_loads"
-                checked={formData.accepts_dangerous_loads}
-                onChange={handleChange}
+                ref={acceptsDangerousLoadsRef}
               />
               Aceita carga perigosa
             </label>
           </div>
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? "Enviando..." : "Confirmar cadastro"}
-          </button>
+          <Button
+            type="submit"
+            disabled={isLoading}
+            title={isLoading ? "Enviando..." : "Confirmar cadastro"}
+            freeSize
+          />
         </form>
       </div>
     </>
