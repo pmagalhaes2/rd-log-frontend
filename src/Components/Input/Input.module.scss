@@ -1,10 +1,14 @@
 .container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input_container {
   align-items: center;
   background-color: #f4f4f4;
   border: 1px solid #545767;
   border-radius: 0.75rem;
   display: flex;
-  gap: 1rem;
   padding: 0.875rem 1.25rem;
 
   .search_icon {
@@ -18,8 +22,27 @@
     font-weight: 400;
     width: 20rem;
 
+    &.fullWidth {
+      width: 100%;
+    }
+
     &::placeholder {
       color: #898989;
     }
   }
+}
+
+.freeSize {
+  width: 100%;
+}
+
+label {
+  align-items: center;
+  color: #2d2d2d;
+  display: flex;
+  font-size: 0.875rem;
+  font-weight: 700;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }

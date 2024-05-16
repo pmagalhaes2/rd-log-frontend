@@ -38,22 +38,24 @@ export const Login = () => {
             src={logoImage}
             alt="Login Logo"
           />
-          <p className={styles["text"]}>E-mail</p>
           <Input
             placeholder={"Digite seu e-mail"}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            label={"E-mail"}
+            freeSize={false}
           />
 
-          <p className={styles["text"]}>Senha</p>
           <Input
             type={"password"}
             placeholder={"Digite sua senha"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            label={"Senha"}
+            freeSize={false}
           />
 
-          <p className={styles["text"]}>Perfil</p>
+          <label>Perfil</label>
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
@@ -64,7 +66,7 @@ export const Login = () => {
             <option value="user">Usuário</option>
           </select>
           {error && <Message message={error} isError={true} />}
-          <Button title="Login" freeSize={true} onClick={handleLogin} />
+          <Button title="Login" freeSize onClick={handleLogin} />
 
           <p className={styles["register-link"]}>
             Ainda não tem conta?
