@@ -1,0 +1,32 @@
+.container {
+  background-color: #f4f4f4;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-around;
+  padding: 4rem 2rem;
+  width: 100%;
+  
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.section {
+  width: 30%;
+  padding: 100px;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  width: 100% ;
+  background-color: #fff;
+  margin-bottom: 70px;
+}
