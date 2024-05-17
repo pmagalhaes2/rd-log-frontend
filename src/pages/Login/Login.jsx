@@ -16,14 +16,36 @@ export const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !password || !role) {
       setError("Por favor, preencha todos os campos.");
       return;
     }
 
-    login(role, "Fulano");
-    navigate("/support");
+    try {
+      const response = await fetch("http://localhost:8080/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          role: role,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        navigate("/support");
+      } else {
+        setError("Credenciais inválidas. Por favor, tente novamente.");
+      }
+    } catch (error) {
+      console.error("Erro ao fazer login:", error);
+      setError("Erro ao fazer login. Por favor, tente novamente.");
+    }
   };
 
   return (
@@ -33,11 +55,7 @@ export const Login = () => {
           <img src={loginImage} alt="Imagem de login" />
         </div>
         <div className={styles["login-form"]}>
-          <img
-            className={styles["login-logo"]}
-            src={logoImage}
-            alt="Login Logo"
-          />
+          <img className={styles["login-logo"]} src={logoImage} alt="Login Logo" />
           <Input
             placeholder={"Digite seu e-mail"}
             value={email}
@@ -45,7 +63,6 @@ export const Login = () => {
             label={"E-mail"}
             freeSize={false}
           />
-
           <Input
             type={"password"}
             placeholder={"Digite sua senha"}
@@ -54,7 +71,6 @@ export const Login = () => {
             label={"Senha"}
             freeSize={false}
           />
-
           <label>Perfil</label>
           <select
             value={role}
@@ -67,7 +83,6 @@ export const Login = () => {
           </select>
           {error && <Message message={error} isError={true} />}
           <Button title="Login" freeSize onClick={handleLogin} />
-
           <p className={styles["register-link"]}>
             Ainda não tem conta?
             <Link to="/register">Cadastre-se.</Link>
