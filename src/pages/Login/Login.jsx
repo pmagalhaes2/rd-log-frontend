@@ -23,29 +23,37 @@ export const Login = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          role: role,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:8080/logistic-companies/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+            role: role,
+          }),
+        }
+      );
 
-      const data = await response.json();
+      const { name } = await response.json();
 
       if (response.ok) {
-        navigate("/support");
-      } else {
-        setError("Credenciais inválidas. Por favor, tente novamente.");
+        login(role, name);
+        navigate("/dashboard");
       }
     } catch (error) {
-      console.error("Erro ao fazer login:", error);
       setError("Erro ao fazer login. Por favor, tente novamente.");
+      handleClearInputs();
     }
+  };
+
+  const handleClearInputs = () => {
+    setEmail("");
+    setPassword("");
+    setRole("");
   };
 
   return (
@@ -55,7 +63,11 @@ export const Login = () => {
           <img src={loginImage} alt="Imagem de login" />
         </div>
         <div className={styles["login-form"]}>
-          <img className={styles["login-logo"]} src={logoImage} alt="Login Logo" />
+          <img
+            className={styles["login-logo"]}
+            src={logoImage}
+            alt="Login Logo"
+          />
           <Input
             placeholder={"Digite seu e-mail"}
             value={email}
