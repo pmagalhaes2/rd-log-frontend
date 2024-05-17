@@ -38,11 +38,16 @@ export const Login = () => {
         }
       );
 
-      const { name } = await response.json();
+      const data = await response.json();
 
       if (response.ok) {
-        login(role, name);
-        navigate("/dashboard");
+        const { logisticCompanyId } = data;
+        await getLogisticCompanyById(logisticCompanyId);
+      } else {
+        setError(
+          data.message || "Erro ao fazer login. Por favor, tente novamente."
+        );
+        handleClearInputs();
       }
     } catch (error) {
       setError("Erro ao fazer login. Por favor, tente novamente.");
@@ -54,6 +59,24 @@ export const Login = () => {
     setEmail("");
     setPassword("");
     setRole("");
+  };
+
+  const getLogisticCompanyById = async (id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/logistic-companies/${id}`
+      );
+      const data = await response.json();
+
+      if (response.ok) {
+        login(role, data.name);
+        navigate("/dashboard");
+      } else {
+        setError("Erro ao buscar dados. Tente novamente!");
+      }
+    } catch (error) {
+      setError("Erro ao buscar dados. Tente novamente!");
+    }
   };
 
   return (
