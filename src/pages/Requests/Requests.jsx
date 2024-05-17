@@ -7,6 +7,7 @@ import { Button } from '../../Components/Button';
 export default function Requests() {
   const [companies, setCompanies] = useState([]);
   const [showCompanies, setShowCompanies] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [valorP, setValorP] = useState('R$ 00,00');
 
@@ -25,6 +26,9 @@ export default function Requests() {
     setValorP(`R$ ${inputValue || '00,00'}`);
   };
 
+  const handleSelectChange = (event) => {
+    setSelectedCompany(event.target.value);
+  };
 
   return (
     <>
@@ -47,7 +51,7 @@ export default function Requests() {
                 <input type="text" id="data" placeholder="dd/mm/aaaa"></input>
                 <br />
               </div>
-              <Button title='Calcular Rota'   freeSize={true} className={styles.calcButton} onClick={handleCalculateRoute}/>
+              <Button title='Calcular Rota' freeSize={true} className={styles.calcButton} onClick={handleCalculateRoute}/>
             </div>
 
             <div className={styles.findTransport}>
@@ -63,15 +67,22 @@ export default function Requests() {
                 <>
                   <h3>Buscar Transporte</h3>
                   <label htmlFor="dispTransp">Transportadoras Disponíveis:</label>
-                  <select>
-                    {companies.map((company) => (
-                      <option key={company.id}>{company.name}</option>
-                    ))}
-                  </select>
+                  <select onChange={handleSelectChange}>
+                      <option value="">Selecione uma transportadora</option>
+                      {companies.map((company) => (
+                        <option key={company.id} value={company.name}>
+                          {company.name}
+                        </option>
+                      ))}
+                    </select>
                 </>
               )}
             </div>
-          <Button disabled={true} freeSize={true} title='Confirmar Solicitação'/>
+            <Button
+                disabled={!selectedCompany}
+                freeSize={true}
+                title='Confirmar Solicitação'
+              />
           </div>
           </div>
         </div>
