@@ -29,6 +29,7 @@ function App() {
           <Route path="/edit-profile" element={<UserProfileForm />} />
           <Route path="/history" element={<Order />} />
           <Route path="*" Component={NotFound} />
+          <Route path="/checkout/:orderId" element={<Requests />} />
         </Routes>
       </BrowserRouter>
       <Footer />

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import styles from './Order.module.scss';
 import MenuComponent from '../../Components/Menu/Menu';
 import { Input } from '../../Components/Input';
@@ -6,27 +7,29 @@ import { Button } from '../../Components/Button';
 
 const Order = () => {
     const [orders, setOrders] = useState([
-        { id: 1, date: '2024-05-20', volume: 10,  status: 'Em andamento', type: 'logistica', solicitante: 'Cliente A', destinatario: 'Destinatário A', empresa: 'Empresa A', entregador: 'Entregador A' },
-        { id: 2, date: '2024-05-21', volume: 15,  status: 'Entregue', type: 'cliente', solicitante: 'Cliente B', destinatario: 'Destinatário B', empresa: 'Empresa B', entregador: 'Entregador B' },
-        { id: 3, date: '2024-05-22', volume: 8,  status: 'Pendente', type: 'logistica', solicitante: 'Cliente C', destinatario: 'Destinatário C', empresa: 'Empresa C', entregador: 'Entregador C' },
-        { id: 4, date: '2024-05-23', volume: 12,  status: 'Em andamento', type: 'cliente', solicitante: 'Cliente D', destinatario: 'Destinatário D', empresa: 'Empresa D', entregador: 'Entregador D' },
+        { id: 1, date: '2024-05-20', volume: 10, status: 'Em andamento', type: 'logistica', solicitante: 'Cliente A', destinatario: 'Destinatário A', empresa: 'Empresa A', entregador: 'Entregador A' },
+        { id: 2, date: '2024-05-21', volume: 15, status: 'Entregue', type: 'cliente', solicitante: 'Cliente B', destinatario: 'Destinatário B', empresa: 'Empresa B', entregador: 'Entregador B' },
+        { id: 3, date: '2024-05-22', volume: 8, status: 'Pendente', type: 'logistica', solicitante: 'Cliente C', destinatario: 'Destinatário C', empresa: 'Empresa C', entregador: 'Entregador C' },
+        { id: 4, date: '2024-05-23', volume: 12, status: 'Em andamento', type: 'cliente', solicitante: 'Cliente D', destinatario: 'Destinatário D', empresa: 'Empresa D', entregador: 'Entregador D' },
     ]);
 
     const [filter, setFilter] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [orderBy, setOrderBy] = useState('');
 
+    const navigate = useNavigate();  
+
     useEffect(() => {
         setOrders([
-            { id: 1, date: '2024-05-20', volume: 10,  status: 'Em andamento', type: 'logistica', solicitante: 'Cliente A', destinatario: 'Destinatário A', empresa: 'Empresa A', entregador: 'Entregador A' },
-            { id: 2, date: '2024-05-21', volume: 15,  status: 'Entregue', type: 'cliente', solicitante: 'Cliente B', destinatario: 'Destinatário B', empresa: 'Empresa B', entregador: 'Entregador B' },
+            { id: 1, date: '2024-05-20', volume: 10, status: 'Em andamento', type: 'logistica', solicitante: 'Cliente A', destinatario: 'Destinatário A', empresa: 'Empresa A', entregador: 'Entregador A' },
+            { id: 2, date: '2024-05-21', volume: 15, status: 'Entregue', type: 'cliente', solicitante: 'Cliente B', destinatario: 'Destinatário B', empresa: 'Empresa B', entregador: 'Entregador B' },
             { id: 3, date: '2024-05-22', volume: 8, status: 'Pendente', type: 'logistica', solicitante: 'Cliente C', destinatario: 'Destinatário C', empresa: 'Empresa C', entregador: 'Entregador C' },
-            { id: 4, date: '2024-05-23', volume: 12,  status: 'Em andamento', type: 'cliente', solicitante: 'Cliente D', destinatario: 'Destinatário D', empresa: 'Empresa D', entregador: 'Entregador D' },
+            { id: 4, date: '2024-05-23', volume: 12, status: 'Em andamento', type: 'cliente', solicitante: 'Cliente D', destinatario: 'Destinatário D', empresa: 'Empresa D', entregador: 'Entregador D' },
         ]);
     }, []);
 
     const handleCheckout = (orderId) => {
-        console.log(`Pedido ${orderId} enviado para checkout.`);
+        navigate(`/checkout/${orderId}`); 
     };
 
     const handleStatusChange = (orderId, newStatus) => {
@@ -78,11 +81,9 @@ const Order = () => {
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Buscar por ID, data, status, solicitante, destinatário, empresa ou entregador"
+                    placeholder="Buscar por ID, data, rota, status, solicitante, destinatário, empresa ou entregador"
                     className={styles.searchInput}
                 />
-
-                
 
                 {filter === 'logistica' || filter === '' ? (
                     <div className={styles.tableSection}>
@@ -126,7 +127,7 @@ const Order = () => {
                                                 </select>
                                             </td>
                                             <td>
-                                                <Button title='Solicitar' onClick={() => handleCheckout(order.id)}>Novo Nome do Botão</Button>
+                                                <Button title='Solicitar' onClick={() => handleCheckout(order.id)}>Solicitar Envio</Button>
                                             </td>
                                         </tr>
                                     ))}
