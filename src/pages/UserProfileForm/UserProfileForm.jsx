@@ -5,9 +5,12 @@ import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
 import MenuComponent from "../../Components/Menu/Menu";
 import styles from "./UserProfileForm.module.scss";
+import { useUser } from "../../context/UserContext";
 
 function UserProfileForm({ onUpdate }) {
-  const userProfile = {id: 2,  name: "Empresa Teste", opening_hours: "08:00:00", closing_hours: "18:00:00", phone_number: "1234567890", email: "", password: "", accepts_dangerous_loads: false};
+  const { user } = useUser(); 
+  const userProfile = user; 
+
   const nameRef = useRef(null);
   const openingHoursRef = useRef(null);
   const closingHoursRef = useRef(null);
@@ -29,9 +32,8 @@ function UserProfileForm({ onUpdate }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Verifica se userProfile está definido, POREM NÃO ESTOU USANDO NENHUM ID DE USUÁRIO
-    if (!userProfile) {
-      console.error("UserProfile não definido.");
+    if (!userProfile || !userProfile.id) {
+      console.error("ID do usuário não encontrado.");
       return;
     }
   
@@ -45,8 +47,6 @@ function UserProfileForm({ onUpdate }) {
       accepts_dangerous_loads: acceptsDangerousLoadsRef.current.checked,
     };
 
-    console.log("formData:", formData);
-  
     try {
       setIsLoading(true);
       const response = await fetch(
@@ -63,6 +63,7 @@ function UserProfileForm({ onUpdate }) {
           }),
         }
       );
+    
       if (response.ok) {
         setMessage("Perfil atualizado com sucesso!");
         onUpdate(formData);

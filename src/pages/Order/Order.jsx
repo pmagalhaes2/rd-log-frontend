@@ -6,10 +6,10 @@ import { Button } from '../../Components/Button';
 
 const Order = () => {
     const [orders, setOrders] = useState([
-        { id: 1, date: '2024-05-20', volume: 10, route: 'Rota A', status: 'Em andamento', type: 'logistica', solicitante: 'Cliente A', destinatario: 'Destinatário A', empresa: 'Empresa A', entregador: 'Entregador A' },
-        { id: 2, date: '2024-05-21', volume: 15, route: 'Rota B', status: 'Entregue', type: 'cliente', solicitante: 'Cliente B', destinatario: 'Destinatário B', empresa: 'Empresa B', entregador: 'Entregador B' },
-        { id: 3, date: '2024-05-22', volume: 8, route: 'Rota C', status: 'Pendente', type: 'logistica', solicitante: 'Cliente C', destinatario: 'Destinatário C', empresa: 'Empresa C', entregador: 'Entregador C' },
-        { id: 4, date: '2024-05-23', volume: 12, route: 'Rota D', status: 'Em andamento', type: 'cliente', solicitante: 'Cliente D', destinatario: 'Destinatário D', empresa: 'Empresa D', entregador: 'Entregador D' },
+        { id: 1, date: '2024-05-20', volume: 10,  status: 'Em andamento', type: 'logistica', solicitante: 'Cliente A', destinatario: 'Destinatário A', empresa: 'Empresa A', entregador: 'Entregador A' },
+        { id: 2, date: '2024-05-21', volume: 15,  status: 'Entregue', type: 'cliente', solicitante: 'Cliente B', destinatario: 'Destinatário B', empresa: 'Empresa B', entregador: 'Entregador B' },
+        { id: 3, date: '2024-05-22', volume: 8,  status: 'Pendente', type: 'logistica', solicitante: 'Cliente C', destinatario: 'Destinatário C', empresa: 'Empresa C', entregador: 'Entregador C' },
+        { id: 4, date: '2024-05-23', volume: 12,  status: 'Em andamento', type: 'cliente', solicitante: 'Cliente D', destinatario: 'Destinatário D', empresa: 'Empresa D', entregador: 'Entregador D' },
     ]);
 
     const [filter, setFilter] = useState('');
@@ -18,10 +18,10 @@ const Order = () => {
 
     useEffect(() => {
         setOrders([
-            { id: 1, date: '2024-05-20', volume: 10, route: 'Rota A', status: 'Em andamento', type: 'logistica', solicitante: 'Cliente A', destinatario: 'Destinatário A', empresa: 'Empresa A', entregador: 'Entregador A' },
-            { id: 2, date: '2024-05-21', volume: 15, route: 'Rota B', status: 'Entregue', type: 'cliente', solicitante: 'Cliente B', destinatario: 'Destinatário B', empresa: 'Empresa B', entregador: 'Entregador B' },
-            { id: 3, date: '2024-05-22', volume: 8, route: 'Rota C', status: 'Pendente', type: 'logistica', solicitante: 'Cliente C', destinatario: 'Destinatário C', empresa: 'Empresa C', entregador: 'Entregador C' },
-            { id: 4, date: '2024-05-23', volume: 12, route: 'Rota D', status: 'Em andamento', type: 'cliente', solicitante: 'Cliente D', destinatario: 'Destinatário D', empresa: 'Empresa D', entregador: 'Entregador D' },
+            { id: 1, date: '2024-05-20', volume: 10,  status: 'Em andamento', type: 'logistica', solicitante: 'Cliente A', destinatario: 'Destinatário A', empresa: 'Empresa A', entregador: 'Entregador A' },
+            { id: 2, date: '2024-05-21', volume: 15,  status: 'Entregue', type: 'cliente', solicitante: 'Cliente B', destinatario: 'Destinatário B', empresa: 'Empresa B', entregador: 'Entregador B' },
+            { id: 3, date: '2024-05-22', volume: 8, status: 'Pendente', type: 'logistica', solicitante: 'Cliente C', destinatario: 'Destinatário C', empresa: 'Empresa C', entregador: 'Entregador C' },
+            { id: 4, date: '2024-05-23', volume: 12,  status: 'Em andamento', type: 'cliente', solicitante: 'Cliente D', destinatario: 'Destinatário D', empresa: 'Empresa D', entregador: 'Entregador D' },
         ]);
     }, []);
 
@@ -54,7 +54,6 @@ const Order = () => {
                 return (
                     order.id.toString().includes(searchTerm) ||
                     order.date.includes(searchTerm) ||
-                    order.route.toLowerCase().includes(searchTerm.toLowerCase()) ||
                     order.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
                     order.solicitante.toLowerCase().includes(searchTerm.toLowerCase()) ||
                     order.destinatario.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -79,7 +78,7 @@ const Order = () => {
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Buscar por ID, data, rota, status, solicitante, destinatário, empresa ou entregador"
+                    placeholder="Buscar por ID, data, status, solicitante, destinatário, empresa ou entregador"
                     className={styles.searchInput}
                 />
 
@@ -96,7 +95,6 @@ const Order = () => {
                                         <th>Ordem ID</th>
                                         <th>Data</th>
                                         <th>Volume</th>
-                                        <th>Rota</th>
                                         <th>Status</th>
                                         <th>Solicitante</th>
                                         <th>Destinatário</th>
@@ -112,7 +110,6 @@ const Order = () => {
                                             <td>{order.id}</td>
                                             <td>{order.date}</td>
                                             <td>{order.volume}</td>
-                                            <td>{order.route}</td>
                                             <td>{order.status}</td>
                                             <td>{order.solicitante}</td>
                                             <td>{order.destinatario}</td>
@@ -151,7 +148,6 @@ const Order = () => {
                                         <th>Ordem ID</th>
                                         <th>Data</th>
                                         <th>Volume</th>
-                                        <th>Rota</th>
                                         <th>Status</th>
                                         <th>Solicitante</th>
                                         <th>Destinatário</th>
@@ -167,7 +163,6 @@ const Order = () => {
                                             <td>{order.id}</td>
                                             <td>{order.date}</td>
                                             <td>{order.volume}</td>
-                                            <td>{order.route}</td>
                                             <td>{order.status}</td>
                                             <td>{order.solicitante}</td>
                                             <td>{order.destinatario}</td>
