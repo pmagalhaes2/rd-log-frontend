@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import styles from "./Header.module.scss";
 import rdlog from "../../assets/images/rdlog.png";
 import userIcon from "../../assets/images/user-icon.svg";
-import expandArrowIcon from "../../assets/images/expand-header-icon.svg";
+import arrowUp from "@iconify-icons/mdi/keyboard-arrow-up";
+import arrowDown from "@iconify-icons/mdi/keyboard-arrow-down";
 import { Input } from "../Input";
 import { useUser } from "../../context/UserContext";
 import { Button } from "../Button";
 import { Link } from "react-router-dom";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 export default function Header() {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const isLoggedIn = user && user.role !== "";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -17,12 +19,28 @@ export default function Header() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleMouseOver = () => {
+    setIsMenuOpen(true);
+  };
+
+  const handleMouseOut = () => {
+    setIsMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    setUser({ role: "", username: "", id: "" });
+  };
+
   return (
     <header className={styles.headerContainer}>
       <img className={styles.logo} src={rdlog} alt="RDLog" />
 
       <div className={styles.searchContainer}>
-        <Input placeholder={"O que você precisa?"} searchInput={true} freeSize={false} />
+        <Input
+          placeholder={"O que você precisa?"}
+          searchInput={true}
+          freeSize={false}
+        />
       </div>
       <div className={styles.separator}></div>
 
@@ -31,23 +49,40 @@ export default function Header() {
           <img src={userIcon} alt="UserIcon" className={styles.userIcon} />
           <div className={styles.userText}>
             <span>Bem-vindo(a),</span>
-            <span className={styles.personContainer} onClick={handleMenuToggle}>{user.username}!</span>
+            <span className={styles.personContainer} onClick={handleMenuToggle}>
+              {user.username}!
+            </span>
           </div>
-          <img
-            className={styles.expandIcon}
-            src={expandArrowIcon}
-            alt="ExpandIcon"
-            onClick={handleMenuToggle}
-          />
-          {isMenuOpen && (
-            <div className={styles.userMenu}>
-              <ul>
-                <li>
-                  <Link to="/edit-profile">Editar Perfil</Link>
-                </li>
-              </ul>
-            </div>
-          )}
+          <div
+            className={styles.iconContainer}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
+          >
+            <Icon
+              className={styles.expandIcon}
+              icon={isMenuOpen ? arrowUp : arrowDown}
+              onClick={handleMenuToggle}
+            />
+
+            {isMenuOpen && (
+              <div className={`${styles.userMenu} ${styles.open}`}>
+                <ul>
+                  <li>
+                    <Link to="/edit-profile" onClick={handleMenuToggle}>
+                      Editar Perfil
+                    </Link>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    <Link to="/login" onClick={handleLogout}>
+                      Sair
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
       ) : (
         <div className={styles.loginSection}>

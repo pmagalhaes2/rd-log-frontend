@@ -66,3 +66,35 @@
   background-color: #ccc;
   margin: 0 10px;
 }
+
+.iconContainer {
+  position: relative;
+  padding: 1rem 0;
+}
+
+.userMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  display: none;
+  width: max-content;
+}
+
+.userMenu.open {
+  display: block;
+}
+
+.userMenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.userMenu li:last-child {
+  border-bottom: none;
+}
+
+.userMenu a:hover {
+  background-color: #abdec2;
+}
