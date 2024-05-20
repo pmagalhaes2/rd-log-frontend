@@ -92,7 +92,6 @@ function UserProfileForm() {
             placeholder="Nome da Empresa"
             ref={nameRef}
             label={"Nome"}
-            value={previousData ? previousData.name : ""}
           />
           <div className={styles["form-row"]}>
             <Input
@@ -101,7 +100,6 @@ function UserProfileForm() {
               ref={openingHoursRef}
               label={"Horário de Abertura"}
               freeSize={false}
-              value={previousData ? previousData.opening_hours : ""}
             />
             <Input
               type="time"
@@ -109,7 +107,6 @@ function UserProfileForm() {
               ref={closingHoursRef}
               label={"Horário de Fechamento"}
               freeSize={false}
-              value={previousData ? previousData.closing_hours : ""}
             />
           </div>
           <div className={styles["form-row"]}>
@@ -119,7 +116,6 @@ function UserProfileForm() {
               ref={phoneNumberRef}
               label={"Telefone"}
               freeSize={false}
-              value={previousData ? previousData.phone_number : ""}
             />
             <Input
               type="email"
@@ -128,7 +124,6 @@ function UserProfileForm() {
               ref={emailRef}
               label={"E-mail"}
               freeSize={false}
-              value={previousData ? previousData.email : ""}
             />
           </div>
           <Input
