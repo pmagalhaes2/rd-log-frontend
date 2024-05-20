@@ -2,12 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styles from './Dashboard.module.scss'; 
 import MenuComponent from '../../Components/Menu/Menu'; 
 import Card from '../../Components/Card/Card'; 
-import { useNavigate } from 'react-router-dom'; 
 
 function Dashboard() {
-  const navigate = useNavigate(); 
-  const [ordersData, setOrdersData] = useState([]); 
-
+  const [ordersData, setOrdersData] = useState([]);
   
   useEffect(() => {
     setOrdersData([

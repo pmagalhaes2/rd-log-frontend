@@ -9,7 +9,7 @@ import { useUser } from "../../context/UserContext";
 
 function UserProfileForm() {
   const { user } = useUser();
-
+  
   const nameRef = useRef(null);
   const openingHoursRef = useRef(null);
   const closingHoursRef = useRef(null);
@@ -64,6 +64,7 @@ function UserProfileForm() {
           }),
         }
       );
+    
       if (response.ok) {
         setMessage("Perfil atualizado com sucesso!");
         navigate("/dashboard");
