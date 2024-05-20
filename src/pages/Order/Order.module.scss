@@ -1,46 +1,96 @@
-
 .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 40px;
+  background-color: #f4f4f4;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-around;
+  padding: 4rem 2rem;
+  width: 100%;
+
+}
+
+.orderContainer {
+  display: flex;
+  padding: 20px;
+  margin: 20px;
+
+}
+
+.content {
+  flex: 1;
+  margin-left: 20px; 
+  padding: 40px;
+  background-color: white;
+  border-radius: 20px;
+  width: 80%;
+}
+
+.filterSelect {
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.orderTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
   }
-  
-  .orderListContainer {
-    width: 80%;
-    background-color: #fff;
-    border-radius: 20px;
-    padding: 20px;
+
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
   }
-  
-  .filterSection,
-  .sortSection {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
+
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
   }
-  
-  .filterSection select,
-  .sortSection select {
-    margin-right: 10px;
-  }
-  
-  .orderList {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .orderList li {
-    border-bottom: 1px solid #ccc;
-    padding: 10px 0;
+
+  tbody tr:hover {
+    background-color: #f1f1f1;
   }
   
  
-  
-  .menu {
-    width: 25%;
-    background-color: #f2f2f2;
-    border-radius: 20px;
-    padding: 20px;
+
+  button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+    
   }
   
+  
+}
+.tableSection {
+  margin-bottom: 40px;
+  
+
+  h2 {
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 24px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+  }
+}
+.tableContainer {
+  overflow-x: auto; 
+}
+
+.tableWrapper {
+  max-width: 100%;
+  overflow-x: auto; 
+}
