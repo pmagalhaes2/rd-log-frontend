@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Message } from "../../Components/Message";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../Components/Button";
@@ -21,12 +21,19 @@ function UserProfileForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
+  const [previousData, setPreviousData] = useState("");
   const navigate = useNavigate();
 
   const formatTime = (time) => {
     const [hours, minutes] = time.split(":");
     return `${hours}:${minutes}:00`;
   };
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/logistic-companies/${user.id}`).then((res) =>
+      res.json().then((data) => setPreviousData(data))
+    );
+  }, [user.id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -84,6 +91,7 @@ function UserProfileForm() {
             placeholder="Nome da Empresa"
             ref={nameRef}
             label={"Nome"}
+            value={previousData ? previousData.name : ""}
           />
           <div className={styles["form-row"]}>
             <Input
@@ -92,6 +100,7 @@ function UserProfileForm() {
               ref={openingHoursRef}
               label={"Horário de Abertura"}
               freeSize={false}
+              value={previousData ? previousData.opening_hours : ""}
             />
             <Input
               type="time"
@@ -99,6 +108,7 @@ function UserProfileForm() {
               ref={closingHoursRef}
               label={"Horário de Fechamento"}
               freeSize={false}
+              value={previousData ? previousData.closing_hours : ""}
             />
           </div>
           <div className={styles["form-row"]}>
@@ -108,6 +118,7 @@ function UserProfileForm() {
               ref={phoneNumberRef}
               label={"Telefone"}
               freeSize={false}
+              value={previousData ? previousData.phone_number : ""}
             />
             <Input
               type="email"
@@ -116,6 +127,7 @@ function UserProfileForm() {
               ref={emailRef}
               label={"E-mail"}
               freeSize={false}
+              value={previousData ? previousData.email : ""}
             />
           </div>
           <Input
@@ -125,14 +137,14 @@ function UserProfileForm() {
             ref={passwordRef}
             label={"Senha"}
           />
-            <label>
-              <input
-                type="checkbox"
-                name="accepts_dangerous_loads"
-                ref={acceptsDangerousLoadsRef}
-              />
-              Aceita carga perigosa
-            </label>
+          <label>
+            <input
+              type="checkbox"
+              name="accepts_dangerous_loads"
+              ref={acceptsDangerousLoadsRef}
+            />
+            Aceita carga perigosa
+          </label>
           <Button
             type="submit"
             disabled={isLoading}
