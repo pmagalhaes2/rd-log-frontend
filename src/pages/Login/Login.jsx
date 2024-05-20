@@ -69,7 +69,7 @@ export const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        login(role, data.name);
+        login(role, data.name, data.id);
         navigate("/dashboard");
       } else {
         setError("Erro ao buscar dados. Tente novamente!");
