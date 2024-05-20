@@ -1,8 +1,9 @@
 .container {
   display: flex;
+  gap: 5rem;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: 40px;
+  padding: 3.125rem 6.25rem;
+  width: 100%;
 
   button {
     width: 50px;
@@ -10,12 +11,7 @@
   }
 }
 
-.menu {
-  width: 25%;
-}
-
 .userProfileFormContainer {
-  width: 80%;
   background-color: #fff;
   border-radius: 20px;
 
@@ -23,7 +19,9 @@
   form {
     display: flex;
     flex-direction: column;
-    margin: 100px;
+    flex-wrap: wrap;
+    padding: 2.5rem 5rem;
+    width: 100%;
 
     h1 {
       margin-bottom: 20px;
@@ -31,18 +29,14 @@
       padding: 10px;
     }
 
-    label {
-      margin-bottom: 20px;
-    }
-
-    input[type="checkbox"] {
-      margin-right: 5px;
-    }
-
-    div {
+    .form-row {
+      align-items: center;
       display: flex;
-      gap: 10px;
-      margin: 5px;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      width: 100%;
     }
   }
 

@@ -5,9 +5,11 @@ import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
 import MenuComponent from "../../Components/Menu/Menu";
 import styles from "./UserProfileForm.module.scss";
+import { useUser } from "../../context/UserContext";
 
-function UserProfileForm({ onUpdate }) {
-  const userProfile = {id: 2,  name: "Empresa Teste", opening_hours: "08:00:00", closing_hours: "18:00:00", phone_number: "1234567890", email: "", password: "", accepts_dangerous_loads: false};
+function UserProfileForm() {
+  const { user } = useUser();
+
   const nameRef = useRef(null);
   const openingHoursRef = useRef(null);
   const closingHoursRef = useRef(null);
@@ -28,29 +30,21 @@ function UserProfileForm({ onUpdate }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Verifica se userProfile está definido, POREM NÃO ESTOU USANDO NENHUM ID DE USUÁRIO
-    if (!userProfile) {
-      console.error("UserProfile não definido.");
-      return;
-    }
-  
+
     const formData = {
       name: nameRef.current.value,
       opening_hours: openingHoursRef.current.value,
       closing_hours: closingHoursRef.current.value,
       phone_number: phoneNumberRef.current.value,
       email: emailRef.current.value,
-      password: passwordRef.current.value,
       accepts_dangerous_loads: acceptsDangerousLoadsRef.current.checked,
+      password: passwordRef.current.value,
     };
 
-    console.log("formData:", formData);
-  
     try {
       setIsLoading(true);
       const response = await fetch(
-        `http://localhost:8080/logistic-companies/${userProfile.id}`,
+        `http://localhost:8080/logistic-companies/${user.id}`,
         {
           method: "PUT",
           headers: {
@@ -65,7 +59,6 @@ function UserProfileForm({ onUpdate }) {
       );
       if (response.ok) {
         setMessage("Perfil atualizado com sucesso!");
-        onUpdate(formData);
         navigate("/dashboard");
       } else {
         setMessage("Erro ao atualizar perfil. Por favor, tente novamente.");
@@ -78,7 +71,6 @@ function UserProfileForm({ onUpdate }) {
     }
     setIsLoading(false);
   };
-  
 
   return (
     <div className={styles.container}>
@@ -87,22 +79,66 @@ function UserProfileForm({ onUpdate }) {
         {message && <Message message={message} isError={error} />}
         <form onSubmit={handleSubmit}>
           <h1>Editar Perfil</h1>
-          <div>CNPJ: {userProfile ? userProfile.cnpj : ""}</div>
-          <Input name="name" onChange={() => console.log(nameRef.current.value)} placeholder="Nome da Empresa" defaultValue={userProfile ? userProfile.name : ""} ref={nameRef} />
-          <div className={styles.formRow}>
-            <Input type="time" name="opening_hours" defaultValue={userProfile ? userProfile.opening_hours : ""} ref={openingHoursRef} />
-            <Input type="time" name="closing_hours" defaultValue={userProfile ? userProfile.closing_hours : ""} ref={closingHoursRef} />
+          <Input
+            name="name"
+            placeholder="Nome da Empresa"
+            ref={nameRef}
+            label={"Nome"}
+          />
+          <div className={styles["form-row"]}>
+            <Input
+              type="time"
+              name="opening_hours"
+              ref={openingHoursRef}
+              label={"Horário de Abertura"}
+              freeSize={false}
+            />
+            <Input
+              type="time"
+              name="closing_hours"
+              ref={closingHoursRef}
+              label={"Horário de Fechamento"}
+              freeSize={false}
+            />
           </div>
-          <Input name="phone_number" placeholder="Telefone" defaultValue={userProfile ? userProfile.phone_number : ""} ref={phoneNumberRef} />
-          <Input type="email" name="email" placeholder="E-mail" defaultValue={userProfile ? userProfile.email : ""} ref={emailRef} />
-          <Input type="password" name="password" placeholder="Senha" defaultValue={userProfile ? userProfile.password : ""} ref={passwordRef} />
-          <div className={styles.formRow}>
+          <div className={styles["form-row"]}>
+            <Input
+              name="phone_number"
+              placeholder="Telefone"
+              ref={phoneNumberRef}
+              label={"Telefone"}
+              freeSize={false}
+            />
+            <Input
+              type="email"
+              name="email"
+              placeholder="E-mail"
+              ref={emailRef}
+              label={"E-mail"}
+              freeSize={false}
+            />
+          </div>
+          <Input
+            type="password"
+            name="password"
+            placeholder="Senha"
+            ref={passwordRef}
+            label={"Senha"}
+          />
             <label>
-              <input type="checkbox" name="accepts_dangerous_loads" defaultChecked={userProfile ? userProfile.accepts_dangerous_loads : false} ref={acceptsDangerousLoadsRef} />
+              <input
+                type="checkbox"
+                name="accepts_dangerous_loads"
+                ref={acceptsDangerousLoadsRef}
+              />
               Aceita carga perigosa
             </label>
-          </div>
-          <Button type="submit" disabled={isLoading} title={isLoading ? "Enviando..." : "Salvar Alterações"} customSize  />
+          <Button
+            type="submit"
+            disabled={isLoading}
+            title={isLoading ? "Enviando..." : "Salvar Alterações"}
+            customSize
+          />
         </form>
       </div>
     </div>
