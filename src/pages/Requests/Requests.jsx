@@ -33,7 +33,7 @@ export default function Requests() {
   return (
     <>
       <div className={styles.container}>
-        <MenuComponent />
+       <MenuComponent pageName={"Solicitações"}/> 
         <div className={styles.formContainer}>
           <h3>Solicitação de Entregas</h3>
 
