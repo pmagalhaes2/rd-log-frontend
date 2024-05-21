@@ -11,6 +11,7 @@ import { useUser } from "../../context/UserContext";
 function MenuComponent({ pageName }) {
   const { user } = useUser();
   const { role } = user;
+  const isAdmin = role === "admin";
 
   return (
     <div>
@@ -28,12 +29,13 @@ function MenuComponent({ pageName }) {
             Dashboard
           </NavLink>
           <NavLink
-            to="/history"
+            to={isAdmin ? "/history" : '/history' }
             className={({ isActive }) => (isActive ? styles.active : "")}
           >
-            <img src={truck} alt="Histórico" />
-            Histórico
-          </NavLink>
+            <img src={truck} alt={isAdmin ? "Histórico" : "Pedidos"} />
+            {isAdmin? "Pedidos": "Histórico"}
+          </NavLink> 
+
           {role === "admin" && (
             <NavLink
               to="/requests"
@@ -48,7 +50,7 @@ function MenuComponent({ pageName }) {
             className={({ isActive }) => (isActive ? styles.active : "")}
           >
             <img src={faqs} alt="FAQs" />
-            FAQs
+            FAQs 
           </NavLink>
         </ul>
       </div>
