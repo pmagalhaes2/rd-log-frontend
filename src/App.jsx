@@ -12,6 +12,7 @@ import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import { NotFound } from "./pages/NotFound";
 import UserProfileForm  from "./pages/UserProfileForm/UserProfileForm";
+import Home from "./pages/Home/Home";
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" Component={Login} />
+          <Route path="/" Component={Home} />
           <Route path="/login" Component={Login} />
           <Route path="/register" Component={Register} />
           <Route path="/requests" Component={Requests} />
