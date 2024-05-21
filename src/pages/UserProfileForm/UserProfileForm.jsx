@@ -6,10 +6,11 @@ import { Input } from "../../Components/Input";
 import MenuComponent from "../../Components/Menu/Menu";
 import styles from "./UserProfileForm.module.scss";
 import { useUser } from "../../context/UserContext";
+import { Loading } from "../../Components/Loading";
 
 function UserProfileForm() {
   const { user } = useUser();
-  
+
   const nameRef = useRef(null);
   const openingHoursRef = useRef(null);
   const closingHoursRef = useRef(null);
@@ -22,6 +23,7 @@ function UserProfileForm() {
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
   const [previousData, setPreviousData] = useState("");
+  const [fetchData, setFetchData] = useState(true);
   const navigate = useNavigate();
 
   const formatTime = (time) => {
@@ -31,7 +33,10 @@ function UserProfileForm() {
 
   useEffect(() => {
     fetch(`http://localhost:8080/logistic-companies/${user.id}`).then((res) =>
-      res.json().then((data) => setPreviousData(data))
+      res.json().then((data) => {
+        setPreviousData(data);
+        setFetchData(false);
+      })
     );
   }, [user.id]);
 
@@ -64,7 +69,7 @@ function UserProfileForm() {
           }),
         }
       );
-    
+
       if (response.ok) {
         setMessage("Perfil atualizado com sucesso!");
         navigate("/dashboard");
@@ -84,70 +89,80 @@ function UserProfileForm() {
     <div className={styles.container}>
       <MenuComponent pageName={"Editar Perfil"} />
       <div className={styles.userProfileFormContainer}>
-        {message && <Message message={message} isError={error} />}
-        <form onSubmit={handleSubmit}>
-          <h1>Editar Perfil</h1>
-          <Input
-            name="name"
-            placeholder="Nome da Empresa"
-            ref={nameRef}
-            label={"Nome"}
-          />
-          <div className={styles["form-row"]}>
+        {fetchData && <Loading />}
+        {previousData && (
+          <form onSubmit={handleSubmit}>
+            <h1>Editar Perfil</h1>
+            {message && <Message message={message} isError={error} />}
             <Input
-              type="time"
-              name="opening_hours"
-              ref={openingHoursRef}
-              label={"Horário de Abertura"}
-              freeSize={false}
+              name="name"
+              placeholder="Nome da Empresa"
+              ref={nameRef}
+              label={"Nome"}
+              defaultValue={previousData.name}
             />
+
+            <div className={styles["form-row"]}>
+              <Input
+                type="time"
+                name="opening_hours"
+                ref={openingHoursRef}
+                label={"Horário de Abertura"}
+                freeSize={false}
+                defaultValue={previousData.opening_hours}
+              />
+              <Input
+                type="time"
+                name="closing_hours"
+                ref={closingHoursRef}
+                label={"Horário de Fechamento"}
+                freeSize={false}
+                defaultValue={previousData.closing_hours}
+              />
+            </div>
+            <div className={styles["form-row"]}>
+              <Input
+                name="phone_number"
+                placeholder="Telefone"
+                ref={phoneNumberRef}
+                label={"Telefone"}
+                freeSize={false}
+                defaultValue={previousData.phone_number}
+              />
+              <Input
+                type="email"
+                name="email"
+                placeholder="E-mail"
+                ref={emailRef}
+                label={"E-mail"}
+                freeSize={false}
+                defaultValue={previousData.email}
+              />
+            </div>
             <Input
-              type="time"
-              name="closing_hours"
-              ref={closingHoursRef}
-              label={"Horário de Fechamento"}
-              freeSize={false}
+              type="password"
+              name="password"
+              placeholder="Senha"
+              ref={passwordRef}
+              label={"Senha"}
+              defaultValue={previousData.password}
             />
-          </div>
-          <div className={styles["form-row"]}>
-            <Input
-              name="phone_number"
-              placeholder="Telefone"
-              ref={phoneNumberRef}
-              label={"Telefone"}
-              freeSize={false}
+            <label>
+              <input
+                type="checkbox"
+                name="accepts_dangerous_loads"
+                ref={acceptsDangerousLoadsRef}
+              />
+              Aceita carga perigosa
+            </label>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              title={isLoading ? "Enviando..." : "Salvar Alterações"}
+              customSize
             />
-            <Input
-              type="email"
-              name="email"
-              placeholder="E-mail"
-              ref={emailRef}
-              label={"E-mail"}
-              freeSize={false}
-            />
-          </div>
-          <Input
-            type="password"
-            name="password"
-            placeholder="Senha"
-            ref={passwordRef}
-            label={"Senha"}
-          />
-          <label>
-            <input
-              type="checkbox"
-              name="accepts_dangerous_loads"
-              ref={acceptsDangerousLoadsRef}
-            />
-            Aceita carga perigosa
-          </label>
-          <Button
-            type="submit"
-            disabled={isLoading}
-            title={isLoading ? "Enviando..." : "Salvar Alterações"}
-            customSize
-          />
-        </form>
+          </form>
+        )}
       </div>
     </div>
   );
