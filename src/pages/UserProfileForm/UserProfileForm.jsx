@@ -9,7 +9,7 @@ import { useUser } from "../../context/UserContext";
 import { Loading } from "../../Components/Loading";
 
 function UserProfileForm() {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
 
   const nameRef = useRef(null);
   const openingHoursRef = useRef(null);
@@ -72,6 +72,7 @@ function UserProfileForm() {
 
       if (response.ok) {
         setMessage("Perfil atualizado com sucesso!");
+        setUser({...user, username: nameRef.current.value})
         navigate("/dashboard");
       } else {
         setMessage("Erro ao atualizar perfil. Por favor, tente novamente.");
