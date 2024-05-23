@@ -80,6 +80,7 @@ export const Login = () => {
   };
 
   return (
+    <div className={styles.container}>
     <div className={styles["login-box"]}>
       <div className={styles["login-content"]}>
         <div className={styles["login-image"]}>
@@ -124,6 +125,7 @@ export const Login = () => {
           </p>
         </div>
       </div>
+    </div>
     </div>
   );
 };

@@ -3,30 +3,47 @@
   display: flex;
   gap: 1rem;
   justify-content: space-around;
-  padding: 4rem 2rem;
+   padding: 50px;
   width: 100%;
+ 
   
 }
 
 .content {
+  background-color: #fff;
+  border-radius: 20px;
+  width: 795px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  padding: 50px;
+
+
+ 
+
+  h2 {
+    margin-top: 50px;
+    margin-left: 20px;
+ 
+  }
+ 
 }
 
-.section {
-  width: 30%;
-  padding: 100px;
-}
+// .section {
+//   width: 30%;
+//   padding: 100px;
+ 
+
+//  }
 
 .cardsContainer {
   display: flex;
-  flex-wrap: wrap;
+  // align-items: center;
+  flex-direction: row;
   justify-content: space-between;
+ 
+
+ 
+  
+ 
+ 
 }
 
-.card {
-  width: 100% ;
-  background-color: #fff;
-  margin-bottom: 70px;
-}
