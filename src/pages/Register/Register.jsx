@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
 import welcomeImage from "../../assets/images/welcome.svg";
+import { Popup } from "../../Components/Popup";
+import sucessImage from "../../assets/images/search-image.svg";
 
 function Register() {
   const nameRef = useRef(null);
@@ -19,6 +21,7 @@ function Register() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
   const formatTime = (time) => {
@@ -79,7 +82,8 @@ function Register() {
           emailRef.current.value = "";
           passwordRef.current.value = "";
           acceptsDangerousLoadsRef.current.checked = false;
-          navigate("/login");
+
+          setShowPopup(!showPopup);
         } else {
           const errorData = await response.json();
           setMessage(`Erro: ${errorData.message}`);
@@ -174,6 +178,14 @@ function Register() {
             title={isLoading ? "Enviando..." : "Confirmar cadastro"}
             freeSize
           />
+          {showPopup && (
+            <Popup
+              alt={"Imagem de confirmação de cadastro"}
+              imageUrl={sucessImage}
+              message={"Cadastro realizado com sucesso!"}
+              onClick={() => navigate("/login")}
+            />
+          )}
         </form>
       </div>
     </div>

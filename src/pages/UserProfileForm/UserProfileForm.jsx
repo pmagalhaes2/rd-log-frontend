@@ -7,6 +7,8 @@ import MenuComponent from "../../Components/Menu/Menu";
 import styles from "./UserProfileForm.module.scss";
 import { useUser } from "../../context/UserContext";
 import { Loading } from "../../Components/Loading";
+import { Popup } from "../../Components/Popup";
+import successImg from "../../assets/images/success-image.svg";
 
 function UserProfileForm() {
   const { user, setUser } = useUser();
@@ -24,6 +26,7 @@ function UserProfileForm() {
   const [message, setMessage] = useState("");
   const [previousData, setPreviousData] = useState("");
   const [fetchData, setFetchData] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
   const formatTime = (time) => {
@@ -72,8 +75,8 @@ function UserProfileForm() {
 
       if (response.ok) {
         setMessage("Perfil atualizado com sucesso!");
-        setUser({...user, username: nameRef.current.value})
-        navigate("/dashboard");
+        setShowPopup(!showPopup);
+        setUser({ ...user, username: nameRef.current.value });
       } else {
         setMessage("Erro ao atualizar perfil. Por favor, tente novamente.");
         setError(true);
@@ -163,6 +166,14 @@ function UserProfileForm() {
               customSize
             />
           </form>
+        )}
+        {showPopup && (
+          <Popup
+            alt={"Imagem de confirmação de alteração"}
+            imageUrl={successImg}
+            message={message}
+            onClick={() => navigate("/dashboard")}
+          />
         )}
       </div>
     </div>
