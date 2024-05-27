@@ -29,6 +29,7 @@ export default function Header() {
 
   const handleLogout = () => {
     setUser({ role: "", username: "", id: "" });
+    setIsMenuOpen(false);
   };
 
   return (
