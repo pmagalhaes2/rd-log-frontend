@@ -28,10 +28,12 @@ const Order = () => {
         ]);
     }, []);
 
-    const handleCheckout = (orderId) => {
-        navigate(`/checkout/${orderId}`); 
+    const handleCheckout = (order) => {
+        const { id, date, volume, type, solicitante, destinatario } = order;
+        navigate('/requests', {
+            state: { id, date, volume, type, solicitante, destinatario }
+        }); 
     };
-
     const handleStatusChange = (orderId, newStatus) => {
         setOrders(prevOrders =>
             prevOrders.map(order =>
@@ -127,7 +129,7 @@ const Order = () => {
                                                 </select>
                                             </td>
                                             <td>
-                                                <Button title='Solicitar' onClick={() => handleCheckout(order.id)}>Solicitar Envio</Button>
+                                            <Button title='Solicitar' onClick={() => handleCheckout(order)}>Solicitar Envio</Button>
                                             </td>
                                         </tr>
                                     ))}
@@ -180,7 +182,7 @@ const Order = () => {
                                                 </select>
                                             </td>
                                             <td>
-                                                <Button title='Solicitar' onClick={() => handleCheckout(order.id)}>Solicitar Envio</Button>
+                                                <Button title='Solicitar' onClick={() => handleCheckout(order)}>Solicitar Envio</Button>
                                             </td>
                                         </tr>
                                     ))}
