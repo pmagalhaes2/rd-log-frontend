@@ -7,6 +7,7 @@ import { Button } from "../../Components/Button";
 import { Message } from "../../Components/Message";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+import { getById, logisticCompanyLogin } from "../../services/logisticCompaniesAPI.js";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -23,34 +24,19 @@ export const Login = () => {
     }
 
     try {
-      const response = await fetch(
-        "http://localhost:8080/logistic-companies/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-            role: role,
-          }),
-        }
-      );
+      const data = await logisticCompanyLogin(email, password, role);
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (data) {
         const { logisticCompanyId } = data;
-        await getLogisticCompanyById(logisticCompanyId);
+        await getLogisticCompany(logisticCompanyId);
       } else {
-        setError(
-          data.message || "Erro ao fazer login. Por favor, tente novamente."
-        );
+        setError("Erro ao fazer login. Por favor, tente novamente.");
         handleClearInputs();
       }
     } catch (error) {
-      setError("Erro ao fazer login. Por favor, tente novamente.");
+      setError(
+        error.message || "Erro ao fazer login. Por favor, tente novamente."
+      );
       handleClearInputs();
     }
   };
@@ -61,15 +47,12 @@ export const Login = () => {
     setRole("");
   };
 
-  const getLogisticCompanyById = async (id) => {
+  const getLogisticCompany = async (id) => {
     try {
-      const response = await fetch(
-        `http://localhost:8080/logistic-companies/${id}`
-      );
-      const data = await response.json();
+      const response = await getById(id);
 
-      if (response.ok) {
-        login(role, data.name, data.id);
+      if (response) {
+        login(role, response.name, response.id);
         navigate("/dashboard");
       } else {
         setError("Erro ao buscar dados. Tente novamente!");
@@ -81,51 +64,51 @@ export const Login = () => {
 
   return (
     <div className={styles.container}>
-    <div className={styles["login-box"]}>
-      <div className={styles["login-content"]}>
-        <div className={styles["login-image"]}>
-          <img src={loginImage} alt="Imagem de login" />
-        </div>
-        <div className={styles["login-form"]}>
-          <img
-            className={styles["login-logo"]}
-            src={logoImage}
-            alt="Login Logo"
-          />
-          <Input
-            placeholder={"Digite seu e-mail"}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            label={"E-mail"}
-            freeSize={false}
-          />
-          <Input
-            type={"password"}
-            placeholder={"Digite sua senha"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            label={"Senha"}
-            freeSize={false}
-          />
-          <label>Perfil</label>
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            className={styles["role-select"]}
-          >
-            <option value="">Selecione o perfil</option>
-            <option value="admin">Administrador</option>
-            <option value="user">Usuário</option>
-          </select>
-          {error && <Message message={error} isError={true} />}
-          <Button title="Login" freeSize onClick={handleLogin} />
-          <p className={styles["register-link"]}>
-            Ainda não tem conta?
-            <Link to="/register">Cadastre-se.</Link>
-          </p>
+      <div className={styles["login-box"]}>
+        <div className={styles["login-content"]}>
+          <div className={styles["login-image"]}>
+            <img src={loginImage} alt="Imagem de login" />
+          </div>
+          <div className={styles["login-form"]}>
+            <img
+              className={styles["login-logo"]}
+              src={logoImage}
+              alt="Login Logo"
+            />
+            <Input
+              placeholder={"Digite seu e-mail"}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              label={"E-mail"}
+              freeSize={false}
+            />
+            <Input
+              type={"password"}
+              placeholder={"Digite sua senha"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              label={"Senha"}
+              freeSize={false}
+            />
+            <label>Perfil</label>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className={styles["role-select"]}
+            >
+              <option value="">Selecione o perfil</option>
+              <option value="admin">Administrador</option>
+              <option value="user">Usuário</option>
+            </select>
+            {error && <Message message={error} isError={true} />}
+            <Button title="Login" freeSize onClick={handleLogin} />
+            <p className={styles["register-link"]}>
+              Ainda não tem conta?
+              <Link to="/register">Cadastre-se.</Link>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };

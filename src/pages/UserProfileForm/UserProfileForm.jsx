@@ -9,6 +9,10 @@ import { useUser } from "../../context/UserContext";
 import { Loading } from "../../Components/Loading";
 import { Popup } from "../../Components/Popup";
 import successImg from "../../assets/images/success-image.svg";
+import {
+  getById,
+  updateLogisticCompany,
+} from "../../services/logisticCompaniesAPI";
 
 function UserProfileForm() {
   const { user, setUser } = useUser();
@@ -35,12 +39,13 @@ function UserProfileForm() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:8080/logistic-companies/${user.id}`).then((res) =>
-      res.json().then((data) => {
-        setPreviousData(data);
+    const getLogisticCompany = async (logisticCompanyId) => {
+      await getById(logisticCompanyId).then((res) => {
+        setPreviousData(res);
         setFetchData(false);
-      })
-    );
+      });
+    };
+    getLogisticCompany(user.id);
   }, [user.id]);
 
   const handleSubmit = async (e) => {
@@ -48,8 +53,8 @@ function UserProfileForm() {
 
     const formData = {
       name: nameRef.current.value,
-      opening_hours: openingHoursRef.current.value,
-      closing_hours: closingHoursRef.current.value,
+      opening_hours: formatTime(openingHoursRef.current.value),
+      closing_hours: formatTime(closingHoursRef.current.value),
       phone_number: phoneNumberRef.current.value,
       email: emailRef.current.value,
       accepts_dangerous_loads: acceptsDangerousLoadsRef.current.checked,
@@ -58,22 +63,9 @@ function UserProfileForm() {
 
     try {
       setIsLoading(true);
-      const response = await fetch(
-        `http://localhost:8080/logistic-companies/${user.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ...formData,
-            opening_hours: formatTime(formData.opening_hours),
-            closing_hours: formatTime(formData.closing_hours),
-          }),
-        }
-      );
+      const response = await updateLogisticCompany(user.id, formData);
 
-      if (response.ok) {
+      if (response) {
         setMessage("Perfil atualizado com sucesso!");
         setShowPopup(!showPopup);
         setUser({ ...user, username: nameRef.current.value });

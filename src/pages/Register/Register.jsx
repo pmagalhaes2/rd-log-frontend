@@ -7,6 +7,7 @@ import { Input } from "../../Components/Input";
 import welcomeImage from "../../assets/images/welcome.svg";
 import { Popup } from "../../Components/Popup";
 import sucessImage from "../../assets/images/search-image.svg";
+import { registerLogisticCompany } from "../../services/logisticCompaniesAPI";
 
 function Register() {
   const nameRef = useRef(null);
@@ -35,8 +36,8 @@ function Register() {
     const formData = {
       name: nameRef.current.value,
       cnpj: cnpjRef.current.value,
-      opening_hours: openingHoursRef.current.value,
-      closing_hours: closingHoursRef.current.value,
+      opening_hours: formatTime(openingHoursRef.current.value),
+      closing_hours: formatTime(closingHoursRef.current.value),
       phone_number: phoneNumberRef.current.value,
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -57,21 +58,9 @@ function Register() {
     } else {
       try {
         setIsLoading(true);
-        const response = await fetch(
-          "http://localhost:8080/logistic-companies",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              ...formData,
-              opening_hours: formatTime(formData.opening_hours),
-              closing_hours: formatTime(formData.closing_hours),
-            }),
-          }
-        );
-        if (response.ok) {
+        const response = await registerLogisticCompany(formData);
+
+        if (response) {
           setError(false);
           setMessage("Cadastro realizado com sucesso!");
           nameRef.current.value = "";
@@ -85,8 +74,8 @@ function Register() {
 
           setShowPopup(!showPopup);
         } else {
-          const errorData = await response.json();
-          setMessage(`Erro: ${errorData.message}`);
+          const { data } = response.json();
+          setMessage(`Erro: ${data.message}`);
           setError(true);
         }
       } catch (error) {
