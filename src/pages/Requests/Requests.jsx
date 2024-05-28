@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import styles from './Requests.module.scss';
-import MenuComponent from '../../Components/Menu/Menu';
-
-import { Button } from '../../Components/Button';
+import React, { useState, useEffect } from "react";
+import styles from "./Requests.module.scss";
+import MenuComponent from "../../Components/Menu/Menu";
+import { Input } from "../../Components/Input";
+import { Button } from "../../Components/Button";
+import { getAllLogisticCompanies } from "../../services/logisticCompaniesAPI.js";
 import { useLocation } from 'react-router-dom';
 
 export default function Requests() {
@@ -10,28 +11,25 @@ export default function Requests() {
   const orderData = location.state || {};
   const [companies, setCompanies] = useState([]);
   const [showCompanies, setShowCompanies] = useState(false);
-
-  const [selectedCompany, setSelectedCompany] = useState('');
+  const [selectedCompany, setSelectedCompany] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [valorP, setValorP] = useState("R$ 00,00");
   const [origem, setOrigem] = useState(orderData.solicitante || '');
   const [destino, setDestino] = useState(orderData.destinatario || '');
   const [data, setData] = useState(new Date().toLocaleDateString());
 
   useEffect(() => {
-    fetch('http://localhost:8080/logistic-companies')
-      .then((response) => response.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setCompanies(data);
-          setShowCompanies(true);
-        } else {
-          console.error('Dados recebidos não são um array:', data);
-        }
+    getAllLogisticCompanies()
+      .then((response) => {
+        setCompanies(response);
+        setShowCompanies(true);
       })
-      .catch((error) => console.error('Erro ao buscar companhias:', error));
+      .catch((error) => console.error("Erro ao buscar companhias:", error));
   }, []);
 
   const handleCalculateRoute = () => {
     setShowCompanies(true);
+    setValorP(`R$ ${inputValue || "00,00"}`);
   };
 
   const handleSelectChange = (event) => {
@@ -98,7 +96,7 @@ export default function Requests() {
               <Button
                 disabled={!selectedCompany}
                 freeSize={true}
-                title='Confirmar Solicitação'
+                title="Confirmar Solicitação"
               />
             </div>
           </div>
