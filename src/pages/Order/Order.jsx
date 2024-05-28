@@ -21,10 +21,10 @@ const Order = () => {
 
     useEffect(() => {
         setOrders([
-            { id: 1, date: '2024-05-20', volume: 10, status: 'Em andamento', type: 'logistica', solicitante: 'Cliente A', destinatario: 'Destinatário A', empresa: 'Empresa A', entregador: 'Entregador A' },
-            { id: 2, date: '2024-05-21', volume: 15, status: 'Entregue', type: 'cliente', solicitante: 'Cliente B', destinatario: 'Destinatário B', empresa: 'Empresa B', entregador: 'Entregador B' },
-            { id: 3, date: '2024-05-22', volume: 8, status: 'Pendente', type: 'logistica', solicitante: 'Cliente C', destinatario: 'Destinatário C', empresa: 'Empresa C', entregador: 'Entregador C' },
-            { id: 4, date: '2024-05-23', volume: 12, status: 'Em andamento', type: 'cliente', solicitante: 'Cliente D', destinatario: 'Destinatário D', empresa: 'Empresa D', entregador: 'Entregador D' },
+            { id: 1, date: '2024-05-20',  status: 'Em andamento', type: 'logistica', solicitante: 'Cliente A', destinatario: 'Destinatário A', empresa: 'Empresa A', entregador: 'Entregador A' },
+            { id: 2, date: '2024-05-21',  status: 'Entregue', type: 'cliente', solicitante: 'Cliente B', destinatario: 'Destinatário B', empresa: 'Empresa B', entregador: 'Entregador B' },
+            { id: 3, date: '2024-05-22',  status: 'Pendente', type: 'logistica', solicitante: 'Cliente C', destinatario: 'Destinatário C', empresa: 'Empresa C', entregador: 'Entregador C' },
+            { id: 4, date: '2024-05-23',  status: 'Em andamento', type: 'cliente', solicitante: 'Cliente D', destinatario: 'Destinatário D', empresa: 'Empresa D', entregador: 'Entregador D' },
         ]);
     }, []);
 
@@ -71,11 +71,6 @@ const Order = () => {
             <MenuComponent className={styles.menu} />
 
             <div className={styles.content}>
-                <select className={styles.filterSelect} value={filter} onChange={(e) => setFilter(e.target.value)}>
-                    <option value="">Todos</option>
-                    <option value="logistica">Logística</option>
-                    <option value="cliente">Cliente</option>
-                </select>
 
                 <Input
                     type="text"
@@ -94,15 +89,13 @@ const Order = () => {
                                 <thead>
                                     <tr>
                                         <th>Ordem ID</th>
-                                        <th>Data</th>
-                                        <th>Volume</th>
+                                        <th>Data do Pedido</th>
                                         <th>Status</th>
                                         <th>Solicitante</th>
                                         <th>Destinatário</th>
                                         <th>Empresa</th>
                                         <th>Entregador</th>
                                         <th>Alterar Status</th>
-                                        <th>Solicitar envio</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -110,75 +103,11 @@ const Order = () => {
                                         <tr key={order.id}>
                                             <td>{order.id}</td>
                                             <td>{order.date}</td>
-                                            <td>{order.volume}</td>
                                             <td>{order.status}</td>
                                             <td>{order.solicitante}</td>
                                             <td>{order.destinatario}</td>
                                             <td>{order.empresa}</td>
                                             <td>{order.entregador}</td>
-                                            <td>
-                                                <select
-                                                    value={order.status}
-                                                    onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                                                >
-                                                    <option value="Em andamento">Em andamento</option>
-                                                    <option value="Entregue">Entregue</option>
-                                                    <option value="Pendente">Pendente</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <Button title='Solicitar' onClick={() => handleCheckout(order.id)}>Solicitar Envio</Button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                        </div>
-                    </div>
-                ) : null}
-
-                {filter === 'cliente' || filter === '' ? (
-                    <div className={styles.tableSection}>
-                        <h2>Listagem de Pedidos em Andamento (Cliente)</h2>
-                        <div className={styles.tableContainer}>
-                        <div className={styles.tableWrapper}>
-                            <table className={styles.orderTable}>
-                                <thead>
-                                    <tr>
-                                        <th>Ordem ID</th>
-                                        <th>Data</th>
-                                        <th>Volume</th>
-                                        <th>Status</th>
-                                        <th>Solicitante</th>
-                                        <th>Destinatário</th>
-                                        <th>Empresa</th>
-                                        <th>Entregador</th>
-                                        <th>Alterar Status</th>
-                                        <th>Solicitar envio</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {filteredOrders('cliente').map((order) => (
-                                        <tr key={order.id}>
-                                            <td>{order.id}</td>
-                                            <td>{order.date}</td>
-                                            <td>{order.volume}</td>
-                                            <td>{order.status}</td>
-                                            <td>{order.solicitante}</td>
-                                            <td>{order.destinatario}</td>
-                                            <td>{order.empresa}</td>
-                                            <td>{order.entregador}</td>
-                                            <td>
-                                                <select
-                                                    value={order.status}
-                                                    onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                                                >
-                                                    <option value="Em andamento">Em andamento</option>
-                                                    <option value="Entregue">Entregue</option>
-                                                    <option value="Pendente">Pendente</option>
-                                                </select>
-                                            </td>
                                             <td>
                                                 <Button title='Solicitar' onClick={() => handleCheckout(order.id)}>Solicitar Envio</Button>
                                             </td>
