@@ -97,7 +97,7 @@ const Order = () => {
                                         <th>Destinatário</th>
                                         <th>Empresa</th>
                                         <th>Entregador</th>
-                                        <th>Alterar Status</th>
+                                        <th>Solicitar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -111,74 +111,7 @@ const Order = () => {
                                             <td>{order.empresa}</td>
                                             <td>{order.entregador}</td>
                                             <td>
-<<<<<<< HEAD
-                                                <select
-                                                    value={order.status}
-                                                    onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                                                >
-                                                    <option value="Em andamento">Em andamento</option>
-                                                    <option value="Entregue">Entregue</option>
-                                                    <option value="Pendente">Pendente</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                            <Button title='Solicitar' onClick={() => handleCheckout(order)}>Solicitar Envio</Button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                        </div>
-                    </div>
-                ) : null}
-
-                {filter === 'cliente' || filter === '' ? (
-                    <div className={styles.tableSection}>
-                        <h2>Listagem de Pedidos em Andamento (Cliente)</h2>
-                        <div className={styles.tableContainer}>
-                        <div className={styles.tableWrapper}>
-                            <table className={styles.orderTable}>
-                                <thead>
-                                    <tr>
-                                        <th>Ordem ID</th>
-                                        <th>Data</th>
-                                        <th>Volume</th>
-                                        <th>Status</th>
-                                        <th>Solicitante</th>
-                                        <th>Destinatário</th>
-                                        <th>Empresa</th>
-                                        <th>Entregador</th>
-                                        <th>Alterar Status</th>
-                                        <th>Solicitar envio</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {filteredOrders('cliente').map((order) => (
-                                        <tr key={order.id}>
-                                            <td>{order.id}</td>
-                                            <td>{order.date}</td>
-                                            <td>{order.volume}</td>
-                                            <td>{order.status}</td>
-                                            <td>{order.solicitante}</td>
-                                            <td>{order.destinatario}</td>
-                                            <td>{order.empresa}</td>
-                                            <td>{order.entregador}</td>
-                                            <td>
-                                                <select
-                                                    value={order.status}
-                                                    onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                                                >
-                                                    <option value="Em andamento">Em andamento</option>
-                                                    <option value="Entregue">Entregue</option>
-                                                    <option value="Pendente">Pendente</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <Button title='Solicitar' onClick={() => handleCheckout(order)}>Solicitar Envio</Button>
-=======
                                                 <Button title='Solicitar' onClick={() => handleCheckout(order.id)}>Solicitar Envio</Button>
->>>>>>> 76ddc4c0a986f32ccd9b00d40e977a5a9e789728
                                             </td>
                                         </tr>
                                     ))}
