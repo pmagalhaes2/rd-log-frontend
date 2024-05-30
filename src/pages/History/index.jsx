@@ -1,0 +1,88 @@
+import React, { useEffect, useState } from "react";
+import { getAllOrders } from "../../services/ordersAPI.js";
+import MenuComponent from "../../Components/Menu/Menu.jsx";
+
+import styles from "./History.module.scss";
+import { useUser } from "../../context/UserContext.jsx";
+
+export const History = () => {
+  const [orders, setOrders] = useState([]);
+  const { user } = useUser();
+
+  useEffect(() => {
+    getAllOrders()
+      .then((response) => {
+        const filteredOrders = response.filter(
+          (item) => Number(item.id_empresa_logistica) === user.id
+        );
+        setOrders(filteredOrders);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch orders:", error);
+      });
+  }, [user.id]);
+
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("pt-BR", date);
+  };
+
+  return (
+    <>
+      <div className={styles.container}>
+        <MenuComponent pageName={"Histórico"} />
+        <div className={styles.content}>
+          {orders.length ? (
+            <div className={styles.tableSection}>
+              <h2>Histórico de Pedidos</h2>
+              <div className={styles.tableContainer}>
+                <div className={styles.tableWrapper}>
+                  <table className={styles.orderTable}>
+                    <thead>
+                      <tr>
+                        <th>ID Pedido</th>
+                        <th>Data do Pedido</th>
+                        <th>ID Fornecedor</th>
+                        <th>Solicitante</th>
+                        <th>Destinatário</th>
+                        <th>UF</th>
+                        <th>ID Logística</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {orders &&
+                        orders.map((order) => (
+                          <tr key={order.id}>
+                            <td>{order.id}</td>
+                            <td>{formatDate(order.data_pedido)}</td>
+                            <td>{order.id_fornecedor}</td>
+                            <td>
+                              {order.endereco_origem.rua},{" "}
+                              {order.endereco_origem.numero}
+                            </td>
+                            <td>
+                              {order.endereco_destino.rua},{" "}
+                              {order.endereco_destino.numero}
+                            </td>
+                            <td>{order.endereco_origem.estado}</td>
+                            <td>{order.id_empresa_logistica}</td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.not_found_container}>
+              <h2>Nenhum pedido encontrado</h2>
+              <p>
+                Atualmente, não há pedidos registrados no histórico. Quando
+                novos pedidos forem feitos, eles aparecerão aqui.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
+};
