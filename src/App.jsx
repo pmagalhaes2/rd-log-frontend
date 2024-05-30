@@ -11,9 +11,9 @@ import { UserProvider } from "./context/UserContext";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import { NotFound } from "./pages/NotFound";
-import UserProfileForm  from "./pages/UserProfileForm/UserProfileForm";
+import UserProfileForm from "./pages/UserProfileForm/UserProfileForm";
 import Home from "./pages/Home/Home";
-
+import { History } from "./pages/History";
 
 function App() {
   return (
@@ -27,8 +27,9 @@ function App() {
           <Route path="/requests" Component={Requests} />
           <Route path="/support" Component={Support} />
           <Route path="/dashboard" Component={Dashboard} />
+          <Route path="history" Component={History} />
           <Route path="/edit-profile" element={<UserProfileForm />} />
-          <Route path="/history" element={<Order />} />
+          <Route path="/orders" element={<Order />} />
           <Route path="*" Component={NotFound} />
           <Route path="/checkout/:orderId" element={<Requests />} />
         </Routes>
