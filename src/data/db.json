@@ -1,0 +1,204 @@
+{
+  "orders": [
+    {
+      "id_pedido": 1,
+      "data_pedido": "2024-05-01",
+      "id_fornecedor": "F12345",
+      "endereco_origem": {
+        "rua": "Rua da Liberdade",
+        "numero": 45,
+        "cidade": "São Paulo",
+        "estado": "SP",
+        "cep": "01045-010"
+      },
+      "endereco_destino": {
+        "rua": "Avenida Paulista",
+        "numero": 1000,
+        "cidade": "São Paulo",
+        "estado": "SP",
+        "cep": "01310-100"
+      },
+      "id_empresa_logistica": "1"
+    },
+    {
+      "id_pedido": 2,
+      "data_pedido": "2024-05-02",
+      "id_fornecedor": "F12346",
+      "endereco_origem": {
+        "rua": "Rua XV de Novembro",
+        "numero": 123,
+        "cidade": "Curitiba",
+        "estado": "PR",
+        "cep": "80020-310"
+      },
+      "endereco_destino": {
+        "rua": "Avenida Cândido de Abreu",
+        "numero": 456,
+        "cidade": "Curitiba",
+        "estado": "PR",
+        "cep": "80530-000"
+      },
+      "id_empresa_logistica": "L67891"
+    },
+    {
+      "id_pedido": 3,
+      "data_pedido": "2024-05-03",
+      "id_fornecedor": "F12347",
+      "endereco_origem": {
+        "rua": "Rua Rio Grande do Sul",
+        "numero": 789,
+        "cidade": "Belo Horizonte",
+        "estado": "MG",
+        "cep": "30170-110"
+      },
+      "endereco_destino": {
+        "rua": "Avenida Afonso Pena",
+        "numero": 900,
+        "cidade": "Belo Horizonte",
+        "estado": "MG",
+        "cep": "30130-003"
+      },
+      "id_empresa_logistica": "L67892"
+    },
+    {
+      "id_pedido": 4,
+      "data_pedido": "2024-05-04",
+      "id_fornecedor": "F12348",
+      "endereco_origem": {
+        "rua": "Rua dos Andradas",
+        "numero": 55,
+        "cidade": "Porto Alegre",
+        "estado": "RS",
+        "cep": "90020-003"
+      },
+      "endereco_destino": {
+        "rua": "Avenida Ipiranga",
+        "numero": 2000,
+        "cidade": "Porto Alegre",
+        "estado": "RS",
+        "cep": "90160-093"
+      },
+      "id_empresa_logistica": "L67893"
+    },
+    {
+      "id_pedido": 5,
+      "data_pedido": "2024-05-05",
+      "id_fornecedor": "F12349",
+      "endereco_origem": {
+        "rua": "Rua da Aurora",
+        "numero": 130,
+        "cidade": "Recife",
+        "estado": "PE",
+        "cep": "50050-000"
+      },
+      "endereco_destino": {
+        "rua": "Avenida Boa Viagem",
+        "numero": 750,
+        "cidade": "Recife",
+        "estado": "PE",
+        "cep": "51011-000"
+      },
+      "id_empresa_logistica": "L67894"
+    },
+    {
+      "id_pedido": 6,
+      "data_pedido": "2024-05-06",
+      "id_fornecedor": "F12350",
+      "endereco_origem": {
+        "rua": "Rua da Consolação",
+        "numero": 250,
+        "cidade": "São Paulo",
+        "estado": "SP",
+        "cep": "01302-000"
+      },
+      "endereco_destino": {
+        "rua": "Avenida Brasil",
+        "numero": 1700,
+        "cidade": "São Paulo",
+        "estado": "SP",
+        "cep": "01430-000"
+      },
+      "id_empresa_logistica": "1"
+    },
+    {
+      "id_pedido": 7,
+      "data_pedido": "2024-05-07",
+      "id_fornecedor": "F12351",
+      "endereco_origem": {
+        "rua": "Rua Sete de Setembro",
+        "numero": 340,
+        "cidade": "Florianópolis",
+        "estado": "SC",
+        "cep": "88015-120"
+      },
+      "endereco_destino": {
+        "rua": "Avenida Beira Mar Norte",
+        "numero": 1200,
+        "cidade": "Florianópolis",
+        "estado": "SC",
+        "cep": "88025-010"
+      },
+      "id_empresa_logistica": "L67896"
+    },
+    {
+      "id_pedido": 8,
+      "data_pedido": "2024-05-08",
+      "id_fornecedor": "F12352",
+      "endereco_origem": {
+        "rua": "Rua Primeiro de Março",
+        "numero": 70,
+        "cidade": "Rio de Janeiro",
+        "estado": "RJ",
+        "cep": "20010-000"
+      },
+      "endereco_destino": {
+        "rua": "Avenida Atlântica",
+        "numero": 4500,
+        "cidade": "Rio de Janeiro",
+        "estado": "RJ",
+        "cep": "22070-002"
+      },
+      "id_empresa_logistica": "2"
+    },
+    {
+      "id_pedido": 9,
+      "data_pedido": "2024-05-09",
+      "id_fornecedor": "F12353",
+      "endereco_origem": {
+        "rua": "Rua Sete de Setembro",
+        "numero": 110,
+        "cidade": "Salvador",
+        "estado": "BA",
+        "cep": "40060-000"
+      },
+      "endereco_destino": {
+        "rua": "Avenida Sete de Setembro",
+        "numero": 900,
+        "cidade": "Salvador",
+        "estado": "BA",
+        "cep": "40080-002"
+      },
+      "id_empresa_logistica": "L67898"
+    },
+    {
+      "id_pedido": 10,
+      "data_pedido": "2024-05-10",
+      "id_fornecedor": "F12354",
+      "endereco_origem": {
+        "rua": "Rua das Flores",
+        "numero": 60,
+        "cidade": "Fortaleza",
+        "estado": "CE",
+        "cep": "60055-010"
+      },
+      "endereco_destino": {
+        "rua": "Avenida Beira Mar",
+        "numero": 850,
+        "cidade": "Fortaleza",
+        "estado": "CE",
+        "cep": "60165-120"
+      },
+      "id_empresa_logistica": "L67899"
+    }
+  ]
+}
