@@ -5,6 +5,7 @@ import dash from "../../assets/images/Dash.png";
 import pack from "../../assets/images/Pack.png";
 import truck from "../../assets/images/Truck.png";
 import faqs from "../../assets/images/FaQs.png";
+import history from "../../assets/images/history-icon.svg";
 import { NavLink } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 
@@ -29,12 +30,12 @@ function MenuComponent({ pageName }) {
             Dashboard
           </NavLink>
           <NavLink
-            to={isAdmin ? "/history" : '/history' }
+            to={isAdmin ? "/orders" : "/orders"}
             className={({ isActive }) => (isActive ? styles.active : "")}
           >
-            <img src={truck} alt={isAdmin ? "Histórico" : "Pedidos"} />
-            {isAdmin? "Pedidos": "Histórico"}
-          </NavLink> 
+            <img src={truck} alt="Pedidos" />
+            Pedidos
+          </NavLink>
 
           {role === "admin" && (
             <NavLink
@@ -46,11 +47,18 @@ function MenuComponent({ pageName }) {
             </NavLink>
           )}
           <NavLink
+            to="/history"
+            className={({ isActive }) => (isActive ? styles.active : "")}
+          >
+            <img src={history} alt="Histórico" />
+            Histórico
+          </NavLink>
+          <NavLink
             to="/support"
             className={({ isActive }) => (isActive ? styles.active : "")}
           >
             <img src={faqs} alt="FAQs" />
-            FAQs 
+            FAQs
           </NavLink>
         </ul>
       </div>
