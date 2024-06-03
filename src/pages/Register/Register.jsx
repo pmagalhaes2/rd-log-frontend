@@ -17,7 +17,6 @@ function Register() {
   const phoneNumberRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const acceptsDangerousLoadsRef = useRef(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -40,8 +39,7 @@ function Register() {
       closing_hours: formatTime(closingHoursRef.current.value),
       phone_number: phoneNumberRef.current.value,
       email: emailRef.current.value,
-      password: passwordRef.current.value,
-      accepts_dangerous_loads: acceptsDangerousLoadsRef.current.checked,
+      password: passwordRef.current.value
     };
 
     if (
@@ -62,7 +60,6 @@ function Register() {
 
         if (response) {
           setError(false);
-          setMessage("Cadastro realizado com sucesso!");
           nameRef.current.value = "";
           cnpjRef.current.value = "";
           openingHoursRef.current.value = "";
@@ -70,7 +67,6 @@ function Register() {
           phoneNumberRef.current.value = "";
           emailRef.current.value = "";
           passwordRef.current.value = "";
-          acceptsDangerousLoadsRef.current.checked = false;
 
           setShowPopup(!showPopup);
         } else {
@@ -92,7 +88,6 @@ function Register() {
     <div className={styles.container}>
       <div className={styles["register-container"]}>
         <img src={welcomeImage} alt="Imagem de boas vindas" />
-        {message && <Message message={message} isError={error} />}
         <form onSubmit={handleSubmit}>
           <h1>Cadastro de Empresa de Logística</h1>
           <Input
@@ -151,16 +146,7 @@ function Register() {
               placeholder="ex: ********"
             />
           </div>
-          <div className={styles["form-row"]}>
-            <label>
-              <input
-                type="checkbox"
-                name="accepts_dangerous_loads"
-                ref={acceptsDangerousLoadsRef}
-              />
-              Aceita carga perigosa
-            </label>
-          </div>
+          {message && <Message message={message} isError={error} />}
           <Button
             type="submit"
             disabled={isLoading}

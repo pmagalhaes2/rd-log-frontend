@@ -23,7 +23,6 @@ function UserProfileForm() {
   const phoneNumberRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const acceptsDangerousLoadsRef = useRef(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -57,7 +56,6 @@ function UserProfileForm() {
       closing_hours: formatTime(closingHoursRef.current.value),
       phone_number: phoneNumberRef.current.value,
       email: emailRef.current.value,
-      accepts_dangerous_loads: acceptsDangerousLoadsRef.current.checked,
       password: passwordRef.current.value,
     };
 
@@ -143,14 +141,6 @@ function UserProfileForm() {
               label={"Senha"}
               defaultValue={previousData.password}
             />
-            <label>
-              <input
-                type="checkbox"
-                name="accepts_dangerous_loads"
-                ref={acceptsDangerousLoadsRef}
-              />
-              Aceita carga perigosa
-            </label>
             <Button
               type="submit"
               disabled={isLoading}
