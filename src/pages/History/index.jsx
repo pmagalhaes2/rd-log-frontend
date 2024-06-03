@@ -12,16 +12,20 @@ export const History = () => {
   useEffect(() => {
     getAllOrders()
       .then((response) => {
-        const filteredOrders = response.filter(
-          (item) => Number(item.id_empresa_logistica) === user.id
-        );
-        setOrders(filteredOrders);
+        if (user.role === "admin") {
+          setOrders(response);
+        } else {
+          const filteredOrders = response.filter(
+            (item) => Number(item.id_empresa_logistica) === user.id
+          );
+          setOrders(filteredOrders);
+        }
       })
       .catch((error) => {
         console.error("Failed to fetch orders:", error);
       });
-  }, [user.id]);
-
+  }, [user.id, user.role]);
+  
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString("pt-BR", date);
   };
