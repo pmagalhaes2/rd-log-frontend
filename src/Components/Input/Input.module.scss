@@ -29,6 +29,10 @@
     &::placeholder {
       color: #898989;
     }
+
+    @media screen and (max-width: 1280px) {
+      width: 15rem;
+    }
   }
 }
 

@@ -30,12 +30,13 @@
     .form-row {
       align-items: center;
       display: flex;
-      flex-wrap: wrap;
       gap: 1rem;
       justify-content: space-between;
-      margin-bottom: 1rem;
       width: 100%;
     }
-  }
 
+    button {
+      margin-top: 1rem;
+    }
+  }
 }
