@@ -7,7 +7,11 @@ import { Button } from "../../Components/Button";
 import { Message } from "../../Components/Message";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-import { getById, logisticCompanyLogin } from "../../services/logisticCompaniesAPI.js";
+import {
+  getById,
+  logisticCompanyLogin,
+} from "../../services/logisticCompaniesAPI.js";
+import { administratorLogin, getAdministratorById } from "../../services/administratorsAPI.js";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -23,6 +27,19 @@ export const Login = () => {
       return;
     }
 
+    if (role !== "user") {
+      const data = await administratorLogin(email, password);
+
+      if(data) {
+        const { administratorId } = data;
+        await getAdministrator(administratorId);
+      } else {
+        setError("Erro ao fazer login. Por favor, tente novamente.");
+        handleClearInputs();
+      }
+
+    }
+
     try {
       const data = await logisticCompanyLogin(email, password, role);
 
@@ -34,9 +51,8 @@ export const Login = () => {
         handleClearInputs();
       }
     } catch (error) {
-      setError(
-        error.message || "Erro ao fazer login. Por favor, tente novamente."
-      );
+      setError("Erro ao fazer login. Por favor, tente novamente.");
+    } finally {
       handleClearInputs();
     }
   };
@@ -61,6 +77,21 @@ export const Login = () => {
       setError("Erro ao buscar dados. Tente novamente!");
     }
   };
+
+  const getAdministrator = async (id) => {
+    try {
+      const response = await getAdministratorById(id);
+      
+      if (response) {
+        login(role, response.name, response.id);
+        navigate("/dashboard");
+      } else {
+        setError("Erro ao buscar dados. Tente novamente!");
+      }
+    } catch (error) {
+      setError("Erro ao buscar dados. Tente novamente!");
+    }
+  }
 
   return (
     <div className={styles.container}>
