@@ -31,3 +31,18 @@ export const administratorLogin = async (email, password, role) => {
     throw error.response;
   }
 };
+
+
+export const updateAdministrator = async (id, formData) => {
+  try {
+    const response = await api.put(`${baseURL}/${id}`, formData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response;
+  }
+};
+
