@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import styles from './Order.module.scss';
 import MenuComponent from '../../Components/Menu/Menu';
+import { useUser } from '../../context/UserContext';
 import { Input } from '../../Components/Input';
 import { Button } from '../../Components/Button';
 
@@ -13,6 +14,7 @@ const Order = () => {
         { id: 4, date: '2024-05-23', volume: 12, status: 'Em andamento', type: 'cliente', solicitante: 'Cliente D', destinatario: 'Destinatário D', empresa: 'Empresa D', entregador: 'Entregador D' },
     ]);
 
+    const { user } = useUser();
     const [filter, setFilter] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [orderBy, setOrderBy] = useState('');
@@ -97,7 +99,7 @@ const Order = () => {
                                         <th>Destinatário</th>
                                         <th>Empresa</th>
                                         <th>Entregador</th>
-                                        <th>Solicitar</th>
+                                        <th>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -111,8 +113,16 @@ const Order = () => {
                                             <td>{order.empresa}</td>
                                             <td>{order.entregador}</td>
                                             <td>
-                                                <Button title='Solicitar' onClick={() => handleCheckout(order.id)}>Solicitar Envio</Button>
+                                                {user && user.role === 'user' ? ( 
+                                                    <div className={styles.buttonGroup}>
+                                                        <button title='Aceitar' className={styles.green} onClick={() => handleStatusChange(order.id, 'Aceito')}>Aceitar</button>
+                                                        <button title='Recusar' className={styles.orange} onClick={() => handleStatusChange(order.id, 'Recusado')}>Recusar</button>
+                                                    </div>
+                                                ) : (
+                                                    <Button title='Solicitar' onClick={() => handleCheckout(order.id)}>Solicitar Envio</Button>
+                                                )}
                                             </td>
+
                                         </tr>
                                     ))}
                                 </tbody>
