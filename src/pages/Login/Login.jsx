@@ -11,7 +11,10 @@ import {
   getById,
   logisticCompanyLogin,
 } from "../../services/logisticCompaniesAPI.js";
-import { administratorLogin, getAdministratorById } from "../../services/administratorsAPI.js";
+import {
+  administratorLogin,
+  getAdministratorById,
+} from "../../services/administratorsAPI.js";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -30,14 +33,13 @@ export const Login = () => {
     if (role !== "user") {
       const data = await administratorLogin(email, password);
 
-      if(data) {
+      if (data) {
         const { administratorId } = data;
         await getAdministrator(administratorId);
       } else {
         setError("Erro ao fazer login. Por favor, tente novamente.");
         handleClearInputs();
       }
-
     }
 
     try {
@@ -81,7 +83,7 @@ export const Login = () => {
   const getAdministrator = async (id) => {
     try {
       const response = await getAdministratorById(id);
-      
+
       if (response) {
         login(role, response.name, response.id);
         navigate("/dashboard");
@@ -91,7 +93,7 @@ export const Login = () => {
     } catch (error) {
       setError("Erro ao buscar dados. Tente novamente!");
     }
-  }
+  };
 
   return (
     <div className={styles.container}>

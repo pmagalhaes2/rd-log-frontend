@@ -13,6 +13,10 @@ import {
   getById,
   updateLogisticCompany,
 } from "../../services/logisticCompaniesAPI";
+import {
+  getAdministratorById,
+  updateAdministrator,
+} from "../../services/administratorsAPI";
 
 function UserProfileForm() {
   const { user, setUser } = useUser();
@@ -37,31 +41,53 @@ function UserProfileForm() {
     return `${hours}:${minutes}:00`;
   };
 
+  const getLogisticCompany = async (logisticCompanyId) => {
+    await getById(logisticCompanyId).then((res) => {
+      setPreviousData(res);
+      setFetchData(false);
+    });
+  };
+
+  const getAdministrator = async (administratorId) => {
+    await getAdministratorById(administratorId).then((res) => {
+      setPreviousData(res);
+      setFetchData(false);
+    });
+  };
+
   useEffect(() => {
-    const getLogisticCompany = async (logisticCompanyId) => {
-      await getById(logisticCompanyId).then((res) => {
-        setPreviousData(res);
-        setFetchData(false);
-      });
-    };
-    getLogisticCompany(user.id);
-  }, [user.id]);
+    if (user.role !== "admin") {
+      getLogisticCompany(user.id);
+    } else {
+      getAdministrator(user.id);
+    }
+  }, [user.id, user.role]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = {
-      name: nameRef.current.value,
-      opening_hours: formatTime(openingHoursRef.current.value),
-      closing_hours: formatTime(closingHoursRef.current.value),
-      phone_number: phoneNumberRef.current.value,
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    };
+    const formData =
+      user.role !== "admin"
+        ? {
+            name: nameRef.current.value,
+            opening_hours: formatTime(openingHoursRef.current.value),
+            closing_hours: formatTime(closingHoursRef.current.value),
+            phone_number: phoneNumberRef.current.value,
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+          }
+        : {
+            name: nameRef.current.value,
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+          };
 
     try {
       setIsLoading(true);
-      const response = await updateLogisticCompany(user.id, formData);
+      const response =
+        user.role !== "admin"
+          ? await updateLogisticCompany(user.id, formData)
+          : await updateAdministrator(user.id, formData);
 
       if (response) {
         setMessage("Perfil atualizado com sucesso!");
@@ -96,33 +122,46 @@ function UserProfileForm() {
               defaultValue={previousData.name}
             />
 
+            {user.role !== "admin" && (
+              <div className={styles["form-row"]}>
+                <Input
+                  type="time"
+                  name="opening_hours"
+                  ref={openingHoursRef}
+                  label={"Horário de Abertura"}
+                  freeSize={false}
+                  defaultValue={previousData.opening_hours}
+                />
+                <Input
+                  type="time"
+                  name="closing_hours"
+                  ref={closingHoursRef}
+                  label={"Horário de Fechamento"}
+                  freeSize={false}
+                  defaultValue={previousData.closing_hours}
+                />
+              </div>
+            )}
             <div className={styles["form-row"]}>
-              <Input
-                type="time"
-                name="opening_hours"
-                ref={openingHoursRef}
-                label={"Horário de Abertura"}
+              {user.role !== "admin" ? (
+                <Input
+                  name="phone_number"
+                  placeholder="Telefone"
+                  ref={phoneNumberRef}
+                  label={"Telefone"}
+                  freeSize={false}
+                  defaultValue={previousData.phone_number}
+                />
+              ) : (
+                <Input
+                name="cpf"
+                placeholder="CPF"
+                label={"CPF"}
                 freeSize={false}
-                defaultValue={previousData.opening_hours}
+                defaultValue={previousData.cpf}
+                disabled
               />
-              <Input
-                type="time"
-                name="closing_hours"
-                ref={closingHoursRef}
-                label={"Horário de Fechamento"}
-                freeSize={false}
-                defaultValue={previousData.closing_hours}
-              />
-            </div>
-            <div className={styles["form-row"]}>
-              <Input
-                name="phone_number"
-                placeholder="Telefone"
-                ref={phoneNumberRef}
-                label={"Telefone"}
-                freeSize={false}
-                defaultValue={previousData.phone_number}
-              />
+              )}
               <Input
                 type="email"
                 name="email"
