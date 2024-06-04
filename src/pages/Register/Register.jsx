@@ -89,7 +89,7 @@ function Register() {
       <div className={styles["register-container"]}>
         <img src={welcomeImage} alt="Imagem de boas vindas" />
         <form onSubmit={handleSubmit}>
-          <h1>Cadastro de Empresa de Logística</h1>
+          <h1>Cadastro de Empresa</h1>
           <Input
             name="name"
             placeholder={"ex: Transportes XYZ"}
