@@ -10,19 +10,21 @@
   width: 100%;
   margin: 1.3rem auto;
   border-radius: 20px;
-  padding:20px  0;
+  
 }
 
 .login-content {
   display: flex;
   align-items: center;
-  gap: 15rem;
+  gap: 5rem;
 }
 
 .login-image {
-  width: 37%;
+  width: 40%;
   padding-top: 1rem;
-  max-width: 100%; 
+  max-width: 100%;
+  margin: auto;
+ 
 }
 
 .login-image img {
@@ -33,13 +35,13 @@
 
 .login-form {
   padding-right: 4rem;
-  padding-top: 0;
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
-  
+  padding-top: 1.5rem;
+  padding-left: 4rem;
+  border-radius: 0px 20px 20px 0px;
   background-color: var(--light-grey);
-  width: 626px;
+  width: 530px;
   height: 509px;
+ 
 
 }
 
@@ -47,6 +49,7 @@
   width: 100%;
   padding: 1rem;
   margin-top: 1.4rem;
+  
 }
 
 .register-link {
@@ -96,12 +99,7 @@
     margin-top: 1.5rem; 
     padding: 2rem;
   }
-
-  .login-form {
-    padding-right: 1rem;
-    
-  }
-
+  
   .login-form button {
     padding: 0.75rem; 
     margin-top: 1.5rem; 
@@ -114,7 +112,8 @@
     width: 90%;
     height: auto; 
     margin-top: 1rem; 
-    padding: 1rem; 
+    padding: 1rem;
+    
   }
 
   .login-content {
@@ -126,10 +125,6 @@
     width: 80%; 
     padding-top: 2rem; 
 
-  }
-
-  .login-form {
-    padding-right: 0; 
   }
 
   .login-form button {
