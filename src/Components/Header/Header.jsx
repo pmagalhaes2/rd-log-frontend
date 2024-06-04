@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 export default function Header() {
-  const { user, setUser } = useUser();
+  const { user, logout } = useUser();
   const isLoggedIn = user && user.role !== "";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -28,7 +28,7 @@ export default function Header() {
   };
 
   const handleLogout = () => {
-    setUser({ role: "", username: "", id: "" });
+    logout();
     setIsMenuOpen(false);
   };
 

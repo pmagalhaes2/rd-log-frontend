@@ -14,6 +14,7 @@ import { NotFound } from "./pages/NotFound";
 import UserProfileForm from "./pages/UserProfileForm/UserProfileForm";
 import Home from "./pages/Home/Home";
 import { History } from "./pages/History";
+import { PrivateRoutes } from "./Components/PrivateRoutes";
 
 function App() {
   return (
@@ -24,14 +25,16 @@ function App() {
           <Route path="/" Component={Home} />
           <Route path="/login" Component={Login} />
           <Route path="/register" Component={Register} />
-          <Route path="/requests" Component={Requests} />
-          <Route path="/support" Component={Support} />
-          <Route path="/dashboard" Component={Dashboard} />
-          <Route path="history" Component={History} />
-          <Route path="/edit-profile" element={<UserProfileForm />} />
-          <Route path="/orders" element={<Order />} />
-          <Route path="*" Component={NotFound} />
-          <Route path="/checkout/:orderId" element={<Requests />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/requests" Component={Requests} />
+            <Route path="/support" Component={Support} />
+            <Route path="/dashboard" Component={Dashboard} />
+            <Route path="history" Component={History} />
+            <Route path="/edit-profile" element={<UserProfileForm />} />
+            <Route path="/orders" element={<Order />} />
+            <Route path="/checkout/:orderId" element={<Requests />} />
+            <Route path="*" Component={NotFound} />
+          </Route>
         </Routes>
       </BrowserRouter>
       <Footer />
