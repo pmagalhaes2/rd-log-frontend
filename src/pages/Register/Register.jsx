@@ -17,6 +17,7 @@ function Register() {
   const phoneNumberRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const passwordConfirmRef = useState(null);
   const addressCepRef = useRef(null);
   const addressTypeRef = useRef(null);
   const addressValueRef = useRef(null);
@@ -56,16 +57,8 @@ function Register() {
       },
     };
 
-    if (
-      formData.name.trim() === "" ||
-      formData.cnpj.trim() === "" ||
-      formData.opening_hours.trim() === "" ||
-      formData.closing_hours.trim() === "" ||
-      formData.phone_number.trim() === "" ||
-      formData.email.trim() === "" ||
-      formData.password.trim() === ""
-    ) {
-      setMessage("Por favor, preencha todos os campos.");
+    if (formData.password !== passwordConfirmRef.current.value) {
+      setMessage("As senhas não coincidem. Tente novamente!");
       setError(true);
     } else {
       try {
@@ -74,20 +67,7 @@ function Register() {
 
         if (response) {
           setError(false);
-          nameRef.current.value = "";
-          cnpjRef.current.value = "";
-          openingHoursRef.current.value = "";
-          closingHoursRef.current.value = "";
-          phoneNumberRef.current.value = "";
-          emailRef.current.value = "";
-          passwordRef.current.value = "";
-          addressTypeRef.current.value = "";
-          addressValueRef.current.value = "";
-          addressNumberRef.current.value = "";
-          addressCityRef.current.value = "";
-          setBrazilianState("");
-          addressCepRef.current.value = "";
-
+          clearInputValues();
           setShowPopup(!showPopup);
         } else {
           const { data } = response.json();
@@ -102,6 +82,22 @@ function Register() {
         setIsLoading(false);
       }
     }
+  };
+
+  const clearInputValues = () => {
+    nameRef.current.value = "";
+    cnpjRef.current.value = "";
+    openingHoursRef.current.value = "";
+    closingHoursRef.current.value = "";
+    phoneNumberRef.current.value = "";
+    emailRef.current.value = "";
+    passwordRef.current.value = "";
+    addressTypeRef.current.value = "";
+    addressValueRef.current.value = "";
+    addressNumberRef.current.value = "";
+    addressCityRef.current.value = "";
+    setBrazilianState("");
+    addressCepRef.current.value = "";
   };
 
   return (
@@ -165,6 +161,7 @@ function Register() {
               name="confirm_password"
               label={"Confirmação senha"}
               placeholder="ex: ********"
+              ref={passwordConfirmRef}
             />
           </div>
           <div className={styles["form-row"]}>
@@ -203,19 +200,19 @@ function Register() {
               ref={addressCityRef}
             />
             <div className={styles.state_container}>
-            <label>Estado</label>
-            <select
-              value={brazilianState}
-              onChange={(e) => setBrazilianState(e.target.value)}
-              className={styles.state_select}
-            >
-              <option value="">Selecione um estado</option>
-              {states.map((state) => (
-                <option key={state.sigla} value={state.sigla}>
-                  {state.nome}
-                </option>
-              ))}
-            </select>
+              <label>Estado</label>
+              <select
+                value={brazilianState}
+                onChange={(e) => setBrazilianState(e.target.value)}
+                className={styles.state_select}
+              >
+                <option value="">Selecione um estado</option>
+                {states.map((state) => (
+                  <option key={state.sigla} value={state.sigla}>
+                    {state.nome}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           {message && <Message message={message} isError={error} />}
