@@ -31,31 +31,35 @@ export const Login = () => {
     }
 
     if (role !== "user") {
-      const data = await administratorLogin(email, password);
+      try {
+        const data = await administratorLogin(email, password);
 
-      if (data) {
-        const { administratorId } = data;
-        await getAdministrator(administratorId);
-      } else {
+        if (data) {
+          const { administratorId } = data;
+          await getAdministrator(administratorId);
+        } else {
+          setError("Erro ao fazer login. Por favor, tente novamente.");
+          handleClearInputs();
+        }
+      } catch (error) {
         setError("Erro ao fazer login. Por favor, tente novamente.");
         handleClearInputs();
       }
-    }
+    } else {
+      try {
+        const data = await logisticCompanyLogin(email, password, role);
 
-    try {
-      const data = await logisticCompanyLogin(email, password, role);
-
-      if (data) {
-        const { logisticCompanyId } = data;
-        await getLogisticCompany(logisticCompanyId);
-      } else {
+        if (data) {
+          const { logisticCompanyId } = data;
+          await getLogisticCompany(logisticCompanyId);
+        } else {
+          setError("Erro ao fazer login. Por favor, tente novamente.");
+          handleClearInputs();
+        }
+      } catch (error) {
         setError("Erro ao fazer login. Por favor, tente novamente.");
         handleClearInputs();
       }
-    } catch (error) {
-      setError("Erro ao fazer login. Por favor, tente novamente.");
-    } finally {
-      handleClearInputs();
     }
   };
 
