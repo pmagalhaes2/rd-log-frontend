@@ -50,13 +50,14 @@ export const History = () => {
                         <th>Destinatário</th>
                         <th>UF</th>
                         <th>ID Logística</th>
+                        <th>Status</th>
                       </tr>
                     </thead>
                     <tbody>
                       {orders &&
-                        orders.map((order) => (
-                          <tr key={order.id}>
-                            <td>{order.id}</td>
+                        orders.map((order, index) => (
+                          <tr key={index}>
+                            <td>{order.id_pedido}</td>
                             <td>{formatDate(order.data_pedido)}</td>
                             <td>{order.id_fornecedor}</td>
                             <td>
@@ -69,6 +70,7 @@ export const History = () => {
                             </td>
                             <td>{order.endereco_origem.estado}</td>
                             <td>{order.id_empresa_logistica}</td>
+                            <td>{order.status}</td>
                           </tr>
                         ))}
                     </tbody>
