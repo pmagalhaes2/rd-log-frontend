@@ -200,8 +200,9 @@ const Order = () => {
                                 title="Aceitar"
                                 className={styles.green}
                                 onClick={() =>
-                                  handleStatusChange(order.id, "Aceito")
+                                    handleStatusChange(order.id, "Aceito")
                                 }
+                                disabled={disabledButtons[order.id]}
                               >
                                 Aceitar
                               </button>
@@ -211,6 +212,7 @@ const Order = () => {
                                 onClick={() =>
                                   handleStatusChange(order.id, "Recusado")
                                 }
+                                disabled={disabledButtons[order.id]}
                               >
                                 Recusar
                               </button>
