@@ -18,7 +18,8 @@
         "estado": "SP",
         "cep": "01310-100"
       },
-      "id_empresa_logistica": "1"
+      "id_empresa_logistica": "1",
+      "status": "Entregue"
     },
     {
       "id_pedido": 2,
@@ -38,7 +39,8 @@
         "estado": "PR",
         "cep": "80530-000"
       },
-      "id_empresa_logistica": "L67891"
+      "id_empresa_logistica": "2",
+      "status": "Entregue"
     },
     {
       "id_pedido": 3,
@@ -58,7 +60,8 @@
         "estado": "MG",
         "cep": "30130-003"
       },
-      "id_empresa_logistica": "L67892"
+      "id_empresa_logistica": "4",
+      "status": "Entregue"
     },
     {
       "id_pedido": 4,
@@ -78,7 +81,8 @@
         "estado": "RS",
         "cep": "90160-093"
       },
-      "id_empresa_logistica": "L67893"
+      "id_empresa_logistica": "26",
+      "status": "Recusado"
     },
     {
       "id_pedido": 5,
@@ -98,7 +102,8 @@
         "estado": "PE",
         "cep": "51011-000"
       },
-      "id_empresa_logistica": "L67894"
+      "id_empresa_logistica": "29",
+      "status": "Recusado"
     },
     {
       "id_pedido": 6,
@@ -118,7 +123,8 @@
         "estado": "SP",
         "cep": "01430-000"
       },
-      "id_empresa_logistica": "1"
+      "id_empresa_logistica": "1",
+      "status": "Entregue"
     },
     {
       "id_pedido": 7,
@@ -138,7 +144,8 @@
         "estado": "SC",
         "cep": "88025-010"
       },
-      "id_empresa_logistica": "L67896"
+      "id_empresa_logistica": "28",
+      "status": "Entregue"
     },
     {
       "id_pedido": 8,
@@ -158,7 +165,8 @@
         "estado": "RJ",
         "cep": "22070-002"
       },
-      "id_empresa_logistica": "2"
+      "id_empresa_logistica": "2",
+      "status": "Entregue"
     },
     {
       "id_pedido": 9,
@@ -178,7 +186,8 @@
         "estado": "BA",
         "cep": "40080-002"
       },
-      "id_empresa_logistica": "L67898"
+      "id_empresa_logistica": "20",
+      "status": "Entregue"
     },
     {
       "id_pedido": 10,
@@ -198,7 +207,8 @@
         "estado": "CE",
         "cep": "60165-120"
       },
-      "id_empresa_logistica": "L67899"
+      "id_empresa_logistica": "19",
+      "status": "Entregue"
     }
   ]
 }
