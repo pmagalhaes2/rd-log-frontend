@@ -15,3 +15,11 @@ export const getAllOrders = async () => {
   }
 };
 
+export const updateOrderStatus = async (orderId, newStatus) => {
+  try {
+    const response = await api.patch(`${baseURL}/${orderId}`, { status: newStatus });
+    return response.data;
+  } catch (error) {
+    throw error.response;
+  }
+};
