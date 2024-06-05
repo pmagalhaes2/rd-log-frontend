@@ -27,6 +27,7 @@ function UserProfileForm() {
   const phoneNumberRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const passwordConfirmRef = useRef(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -81,6 +82,12 @@ function UserProfileForm() {
             email: emailRef.current.value,
             password: passwordRef.current.value,
           };
+
+    if (formData.password !== passwordConfirmRef.current.value) {
+      setMessage("As senhas não coincidem. Tente novamente!");
+      setError(true);
+      return;
+    }
 
     try {
       setIsLoading(true);
@@ -154,13 +161,13 @@ function UserProfileForm() {
                 />
               ) : (
                 <Input
-                name="cpf"
-                placeholder="CPF"
-                label={"CPF"}
-                freeSize={false}
-                defaultValue={previousData.cpf}
-                disabled
-              />
+                  name="cpf"
+                  placeholder="CPF"
+                  label={"CPF"}
+                  freeSize={false}
+                  defaultValue={previousData.cpf}
+                  disabled
+                />
               )}
               <Input
                 type="email"
@@ -172,14 +179,23 @@ function UserProfileForm() {
                 defaultValue={previousData.email}
               />
             </div>
-            <Input
-              type="password"
-              name="password"
-              placeholder="Senha"
-              ref={passwordRef}
-              label={"Senha"}
-              defaultValue={previousData.password}
-            />
+            <div className={styles["form-row"]}>
+              <Input
+                type="password"
+                name="password"
+                placeholder="Senha"
+                ref={passwordRef}
+                label={"Senha"}
+                defaultValue={previousData.password}
+              />
+              <Input
+                type="password"
+                name="confirm_password"
+                label={"Confirmação senha"}
+                placeholder="Confirmação de senha"
+                ref={passwordConfirmRef}
+              />
+            </div>
             <Button
               type="submit"
               disabled={isLoading}
