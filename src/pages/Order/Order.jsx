@@ -18,6 +18,7 @@ const Order = () => {
     const [filter, setFilter] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [orderBy, setOrderBy] = useState('');
+    const [disabledButtons, setDisabledButtons] = useState({}); 
 
     const navigate = useNavigate();  
 
@@ -36,12 +37,17 @@ const Order = () => {
             state: { id, date, volume, type, solicitante, destinatario }
         }); 
     };
+
     const handleStatusChange = (orderId, newStatus) => {
         setOrders(prevOrders =>
             prevOrders.map(order =>
                 order.id === orderId ? { ...order, status: newStatus } : order
             )
         );
+        setDisabledButtons(prevState => ({
+            ...prevState,
+            [orderId]: true
+        }));
     };
 
     const handleSort = (key) => {
@@ -115,8 +121,22 @@ const Order = () => {
                                             <td>
                                                 {user && user.role === 'user' ? ( 
                                                     <div className={styles.buttonGroup}>
-                                                        <button title='Aceitar' className={styles.green} onClick={() => handleStatusChange(order.id, 'Aceito')}>Aceitar</button>
-                                                        <button title='Recusar' className={styles.orange} onClick={() => handleStatusChange(order.id, 'Recusado')}>Recusar</button>
+                                                        <button 
+                                                            title='Aceitar' 
+                                                            className={styles.green} 
+                                                            onClick={() => handleStatusChange(order.id, 'Aceito')}
+                                                            disabled={disabledButtons[order.id]}
+                                                        >
+                                                            Aceitar
+                                                        </button>
+                                                        <button 
+                                                            title='Recusar' 
+                                                            className={styles.orange} 
+                                                            onClick={() => handleStatusChange(order.id, 'Recusado')}
+                                                            disabled={disabledButtons[order.id]}
+                                                        >
+                                                            Recusar
+                                                        </button>
                                                     </div>
                                                 ) : (
                                                     <Button title='Solicitar' onClick={() => handleCheckout(order.id)}>Solicitar Envio</Button>
