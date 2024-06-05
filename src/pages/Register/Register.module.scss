@@ -29,10 +29,10 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 1rem;
-      width: 50%;
+      width: 100%;
       background-color: var(--light-grey);
       padding: 2.5rem 5rem;
-      border-radius: 0 20px 20px 0;
+      border-radius: 20px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
       h1 {
@@ -45,11 +45,23 @@
         gap: 1rem;
         margin-bottom: 1rem;
         width: 100%;
-      }
-    }
 
-    > img {
-      width: 40%;
+        .state_container {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+
+          .state_select {
+            align-items: center;
+            background-color: #f4f4f4;
+            border: 1px solid #566754;
+            border-radius: 0.75rem;
+            outline: none;
+            padding: 0.875rem 1.25rem;
+            width: 100%;
+          }
+        }
+      }
     }
   }
 }

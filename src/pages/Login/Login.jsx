@@ -120,6 +120,7 @@ export const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               label={"Senha"}
+              freeSize={false}
             />
             <label>Perfil</label>
             <select

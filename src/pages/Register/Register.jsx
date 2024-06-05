@@ -4,10 +4,10 @@ import { Message } from "../../Components/Message";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
-import welcomeImage from "../../assets/images/welcome.svg";
 import { Popup } from "../../Components/Popup";
 import sucessImage from "../../assets/images/search-image.svg";
 import { registerLogisticCompany } from "../../services/logisticCompaniesAPI";
+import states from "./brazilian_states";
 
 function Register() {
   const nameRef = useRef(null);
@@ -17,11 +17,17 @@ function Register() {
   const phoneNumberRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const addressCepRef = useRef(null);
+  const addressTypeRef = useRef(null);
+  const addressValueRef = useRef(null);
+  const addressNumberRef = useRef(null);
+  const addressCityRef = useRef(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
+  const [brazilianState, setBrazilianState] = useState("");
   const navigate = useNavigate();
 
   const formatTime = (time) => {
@@ -39,7 +45,15 @@ function Register() {
       closing_hours: formatTime(closingHoursRef.current.value),
       phone_number: phoneNumberRef.current.value,
       email: emailRef.current.value,
-      password: passwordRef.current.value
+      password: passwordRef.current.value,
+      address: {
+        type: addressTypeRef.current.value,
+        value: addressValueRef.current.value,
+        number: addressNumberRef.current.value,
+        city: addressCityRef.current.value,
+        state: brazilianState,
+        zipCode: addressCepRef.current.value,
+      },
     };
 
     if (
@@ -67,6 +81,12 @@ function Register() {
           phoneNumberRef.current.value = "";
           emailRef.current.value = "";
           passwordRef.current.value = "";
+          addressTypeRef.current.value = "";
+          addressValueRef.current.value = "";
+          addressNumberRef.current.value = "";
+          addressCityRef.current.value = "";
+          setBrazilianState("");
+          addressCepRef.current.value = "";
 
           setShowPopup(!showPopup);
         } else {
@@ -87,21 +107,22 @@ function Register() {
   return (
     <div className={styles.container}>
       <div className={styles["register-container"]}>
-        <img src={welcomeImage} alt="Imagem de boas vindas" />
         <form onSubmit={handleSubmit}>
           <h1>Cadastro de Empresa</h1>
-          <Input
-            name="name"
-            placeholder={"ex: Transportes XYZ"}
-            label={"Nome da empresa"}
-            ref={nameRef}
-          />
-          <Input
-            name="cnpj"
-            placeholder={"ex: 12.345.678/0001-90"}
-            label={"CNPJ"}
-            ref={cnpjRef}
-          />
+          <div className={styles["form-row"]}>
+            <Input
+              name="name"
+              placeholder={"ex: Transportes XYZ"}
+              label={"Nome da empresa"}
+              ref={nameRef}
+            />
+            <Input
+              name="cnpj"
+              placeholder={"ex: 12.345.678/0001-90"}
+              label={"CNPJ"}
+              ref={cnpjRef}
+            />
+          </div>
           <div className={styles["form-row"]}>
             <Input
               type={"time"}
@@ -145,6 +166,57 @@ function Register() {
               label={"Confirmação senha"}
               placeholder="ex: ********"
             />
+          </div>
+          <div className={styles["form-row"]}>
+            <Input
+              name="zipCode"
+              label={"CEP"}
+              placeholder="ex: 01001000"
+              ref={addressCepRef}
+            />
+            <Input
+              name="type"
+              label={"Tipo Logradouro"}
+              placeholder="ex: Rua"
+              ref={addressTypeRef}
+            />
+          </div>
+          <div className={styles["form-row"]}>
+            <Input
+              name="value"
+              label={"Logradouro"}
+              placeholder="ex: Praça da Sé"
+              ref={addressValueRef}
+            />
+            <Input
+              name="number"
+              label={"Número"}
+              placeholder="ex: 100"
+              ref={addressNumberRef}
+            />
+          </div>
+          <div className={styles["form-row"]}>
+            <Input
+              name="city"
+              label={"Cidade"}
+              placeholder="ex: São Paulo"
+              ref={addressCityRef}
+            />
+            <div className={styles.state_container}>
+            <label>Estado</label>
+            <select
+              value={brazilianState}
+              onChange={(e) => setBrazilianState(e.target.value)}
+              className={styles.state_select}
+            >
+              <option value="">Selecione um estado</option>
+              {states.map((state) => (
+                <option key={state.sigla} value={state.sigla}>
+                  {state.nome}
+                </option>
+              ))}
+            </select>
+            </div>
           </div>
           {message && <Message message={message} isError={error} />}
           <Button
