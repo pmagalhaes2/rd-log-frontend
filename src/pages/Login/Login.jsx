@@ -113,7 +113,6 @@ export const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               label={"E-mail"}
-              freeSize={false}
             />
             <Input
               type={"password"}
@@ -121,7 +120,6 @@ export const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               label={"Senha"}
-              freeSize={false}
             />
             <label>Perfil</label>
             <select
