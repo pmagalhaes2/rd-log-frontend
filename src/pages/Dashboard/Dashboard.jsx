@@ -15,10 +15,6 @@ function Dashboard() {
   }, []);
 
 
-  const handleViewOrderDetails = (category) => {
-    console.log(`Visualizando pedidos da categoria: ${category}`);
-  };
-
   return (
     <div className={styles.container}>
       <MenuComponent pageName="Dashboard" /> 
@@ -30,7 +26,6 @@ function Dashboard() {
               <Card
                 category={order.category}
                 total={order.total}
-                onClick={() => handleViewOrderDetails(order.category)}
               />
             </div>
           </div>

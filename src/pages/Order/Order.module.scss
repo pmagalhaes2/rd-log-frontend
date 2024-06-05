@@ -5,19 +5,17 @@
   justify-content: space-around;
   padding: 3.125rem 5rem;
   width: 100%;
-
 }
 
 .orderContainer {
   display: flex;
   padding: 20px;
   margin: 20px;
-
 }
 
 .content {
   flex: 1;
-  margin-left: 20px; 
+  margin-left: 20px;
   padding: 40px;
   background-color: white;
   border-radius: 20px;
@@ -35,14 +33,12 @@
   border-collapse: collapse;
   margin-top: 20px;
 
-
-  th, td {
+  th,
+  td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
   }
-
-  
 
   th {
     background-color: #f2f2f2;
@@ -56,25 +52,9 @@
   tbody tr:hover {
     background-color: #f1f1f1;
   }
-
-  // button {
-  //   padding: 5px 10px;
-  //   background-color: #007bff;
-  //   color: white;
-  //   border: none;
-  //   border-radius: 4px;
-  //   cursor: pointer;
-
-  //   &:hover {
-  //     background-color: #0056b3;
-  //   }
-    
-  // }
-  
 }
 .tableSection {
   margin-bottom: 40px;
-  
 
   h2 {
     padding: 10px;
@@ -86,12 +66,12 @@
   }
 }
 .tableContainer {
-  overflow-x: auto; 
+  overflow-x: auto;
 }
 
 .tableWrapper {
   max-width: 100%;
-  overflow-x: auto; 
+  overflow-x: auto;
 }
 
 .buttonGroup {
@@ -100,7 +80,7 @@
   gap: 10px;
 }
 
-.green{
+.green {
   border: 2px solid #0f8143;
   background-color: #0f8143;
   border-radius: 8px;
@@ -118,9 +98,9 @@
   }
 }
 
-.orange{
-  border: 2px solid #D66E0F;
-  background-color: #D66E0F;
+.orange {
+  border: 2px solid #d66e0f;
+  background-color: #d66e0f;
   border-radius: 8px;
   padding: 8px;
   color: #ffffff;
@@ -133,6 +113,5 @@
   &:hover {
     border: 2px solid #b8600e;
     background-color: #b8600e;
-
   }
 }

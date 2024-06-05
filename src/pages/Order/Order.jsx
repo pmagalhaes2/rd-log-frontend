@@ -149,7 +149,7 @@ const Order = () => {
 
   return (
     <div className={styles.orderContainer}>
-      <MenuComponent className={styles.menu} />
+      <MenuComponent pageName={"Pedidos"} />
 
       <div className={styles.content}>
         {filter === "logistica" || filter === "" ? (

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './Card.module.scss'; // Importe os estilos do arquivo SCSS correspondente
+import styles from './Card.module.scss';
 
 const Card = ({ category, total, onClick }) => {
   return (
@@ -12,9 +12,9 @@ const Card = ({ category, total, onClick }) => {
 };
 
 Card.propTypes = {
-  category: PropTypes.string.isRequired, // Certifique-se de passar uma categoria de string para o componente
-  total: PropTypes.number.isRequired, // Certifique-se de passar um total numérico para o componente
-  onClick: PropTypes.func, // Função de clique opcional
+  category: PropTypes.string.isRequired,
+  total: PropTypes.number.isRequired,
+  onClick: PropTypes.func,
 };
 
 export default Card;
