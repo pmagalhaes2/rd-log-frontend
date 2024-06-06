@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { getAllOrders } from "../../services/ordersAPI.js";
 import MenuComponent from "../../Components/Menu/Menu.jsx";
+import { Input } from "../../Components/Input";
 
 import styles from "./History.module.scss";
 import { useUser } from "../../context/UserContext.jsx";
 
 export const History = () => {
   const [orders, setOrders] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filter] = useState(""); 
   const { user } = useUser();
 
   useEffect(() => {
@@ -25,17 +28,36 @@ export const History = () => {
         console.error("Failed to fetch orders:", error);
       });
   }, [user.id, user.role]);
-  
+
   const formatDate = (date) => {
-    return new Date(date).toLocaleDateString("pt-BR", date);
+    return new Date(date).toLocaleDateString("pt-BR");
   };
+
+  const filteredOrders = orders.filter((order) =>
+    order.id_pedido.toString().includes(searchTerm) ||
+    order.id_fornecedor.toString().includes(searchTerm) ||
+    order.endereco_origem.rua.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    order.endereco_destino.rua.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    order.endereco_origem.estado.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    order.status.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
       <div className={styles.container}>
         <MenuComponent pageName={"Histórico"} />
         <div className={styles.content}>
-          {orders.length ? (
+          <div className={styles.filterSection}>
+            <Input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Faça sua busca aqui"
+              className={styles.searchInput}
+            />
+          
+
+          {filter === "logistica" || filter === "" ? (
             <div className={styles.tableSection}>
               <h2>Histórico de Pedidos</h2>
               <div className={styles.tableContainer}>
@@ -54,25 +76,24 @@ export const History = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {orders &&
-                        orders.map((order, index) => (
-                          <tr key={index}>
-                            <td>{order.id_pedido}</td>
-                            <td>{formatDate(order.data_pedido)}</td>
-                            <td>{order.id_fornecedor}</td>
-                            <td>
-                              {order.endereco_origem.rua},{" "}
-                              {order.endereco_origem.numero}
-                            </td>
-                            <td>
-                              {order.endereco_destino.rua},{" "}
-                              {order.endereco_destino.numero}
-                            </td>
-                            <td>{order.endereco_origem.estado}</td>
-                            <td>{order.id_empresa_logistica}</td>
-                            <td>{order.status}</td>
-                          </tr>
-                        ))}
+                      {filteredOrders.map((order, index) => (
+                        <tr key={index}>
+                          <td>{order.id_pedido}</td>
+                          <td>{formatDate(order.data_pedido)}</td>
+                          <td>{order.id_fornecedor}</td>
+                          <td>
+                            {order.endereco_origem.rua},{" "}
+                            {order.endereco_origem.numero}
+                          </td>
+                          <td>
+                            {order.endereco_destino.rua},{" "}
+                            {order.endereco_destino.numero}
+                          </td>
+                          <td>{order.endereco_origem.estado}</td>
+                          <td>{order.id_empresa_logistica}</td>
+                          <td>{order.status}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -87,6 +108,7 @@ export const History = () => {
               </p>
             </div>
           )}
+          </div>
         </div>
       </div>
     </>
