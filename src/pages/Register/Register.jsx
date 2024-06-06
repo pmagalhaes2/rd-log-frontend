@@ -14,6 +14,7 @@ function Register() {
   const cnpjRef = useRef(null);
   const openingHoursRef = useRef(null);
   const closingHoursRef = useRef(null);
+  const priceKmRef = useRef(null);
   const phoneNumberRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
@@ -42,6 +43,7 @@ function Register() {
     const formData = {
       name: nameRef.current.value,
       cnpj: cnpjRef.current.value,
+      pricekm: priceKmRef.current.value,
       opening_hours: formatTime(openingHoursRef.current.value),
       closing_hours: formatTime(closingHoursRef.current.value),
       phone_number: phoneNumberRef.current.value,
@@ -112,11 +114,19 @@ function Register() {
               label={"Nome da empresa"}
               ref={nameRef}
             />
-            <Input
+          </div>
+          <div className={styles["form-row"]}>
+          <Input
               name="cnpj"
               placeholder={"ex: 12.345.678/0001-90"}
               label={"CNPJ"}
               ref={cnpjRef}
+            />
+            <Input
+              name="price_km"
+              placeholder={"ex: R$1,90"}
+              label={"Preço do Km"}
+              ref={priceKmRef}
             />
           </div>
           <div className={styles["form-row"]}>
@@ -146,22 +156,6 @@ function Register() {
               label={"E-mail"}
               placeholder="ex: mail@empresa.com"
               ref={emailRef}
-            />
-          </div>
-          <div className={styles["form-row"]}>
-            <Input
-              type="password"
-              name="password"
-              label={"Senha"}
-              placeholder="ex: ********"
-              ref={passwordRef}
-            />
-            <Input
-              type="password"
-              name="confirm_password"
-              label={"Confirmação senha"}
-              placeholder="ex: ********"
-              ref={passwordConfirmRef}
             />
           </div>
           <div className={styles["form-row"]}>
@@ -214,6 +208,22 @@ function Register() {
                 ))}
               </select>
             </div>
+          </div>
+          <div className={styles["form-row"]}>
+            <Input
+              type="password"
+              name="password"
+              label={"Senha"}
+              placeholder="ex: ********"
+              ref={passwordRef}
+            />
+            <Input
+              type="password"
+              name="confirm_password"
+              label={"Confirmação senha"}
+              placeholder="ex: ********"
+              ref={passwordConfirmRef}
+            />
           </div>
           {message && <Message message={message} isError={error} />}
           <Button

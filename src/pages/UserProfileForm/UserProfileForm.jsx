@@ -22,17 +22,25 @@ function UserProfileForm() {
   const { user, setUser } = useUser();
 
   const nameRef = useRef(null);
+  const cnpjRef = useRef(null);
   const openingHoursRef = useRef(null);
   const closingHoursRef = useRef(null);
   const phoneNumberRef = useRef(null);
   const emailRef = useRef(null);
+  const priceKmRef = useRef(null);
+  const addressTypeRef = useRef(null);
+  const addressValueRef = useRef(null);
+  const addressNumberRef = useRef(null);
+  const addressCityRef = useRef(null);
+  const addressStateRef = useRef(null);
+  const addressZipCodeRef = useRef(null);
   const passwordRef = useRef(null);
   const passwordConfirmRef = useRef(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
-  const [previousData, setPreviousData] = useState("");
+  const [previousData, setPreviousData] = useState(null);
   const [fetchData, setFetchData] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
@@ -43,17 +51,15 @@ function UserProfileForm() {
   };
 
   const getLogisticCompany = async (logisticCompanyId) => {
-    await getById(logisticCompanyId).then((res) => {
-      setPreviousData(res);
-      setFetchData(false);
-    });
+    const res = await getById(logisticCompanyId);
+    setPreviousData(res);
+    setFetchData(false);
   };
 
   const getAdministrator = async (administratorId) => {
-    await getAdministratorById(administratorId).then((res) => {
-      setPreviousData(res);
-      setFetchData(false);
-    });
+    const res = await getAdministratorById(administratorId);
+    setPreviousData(res);
+    setFetchData(false);
   };
 
   useEffect(() => {
@@ -63,6 +69,24 @@ function UserProfileForm() {
       getAdministrator(user.id);
     }
   }, [user.id, user.role]);
+
+  useEffect(() => {
+    if (previousData) {
+      nameRef.current.value = previousData.name;
+      openingHoursRef.current.value = previousData.opening_hours;
+      closingHoursRef.current.value = previousData.closing_hours;
+      phoneNumberRef.current.value = previousData.phone_number;
+      emailRef.current.value = previousData.email;
+      priceKmRef.current.value = previousData.pricekm;
+      addressTypeRef.current.value = previousData.address?.type;
+      addressValueRef.current.value = previousData.address?.value;
+      addressNumberRef.current.value = previousData.address?.number;
+      addressCityRef.current.value = previousData.address?.city;
+      addressStateRef.current.value = previousData.address?.state;
+      addressZipCodeRef.current.value = previousData.address?.zipCode;
+      
+    }
+  }, [previousData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -75,6 +99,14 @@ function UserProfileForm() {
             closing_hours: formatTime(closingHoursRef.current.value),
             phone_number: phoneNumberRef.current.value,
             email: emailRef.current.value,
+            address: {
+              type: addressTypeRef.current.value,
+              value: addressValueRef.current.value,
+              number: addressNumberRef.current.value,
+              city: addressCityRef.current.value,
+              state: addressStateRef.current.value,
+              zipCode: addressZipCodeRef.current.value,
+            },
             password: passwordRef.current.value,
           }
         : {
@@ -126,29 +158,85 @@ function UserProfileForm() {
               placeholder="Nome da Empresa"
               ref={nameRef}
               label={"Nome"}
-              defaultValue={previousData.name}
             />
 
             {user.role !== "admin" && (
               <div className={styles["form-row"]}>
                 <Input
+                  name="cnpj"
+                  placeholder="CNPJ"
+                  label={"CNPJ"}
+                  freeSize={false}
+                  defaultValue={previousData.cnpj}
+                  disabled
+                />
+                <Input
+                  name="price_km"
+                  ref={priceKmRef}
+                  label={"Preço do Km"}
+                />
+              </div>
+              
+            )}
+            <div className={styles["form-row"]}>
+                <Input
                   type="time"
                   name="opening_hours"
                   ref={openingHoursRef}
                   label={"Horário de Abertura"}
-                  freeSize={false}
-                  defaultValue={previousData.opening_hours}
                 />
                 <Input
                   type="time"
                   name="closing_hours"
                   ref={closingHoursRef}
                   label={"Horário de Fechamento"}
-                  freeSize={false}
-                  defaultValue={previousData.closing_hours}
                 />
               </div>
-            )}
+              <div className={styles["form-row"]}>
+                <Input
+                  name="zipCode"
+                  ref={addressZipCodeRef}
+                  label={"CEP"}
+                  freeSize={false}
+                />
+                <Input
+                  name="address_type"
+                  ref={addressTypeRef}
+                  label={"Tipo de Logradouro"}
+                  freeSize={false}
+                />
+              </div>
+            
+              <div className={styles["form-row"]}>
+                <Input
+                  name="address_value"
+                  ref={addressValueRef}
+                  label={"Nome do Logradouro"}
+                  freeSize={false}
+                />
+                <Input
+                  name="address_number"
+                  ref={addressNumberRef}
+                  label={"Número"}
+                  freeSize={false}
+                />
+              </div>
+
+              <div className={styles["form-row"]}>
+                <Input
+                  name="address_city"
+                  ref={addressCityRef}
+                  label={"Cidade"}
+                  freeSize={false}
+                />
+                <Input
+                  name="address_state"
+                  ref={addressStateRef}
+                  label={"Estado"}
+                  freeSize={false}
+                />
+              </div>
+
             <div className={styles["form-row"]}>
               {user.role !== "admin" ? (
                 <Input
@@ -157,7 +245,6 @@ function UserProfileForm() {
                   ref={phoneNumberRef}
                   label={"Telefone"}
                   freeSize={false}
-                  defaultValue={previousData.phone_number}
                 />
               ) : (
                 <Input
@@ -176,7 +263,6 @@ function UserProfileForm() {
                 ref={emailRef}
                 label={"E-mail"}
                 freeSize={false}
-                defaultValue={previousData.email}
               />
             </div>
             <div className={styles["form-row"]}>
@@ -186,7 +272,6 @@ function UserProfileForm() {
                 placeholder="Senha"
                 ref={passwordRef}
                 label={"Senha"}
-                defaultValue={previousData.password}
               />
               <Input
                 type="password"
