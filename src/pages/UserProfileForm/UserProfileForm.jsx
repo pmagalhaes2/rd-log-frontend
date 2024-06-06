@@ -76,7 +76,7 @@ function UserProfileForm() {
       closingHoursRef.current.value = previousData.closing_hours;
       phoneNumberRef.current.value = previousData.phone_number;
       emailRef.current.value = previousData.email;
-      priceKmRef.current.value = previousData.pricekm;
+      priceKmRef.current.value = previousData.price_km;
       addressTypeRef.current.value = previousData.address?.type;
       addressValueRef.current.value = previousData.address?.value;
       addressNumberRef.current.value = previousData.address?.number;

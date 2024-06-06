@@ -90,6 +90,7 @@ function Register() {
   const clearInputValues = () => {
     nameRef.current.value = "";
     cnpjRef.current.value = "";
+    priceKmRef.current.value= "";
     openingHoursRef.current.value = "";
     closingHoursRef.current.value = "";
     phoneNumberRef.current.value = "";
@@ -143,7 +144,7 @@ function Register() {
             />
             <Input
               name="price_km"
-              placeholder={"ex: R$1,90"}
+              placeholder={"ex: R$1.90"}
               label={"Preço do Km"}
               ref={priceKmRef}
             />
