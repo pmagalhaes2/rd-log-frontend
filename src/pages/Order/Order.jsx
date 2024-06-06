@@ -55,9 +55,8 @@ const Order = () => {
   ]);
 
     const { user } = useUser();
-    const [filter, setFilter] = useState('');
+    const [filter] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
-    const [orderBy, setOrderBy] = useState('');
     const [disabledButtons, setDisabledButtons] = useState({}); 
 
   const navigate = useNavigate();
@@ -126,15 +125,6 @@ const Order = () => {
         }));
     };
 
-  const handleSort = (key) => {
-    const sortedOrders = [...orders].sort((a, b) => {
-      if (a[key] < b[key]) return -1;
-      if (a[key] > b[key]) return 1;
-      return 0;
-    });
-    setOrders(sortedOrders);
-    setOrderBy(key);
-  };
 
   const filteredOrders = (type) => {
     return orders
