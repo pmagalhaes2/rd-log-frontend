@@ -8,6 +8,7 @@ import { Popup } from "../../Components/Popup";
 import sucessImage from "../../assets/images/search-image.svg";
 import { registerLogisticCompany } from "../../services/logisticCompaniesAPI";
 import states from "./brazilian_states";
+import { getCep } from "../../services/cepAPI";
 
 function Register() {
   const nameRef = useRef(null);
@@ -18,7 +19,7 @@ function Register() {
   const phoneNumberRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const passwordConfirmRef = useState(null);
+  const passwordConfirmRef = useRef(null);
   const addressCepRef = useRef(null);
   const addressTypeRef = useRef(null);
   const addressValueRef = useRef(null);
@@ -43,7 +44,7 @@ function Register() {
     const formData = {
       name: nameRef.current.value,
       cnpj: cnpjRef.current.value,
-      pricekm: priceKmRef.current.value,
+      price_km: priceKmRef.current.value,
       opening_hours: formatTime(openingHoursRef.current.value),
       closing_hours: formatTime(closingHoursRef.current.value),
       phone_number: phoneNumberRef.current.value,
@@ -102,6 +103,24 @@ function Register() {
     addressCepRef.current.value = "";
   };
 
+  const handleCep = async () => {
+    try {
+      if (addressCepRef.current.value.trim() === "") {
+        return;
+      } else {
+        const previousAddress = await getCep(addressCepRef.current.value);
+        const { logradouro, localidade, uf } = previousAddress;
+        addressValueRef.current.value = logradouro;
+        addressCityRef.current.value = localidade;
+        setBrazilianState(uf);
+      }
+    } catch (error) {
+      console.error("Erro ao consultar CEP:", error);
+      setMessage("Erro ao buscar CEP. Por favor, tente novamente.");
+      setError(true);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles["register-container"]}>
@@ -116,7 +135,7 @@ function Register() {
             />
           </div>
           <div className={styles["form-row"]}>
-          <Input
+            <Input
               name="cnpj"
               placeholder={"ex: 12.345.678/0001-90"}
               label={"CNPJ"}
@@ -164,6 +183,8 @@ function Register() {
               label={"CEP"}
               placeholder="ex: 01001000"
               ref={addressCepRef}
+              searchInput
+              onClick={handleCep}
             />
             <Input
               name="type"

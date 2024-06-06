@@ -16,6 +16,7 @@ export const Input = React.forwardRef(
       freeSize = true,
       defaultValue,
       disabled = false,
+      onClick
     },
     ref
   ) => {
@@ -35,7 +36,7 @@ export const Input = React.forwardRef(
             disabled={disabled}
           />
           {searchInput && (
-            <Icon icon={searchIcon} className={styles.search_icon} />
+            <Icon icon={searchIcon} className={styles.search_icon} onClick={onClick} />
           )}
         </div>
       </div>

@@ -22,7 +22,6 @@ function UserProfileForm() {
   const { user, setUser } = useUser();
 
   const nameRef = useRef(null);
-  const cnpjRef = useRef(null);
   const openingHoursRef = useRef(null);
   const closingHoursRef = useRef(null);
   const phoneNumberRef = useRef(null);
