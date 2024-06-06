@@ -97,6 +97,7 @@ function UserProfileForm() {
             opening_hours: formatTime(openingHoursRef.current.value),
             closing_hours: formatTime(closingHoursRef.current.value),
             phone_number: phoneNumberRef.current.value,
+            price_km: priceKmRef.current.value,
             email: emailRef.current.value,
             address: {
               type: addressTypeRef.current.value,
