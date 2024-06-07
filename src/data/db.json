@@ -22,7 +22,7 @@
       "status": "Pendente"
     },
     {
-      "id_pedido": 1,
+      "id_pedido": 6,
       "data_pedido": "2024-05-01",
       "id_fornecedor": "F12345",
       "endereco_origem": {
@@ -127,7 +127,7 @@
       "status": "Recusado"
     },
     {
-      "id_pedido": 6,
+      "id_pedido": 10,
       "data_pedido": "2024-05-06",
       "id_fornecedor": "F12350",
       "endereco_origem": {
@@ -211,7 +211,7 @@
       "status": "Entregue"
     },
     {
-      "id_pedido": 10,
+      "id_pedido": 11,
       "data_pedido": "2024-05-10",
       "id_fornecedor": "F12354",
       "endereco_origem": {
@@ -232,7 +232,7 @@
       "status": "Entregue"
     },
     {
-      "id_pedido": 1,
+      "id_pedido": 12,
       "data_pedido": "2024-05-01",
       "id_fornecedor": "F12345",
       "endereco_origem": {
