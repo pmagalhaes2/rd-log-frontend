@@ -8,15 +8,18 @@ import { Popup } from "../../Components/Popup";
 import sucessImage from "../../assets/images/search-image.svg";
 import { registerLogisticCompany } from "../../services/logisticCompaniesAPI";
 import states from "./brazilian_states";
+import { getCep } from "../../services/cepAPI";
 
 function Register() {
   const nameRef = useRef(null);
   const cnpjRef = useRef(null);
   const openingHoursRef = useRef(null);
   const closingHoursRef = useRef(null);
+  const priceKmRef = useRef(null);
   const phoneNumberRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const passwordConfirmRef = useRef(null);
   const addressCepRef = useRef(null);
   const addressTypeRef = useRef(null);
   const addressValueRef = useRef(null);
@@ -41,6 +44,7 @@ function Register() {
     const formData = {
       name: nameRef.current.value,
       cnpj: cnpjRef.current.value,
+      price_km: priceKmRef.current.value,
       opening_hours: formatTime(openingHoursRef.current.value),
       closing_hours: formatTime(closingHoursRef.current.value),
       phone_number: phoneNumberRef.current.value,
@@ -56,16 +60,8 @@ function Register() {
       },
     };
 
-    if (
-      formData.name.trim() === "" ||
-      formData.cnpj.trim() === "" ||
-      formData.opening_hours.trim() === "" ||
-      formData.closing_hours.trim() === "" ||
-      formData.phone_number.trim() === "" ||
-      formData.email.trim() === "" ||
-      formData.password.trim() === ""
-    ) {
-      setMessage("Por favor, preencha todos os campos.");
+    if (formData.password !== passwordConfirmRef.current.value) {
+      setMessage("As senhas não coincidem. Tente novamente!");
       setError(true);
     } else {
       try {
@@ -74,20 +70,7 @@ function Register() {
 
         if (response) {
           setError(false);
-          nameRef.current.value = "";
-          cnpjRef.current.value = "";
-          openingHoursRef.current.value = "";
-          closingHoursRef.current.value = "";
-          phoneNumberRef.current.value = "";
-          emailRef.current.value = "";
-          passwordRef.current.value = "";
-          addressTypeRef.current.value = "";
-          addressValueRef.current.value = "";
-          addressNumberRef.current.value = "";
-          addressCityRef.current.value = "";
-          setBrazilianState("");
-          addressCepRef.current.value = "";
-
+          clearInputValues();
           setShowPopup(!showPopup);
         } else {
           const { data } = response.json();
@@ -104,6 +87,41 @@ function Register() {
     }
   };
 
+  const clearInputValues = () => {
+    nameRef.current.value = "";
+    cnpjRef.current.value = "";
+    priceKmRef.current.value= "";
+    openingHoursRef.current.value = "";
+    closingHoursRef.current.value = "";
+    phoneNumberRef.current.value = "";
+    emailRef.current.value = "";
+    passwordRef.current.value = "";
+    addressTypeRef.current.value = "";
+    addressValueRef.current.value = "";
+    addressNumberRef.current.value = "";
+    addressCityRef.current.value = "";
+    setBrazilianState("");
+    addressCepRef.current.value = "";
+  };
+
+  const handleCep = async () => {
+    try {
+      if (addressCepRef.current.value.trim() === "") {
+        return;
+      } else {
+        const previousAddress = await getCep(addressCepRef.current.value);
+        const { logradouro, localidade, uf } = previousAddress;
+        addressValueRef.current.value = logradouro;
+        addressCityRef.current.value = localidade;
+        setBrazilianState(uf);
+      }
+    } catch (error) {
+      console.error("Erro ao consultar CEP:", error);
+      setMessage("Erro ao buscar CEP. Por favor, tente novamente.");
+      setError(true);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles["register-container"]}>
@@ -116,11 +134,19 @@ function Register() {
               label={"Nome da empresa"}
               ref={nameRef}
             />
+          </div>
+          <div className={styles["form-row"]}>
             <Input
               name="cnpj"
               placeholder={"ex: 12.345.678/0001-90"}
               label={"CNPJ"}
               ref={cnpjRef}
+            />
+            <Input
+              name="price_km"
+              placeholder={"ex: R$1.90"}
+              label={"Preço do Km"}
+              ref={priceKmRef}
             />
           </div>
           <div className={styles["form-row"]}>
@@ -154,25 +180,12 @@ function Register() {
           </div>
           <div className={styles["form-row"]}>
             <Input
-              type="password"
-              name="password"
-              label={"Senha"}
-              placeholder="ex: ********"
-              ref={passwordRef}
-            />
-            <Input
-              type="password"
-              name="confirm_password"
-              label={"Confirmação senha"}
-              placeholder="ex: ********"
-            />
-          </div>
-          <div className={styles["form-row"]}>
-            <Input
               name="zipCode"
               label={"CEP"}
               placeholder="ex: 01001000"
               ref={addressCepRef}
+              searchInput
+              onClick={handleCep}
             />
             <Input
               name="type"
@@ -203,20 +216,36 @@ function Register() {
               ref={addressCityRef}
             />
             <div className={styles.state_container}>
-            <label>Estado</label>
-            <select
-              value={brazilianState}
-              onChange={(e) => setBrazilianState(e.target.value)}
-              className={styles.state_select}
-            >
-              <option value="">Selecione um estado</option>
-              {states.map((state) => (
-                <option key={state.sigla} value={state.sigla}>
-                  {state.nome}
-                </option>
-              ))}
-            </select>
+              <label>Estado</label>
+              <select
+                value={brazilianState}
+                onChange={(e) => setBrazilianState(e.target.value)}
+                className={styles.state_select}
+              >
+                <option value="">Selecione um estado</option>
+                {states.map((state) => (
+                  <option key={state.sigla} value={state.sigla}>
+                    {state.nome}
+                  </option>
+                ))}
+              </select>
             </div>
+          </div>
+          <div className={styles["form-row"]}>
+            <Input
+              type="password"
+              name="password"
+              label={"Senha"}
+              placeholder="ex: ********"
+              ref={passwordRef}
+            />
+            <Input
+              type="password"
+              name="confirm_password"
+              label={"Confirmação senha"}
+              placeholder="ex: ********"
+              ref={passwordConfirmRef}
+            />
           </div>
           {message && <Message message={message} isError={error} />}
           <Button
