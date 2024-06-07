@@ -9,7 +9,7 @@ import { useUser } from "../../context/UserContext.jsx";
 export const History = () => {
   const [orders, setOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filter] = useState(""); 
+  const [filter] = useState("");
   const { user } = useUser();
 
   useEffect(() => {
@@ -30,7 +30,6 @@ export const History = () => {
   }, [user.id, user.role]);
 
   const formatDate = (date) => {
-    // Função para formatar a data com zero à esquerda para o dia e mês
     const formattedDate = new Date(date);
     const day = formattedDate.getDate().toString().padStart(2, "0");
     const month = (formattedDate.getMonth() + 1).toString().padStart(2, "0");
@@ -53,8 +52,16 @@ export const History = () => {
       <div className={styles.container}>
         <MenuComponent pageName={"Histórico"} />
         <div className={styles.content}>
-          <div className={styles.filterSection}>
-            {filter === "logistica" || filter === "" ? (
+          
+            {orders.length === 0 ? (
+              <div className={styles.not_found_container}>
+                <h2>Nenhum pedido encontrado</h2>
+                <p>
+                  Atualmente, não há pedidos registrados no histórico. Quando
+                  novos pedidos forem feitos, eles aparecerão aqui.
+                </p>
+              </div>
+            ) : (
               <div className={styles.tableSection}>
                 <h2>Histórico de Pedidos</h2>
                 <Input
@@ -111,18 +118,10 @@ export const History = () => {
                   </div>
                 </div>
               </div>
-            ) : (
-              <div className={styles.not_found_container}>
-                <h2>Nenhum pedido encontrado</h2>
-                <p>
-                  Atualmente, não há pedidos registrados no histórico. Quando
-                  novos pedidos forem feitos, eles aparecerão aqui.
-                </p>
-              </div>
             )}
           </div>
         </div>
-      </div>
     </>
   );
 };
+
