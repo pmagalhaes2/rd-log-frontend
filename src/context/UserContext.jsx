@@ -1,16 +1,17 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useState, useContext } from 'react';
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({ role: "", username: "", id: "" });
+  const [user, setUser] = useState({ role: "", username: "", id: "", id_empresa_logistica: "" });
 
-  const login = (role, username, id) => {
-    setUser({ role, username, id });
+  const login = (role, username, id, id_empresa_logistica) => {
+    console.log("Setting user context:", { role, username, id, id_empresa_logistica });
+    setUser({ role, username, id, id_empresa_logistica });
   };
 
   const logout = () => {
-    setUser({ role: "", username: "", id: "" });
+    setUser({ role: "", username: "", id: "", id_empresa_logistica: "" });
   };
 
   return (
