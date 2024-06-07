@@ -144,7 +144,7 @@
         "estado": "SP",
         "cep": "01430-000"
       },
-      "id_empresa_logistica": "1",
+      "id_empresa_logistica": "3",
       "status": "Entregue"
     },
     {
@@ -249,7 +249,7 @@
         "estado": "SP",
         "cep": "01310-100"
       },
-      "id_empresa_logistica": "103",
+      "id_empresa_logistica": "3",
       "status": "Pendente"
     }
   ]
