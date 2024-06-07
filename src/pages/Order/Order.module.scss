@@ -7,118 +7,129 @@
   width: 100%;
 }
 
-.orderContainer {
-  display: flex;
-  padding: 20px;
-  margin: 20px;
-}
-
 .content {
-  flex: 1;
-  margin-left: 20px;
-  padding: 40px;
-  background-color: white;
-  border-radius: 20px;
-  width: 80%;
-}
-
-.filterSelect {
-  margin-bottom: 20px;
-  padding: 10px;
-  font-size: 16px;
-}
-
-.orderTable {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-
-  th,
-  td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-
-  th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-  }
-
-  tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-
-  tbody tr:hover {
-    background-color: #f1f1f1;
-  }
-}
-.tableSection {
-  margin-bottom: 40px;
-
-  h2 {
-    padding: 10px;
-    margin-bottom: 10px;
-    color: #333;
-    font-size: 24px;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 5px;
-  }
-}
-.tableContainer {
-  overflow-x: auto;
-}
-
-.tableWrapper {
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-.buttonGroup {
+  background-color: #ffffff;
+  border-radius: 1.25rem;
   display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
+  justify-content: center;
+  padding: 2rem;
+  width: 100%;
 
-.buttonGroup button:disabled {
-  background-color: #d3d3d3; 
-  cursor: not-allowed; 
-  border: 1px solid #ccc; 
-  color: #666; 
-}
+  .tableSection {
+    width: 100%;
 
-.green {
-  border: 2px solid #0f8143;
-  background-color: #0f8143;
-  border-radius: 8px;
-  padding: 8px;
-  color: #ffffff;
-  cursor: pointer;
-  transition: 0.2s;
-  font-size: 1rem;
-  font-weight: 500;
-  border: none;
+    h2 {
+      padding: 10px;
+      margin-bottom: 10px;
+      color: #333;
+      font-size: 24px;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 5px;
+    }
 
-  &:hover {
-    border: 2px solid #004620;
-    background-color: #004620;
+    .tableContainer {
+      overflow-x: auto;
+    }
+
+    .tableWrapper {
+      max-width: 100%;
+      overflow-x: auto;
+
+      .orderTable {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+
+        th,
+        td {
+          border: 1px solid #ddd;
+          padding: 8px;
+          text-align: left;
+        }
+
+        th {
+          background-color: #f2f2f2;
+          font-weight: bold;
+        }
+
+        tbody tr:nth-child(even) {
+          background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+          background-color: #f1f1f1;
+        }
+
+        .buttonGroup {
+          align-items: center;
+          justify-content: space-around;
+          display: flex;
+        }
+
+        .buttonGroup button:disabled {
+          background-color: #d3d3d3;
+          cursor: not-allowed;
+          border: 1px solid #ccc;
+          color: #666;
+          background-color: #ffffff;
+        }
+
+        .green {
+          border: 2px solid #0f8143;
+          background-color: #0f8143;
+          border-radius: 8px;
+          padding: 8px;
+          color: #ffffff;
+          cursor: pointer;
+          transition: 0.1s;
+          font-size: 1rem;
+          font-weight: 500;
+          border: none;
+
+          &:hover {
+            border: 2px solid #004620;
+            background-color: #004620;
+          }
+        }
+
+        .orange {
+          border: 2px solid #d66e0f;
+          background-color: #d66e0f;
+          border-radius: 8px;
+          padding: 8px;
+          color: #ffffff;
+          cursor: pointer;
+          transition: 0.1s;
+          font-size: 1rem;
+          font-weight: 500;
+          border: none;
+
+          &:hover {
+            border: 2px solid #b8600e;
+            background-color: #b8600e;
+          }
+        }
+      }
+    }
   }
-}
 
-.orange {
-  border: 2px solid #d66e0f;
-  background-color: #d66e0f;
-  border-radius: 8px;
-  padding: 8px;
-  color: #ffffff;
-  cursor: pointer;
-  transition: 0.2s;
-  font-size: 1rem;
-  font-weight: 500;
-  border: none;
+  .not_found_container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    width: 100%;
 
-  &:hover {
-    border: 2px solid #b8600e;
-    background-color: #b8600e;
+    h2 {
+      color: #212026;
+    }
+
+    p {
+      color: #737171;
+      font-weight: 400;
+      max-width: 500px;
+      text-align: center;
+    }
   }
 }

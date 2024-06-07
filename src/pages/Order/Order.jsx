@@ -5,6 +5,9 @@ import MenuComponent from "../../Components/Menu/Menu";
 import { useUser } from "../../context/UserContext";
 import { Input } from "../../Components/Input";
 import { Button } from "../../Components/Button";
+import { Icon } from "@iconify/react/dist/iconify";
+import acceptIcon from "@iconify-icons/mdi/check-thick";
+import rejectIcon from "@iconify-icons/mdi/close-thick";
 
 const Order = () => {
   const [orders, setOrders] = useState([
@@ -16,8 +19,6 @@ const Order = () => {
       type: "logistica",
       solicitante: "Cliente A",
       destinatario: "Destinatário A",
-      empresa: "Empresa A",
-      entregador: "Entregador A",
     },
     {
       id: 2,
@@ -27,8 +28,6 @@ const Order = () => {
       type: "cliente",
       solicitante: "Cliente B",
       destinatario: "Destinatário B",
-      empresa: "Empresa B",
-      entregador: "Entregador B",
     },
     {
       id: 3,
@@ -38,8 +37,6 @@ const Order = () => {
       type: "logistica",
       solicitante: "Cliente C",
       destinatario: "Destinatário C",
-      empresa: "Empresa C",
-      entregador: "Entregador C",
     },
     {
       id: 4,
@@ -49,15 +46,13 @@ const Order = () => {
       type: "cliente",
       solicitante: "Cliente D",
       destinatario: "Destinatário D",
-      empresa: "Empresa D",
-      entregador: "Entregador D",
     },
   ]);
 
-    const { user } = useUser();
-    const [filter] = useState('');
-    const [searchTerm, setSearchTerm] = useState('');
-    const [disabledButtons, setDisabledButtons] = useState({}); 
+  const { user } = useUser();
+  const [filter] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [disabledButtons, setDisabledButtons] = useState({});
 
   const navigate = useNavigate();
 
@@ -70,8 +65,6 @@ const Order = () => {
         type: "logistica",
         solicitante: "Cliente A",
         destinatario: "Destinatário A",
-        empresa: "Empresa A",
-        entregador: "Entregador A",
       },
       {
         id: 2,
@@ -80,8 +73,6 @@ const Order = () => {
         type: "cliente",
         solicitante: "Cliente B",
         destinatario: "Destinatário B",
-        empresa: "Empresa B",
-        entregador: "Entregador B",
       },
       {
         id: 3,
@@ -90,8 +81,6 @@ const Order = () => {
         type: "logistica",
         solicitante: "Cliente C",
         destinatario: "Destinatário C",
-        empresa: "Empresa C",
-        entregador: "Entregador C",
       },
       {
         id: 4,
@@ -100,31 +89,28 @@ const Order = () => {
         type: "cliente",
         solicitante: "Cliente D",
         destinatario: "Destinatário D",
-        empresa: "Empresa D",
-        entregador: "Entregador D",
       },
     ]);
   }, []);
 
-    const handleCheckout = (order) => {
-        const { id, date, volume, type, solicitante, destinatario } = order;
-        navigate('/requests', {
-            state: { id, date, volume, type, solicitante, destinatario }
-        }); 
-    };
+  const handleCheckout = (order) => {
+    const { id, date, volume, type, solicitante, destinatario } = order;
+    navigate("/requests", {
+      state: { id, date, volume, type, solicitante, destinatario },
+    });
+  };
 
-    const handleStatusChange = (orderId, newStatus) => {
-        setOrders(prevOrders =>
-            prevOrders.map(order =>
-                order.id === orderId ? { ...order, status: newStatus } : order
-            )
-        );
-        setDisabledButtons(prevState => ({
-            ...prevState,
-            [orderId]: true
-        }));
-    };
-
+  const handleStatusChange = (orderId, newStatus) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.id === orderId ? { ...order, status: newStatus } : order
+      )
+    );
+    setDisabledButtons((prevState) => ({
+      ...prevState,
+      [orderId]: true,
+    }));
+  };
 
   const filteredOrders = (type) => {
     return orders
@@ -136,15 +122,13 @@ const Order = () => {
           order.date.includes(searchTerm) ||
           order.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
           order.solicitante.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          order.destinatario.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          order.empresa.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          order.entregador.toLowerCase().includes(searchTerm.toLowerCase())
+          order.destinatario.toLowerCase().includes(searchTerm.toLowerCase())
         );
       });
   };
 
   return (
-    <div className={styles.orderContainer}>
+    <div className={styles.container}>
       <MenuComponent pageName={"Pedidos"} />
 
       <div className={styles.content}>
@@ -163,13 +147,11 @@ const Order = () => {
                 <table className={styles.orderTable}>
                   <thead>
                     <tr>
-                      <th>Ordem ID</th>
-                      <th>Data do Pedido</th>
+                      <th>ID</th>
+                      <th>Data Pedido</th>
+                      <th>Origem</th>
+                      <th>Destino</th>
                       <th>Status</th>
-                      <th>Solicitante</th>
-                      <th>Destinatário</th>
-                      <th>Empresa</th>
-                      <th>Entregador</th>
                       <th>Ações</th>
                     </tr>
                   </thead>
@@ -178,11 +160,10 @@ const Order = () => {
                       <tr key={order.id}>
                         <td>{order.id}</td>
                         <td>{order.date}</td>
-                        <td>{order.status}</td>
                         <td>{order.solicitante}</td>
                         <td>{order.destinatario}</td>
-                        <td>{order.empresa}</td>
-                        <td>{order.entregador}</td>
+                        <td>{order.status}</td>
+
                         <td>
                           {user && user.role === "user" ? (
                             <div className={styles.buttonGroup}>
@@ -190,11 +171,11 @@ const Order = () => {
                                 title="Aceitar"
                                 className={styles.green}
                                 onClick={() =>
-                                    handleStatusChange(order.id, "Aceito")
+                                  handleStatusChange(order.id, "Aceito")
                                 }
                                 disabled={disabledButtons[order.id]}
                               >
-                                Aceitar
+                                <Icon icon={acceptIcon} />
                               </button>
                               <button
                                 title="Recusar"
@@ -204,7 +185,7 @@ const Order = () => {
                                 }
                                 disabled={disabledButtons[order.id]}
                               >
-                                Recusar
+                                <Icon icon={rejectIcon} />
                               </button>
                             </div>
                           ) : (
