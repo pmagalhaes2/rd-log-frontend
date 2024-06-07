@@ -17,6 +17,10 @@ import {
   getAdministratorById,
   updateAdministrator,
 } from "../../services/administratorsAPI";
+import { formatTime } from "../../utils/formatters/formatDate";
+import { formatCurrency } from "../../utils/formatters/formatCurrency";
+import { removeMask } from "../../utils/formatters/removeMask";
+import { formatCnpj } from "../../utils/formatters/formatCnpj";
 
 function UserProfileForm() {
   const { user, setUser } = useUser();
@@ -27,7 +31,7 @@ function UserProfileForm() {
   const phoneNumberRef = useRef(null);
   const emailRef = useRef(null);
   const priceKmRef = useRef(null);
-  const addressTypeRef = useRef(null);
+  const addressComplementRef = useRef(null);
   const addressValueRef = useRef(null);
   const addressNumberRef = useRef(null);
   const addressCityRef = useRef(null);
@@ -43,11 +47,6 @@ function UserProfileForm() {
   const [fetchData, setFetchData] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
-
-  const formatTime = (time) => {
-    const [hours, minutes] = time.split(":");
-    return `${hours}:${minutes}:00`;
-  };
 
   const getLogisticCompany = async (logisticCompanyId) => {
     const res = await getById(logisticCompanyId);
@@ -77,13 +76,12 @@ function UserProfileForm() {
       phoneNumberRef.current.value = previousData.phone_number;
       emailRef.current.value = previousData.email;
       priceKmRef.current.value = previousData.price_km;
-      addressTypeRef.current.value = previousData.address?.type;
+      addressComplementRef.current.value = previousData.address?.complement;
       addressValueRef.current.value = previousData.address?.value;
       addressNumberRef.current.value = previousData.address?.number;
       addressCityRef.current.value = previousData.address?.city;
       addressStateRef.current.value = previousData.address?.state;
       addressZipCodeRef.current.value = previousData.address?.zipCode;
-      
     }
   }, [previousData]);
 
@@ -96,16 +94,16 @@ function UserProfileForm() {
             name: nameRef.current.value,
             opening_hours: formatTime(openingHoursRef.current.value),
             closing_hours: formatTime(closingHoursRef.current.value),
-            phone_number: phoneNumberRef.current.value,
-            price_km: priceKmRef.current.value,
+            phone_number: removeMask(phoneNumberRef.current.value),
+            price_km: formatCurrency(priceKmRef.current.value),
             email: emailRef.current.value,
             address: {
-              type: addressTypeRef.current.value,
+              complement: addressComplementRef.current.value,
               value: addressValueRef.current.value,
               number: addressNumberRef.current.value,
               city: addressCityRef.current.value,
               state: addressStateRef.current.value,
-              zipCode: addressZipCodeRef.current.value,
+              zipCode: removeMask(addressZipCodeRef.current.value),
             },
             password: passwordRef.current.value,
           }
@@ -144,6 +142,8 @@ function UserProfileForm() {
     setIsLoading(false);
   };
 
+
+
   return (
     <div className={styles.container}>
       <MenuComponent pageName={"Editar Perfil"} />
@@ -167,75 +167,77 @@ function UserProfileForm() {
                   placeholder="CNPJ"
                   label={"CNPJ"}
                   freeSize={false}
-                  defaultValue={previousData.cnpj}
+                  defaultValue={formatCnpj(previousData.cnpj)}
                   disabled
                 />
                 <Input
                   name="price_km"
                   ref={priceKmRef}
                   label={"Preço do Km"}
+                  mask={"R$ 9,99"}
                 />
               </div>
-              
             )}
             <div className={styles["form-row"]}>
-                <Input
-                  type="time"
-                  name="opening_hours"
-                  ref={openingHoursRef}
-                  label={"Horário de Abertura"}
-                />
-                <Input
-                  type="time"
-                  name="closing_hours"
-                  ref={closingHoursRef}
-                  label={"Horário de Fechamento"}
-                />
-              </div>
-              <div className={styles["form-row"]}>
-                <Input
-                  name="zipCode"
-                  ref={addressZipCodeRef}
-                  label={"CEP"}
-                  freeSize={false}
-                />
-                <Input
-                  name="address_type"
-                  ref={addressTypeRef}
-                  label={"Tipo de Logradouro"}
-                  freeSize={false}
-                />
-              </div>
-            
-              <div className={styles["form-row"]}>
-                <Input
-                  name="address_value"
-                  ref={addressValueRef}
-                  label={"Nome do Logradouro"}
-                  freeSize={false}
-                />
-                <Input
-                  name="address_number"
-                  ref={addressNumberRef}
-                  label={"Número"}
-                  freeSize={false}
-                />
-              </div>
+              <Input
+                type="time"
+                name="opening_hours"
+                ref={openingHoursRef}
+                label={"Horário de Abertura"}
+              />
+              <Input
+                type="time"
+                name="closing_hours"
+                ref={closingHoursRef}
+                label={"Horário de Fechamento"}
+              />
+            </div>
+            <div className={styles["form-row"]}>
+              <Input
+                name="zipCode"
+                ref={addressZipCodeRef}
+                label={"CEP"}
+                freeSize={false}
+                mask={"99999-999"}
+                alwaysShowMask
+              />
+              <Input
+                name="address_value"
+                ref={addressValueRef}
+                label={"Logradouro"}
+                freeSize={false}
+              />
+            </div>
 
-              <div className={styles["form-row"]}>
-                <Input
-                  name="address_city"
-                  ref={addressCityRef}
-                  label={"Cidade"}
-                  freeSize={false}
-                />
-                <Input
-                  name="address_state"
-                  ref={addressStateRef}
-                  label={"Estado"}
-                  freeSize={false}
-                />
-              </div>
+            <div className={styles["form-row"]}>
+              <Input
+                name="address_number"
+                ref={addressNumberRef}
+                label={"Número"}
+                freeSize={false}
+              />
+              <Input
+                name="address_complement"
+                ref={addressComplementRef}
+                label={"Complemento"}
+                freeSize={false}
+              />
+            </div>
+
+            <div className={styles["form-row"]}>
+              <Input
+                name="address_city"
+                ref={addressCityRef}
+                label={"Cidade"}
+                freeSize={false}
+              />
+              <Input
+                name="address_state"
+                ref={addressStateRef}
+                label={"Estado"}
+                freeSize={false}
+              />
+            </div>
 
             <div className={styles["form-row"]}>
               {user.role !== "admin" ? (
@@ -245,6 +247,7 @@ function UserProfileForm() {
                   ref={phoneNumberRef}
                   label={"Telefone"}
                   freeSize={false}
+                  mask="(99) 99999-9999"
                 />
               ) : (
                 <Input
