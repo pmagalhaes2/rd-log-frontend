@@ -9,6 +9,9 @@ import sucessImage from "../../assets/images/search-image.svg";
 import { registerLogisticCompany } from "../../services/logisticCompaniesAPI";
 import states from "./brazilian_states";
 import { getCep } from "../../services/cepAPI";
+import { removeMask } from "../../utils/formatters/removeMask";
+import { formatCurrency } from "../../utils/formatters/formatCurrency";
+import { formatTime } from "../../utils/formatters/formatDate";
 
 function Register() {
   const nameRef = useRef(null);
@@ -33,21 +36,16 @@ function Register() {
   const [brazilianState, setBrazilianState] = useState("");
   const navigate = useNavigate();
 
-  const formatTime = (time) => {
-    const [hours, minutes] = time.split(":");
-    return `${hours}:${minutes}:00`;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = {
       name: nameRef.current.value,
-      cnpj: cnpjRef.current.value,
-      price_km: priceKmRef.current.value,
+      cnpj: removeMask(cnpjRef.current.value),
+      price_km: formatCurrency(priceKmRef.current.value),
       opening_hours: formatTime(openingHoursRef.current.value),
       closing_hours: formatTime(closingHoursRef.current.value),
-      phone_number: phoneNumberRef.current.value,
+      phone_number: removeMask(phoneNumberRef.current.value),
       email: emailRef.current.value,
       password: passwordRef.current.value,
       address: {
@@ -56,7 +54,7 @@ function Register() {
         number: addressNumberRef.current.value,
         city: addressCityRef.current.value,
         state: brazilianState,
-        zipCode: addressCepRef.current.value,
+        zipCode: removeMask(addressCepRef.current.value),
       },
     };
 
@@ -90,7 +88,7 @@ function Register() {
   const clearInputValues = () => {
     nameRef.current.value = "";
     cnpjRef.current.value = "";
-    priceKmRef.current.value= "";
+    priceKmRef.current.value = "";
     openingHoursRef.current.value = "";
     closingHoursRef.current.value = "";
     phoneNumberRef.current.value = "";
@@ -141,12 +139,14 @@ function Register() {
               placeholder={"ex: 12.345.678/0001-90"}
               label={"CNPJ"}
               ref={cnpjRef}
+              mask="99.999.999/9999-99"
             />
             <Input
               name="price_km"
               placeholder={"ex: R$1.90"}
               label={"Preço do Km"}
               ref={priceKmRef}
+              mask={"R$ 9,99"}
             />
           </div>
           <div className={styles["form-row"]}>
@@ -165,10 +165,12 @@ function Register() {
           </div>
           <div className={styles["form-row"]}>
             <Input
+              type="tel"
               name="phone_number"
-              label={"Telefone"}
+              label={"Celular"}
               placeholder="ex: (11) 98765-4321"
               ref={phoneNumberRef}
+              mask="(99) 99999-9999"
             />
             <Input
               type="email"
@@ -186,6 +188,7 @@ function Register() {
               ref={addressCepRef}
               searchInput
               onClick={handleCep}
+              mask={"99999-999"}
             />
             <Input
               name="type"

@@ -17,6 +17,9 @@ import {
   getAdministratorById,
   updateAdministrator,
 } from "../../services/administratorsAPI";
+import { formatTime } from "../../utils/formatters/formatDate";
+import { formatCurrency } from "../../utils/formatters/formatCurrency";
+import { removeMask } from "../../utils/formatters/removeMask";
 
 function UserProfileForm() {
   const { user, setUser } = useUser();
@@ -43,11 +46,6 @@ function UserProfileForm() {
   const [fetchData, setFetchData] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
-
-  const formatTime = (time) => {
-    const [hours, minutes] = time.split(":");
-    return `${hours}:${minutes}:00`;
-  };
 
   const getLogisticCompany = async (logisticCompanyId) => {
     const res = await getById(logisticCompanyId);
@@ -97,7 +95,7 @@ function UserProfileForm() {
             opening_hours: formatTime(openingHoursRef.current.value),
             closing_hours: formatTime(closingHoursRef.current.value),
             phone_number: phoneNumberRef.current.value,
-            price_km: priceKmRef.current.value,
+            price_km: formatCurrency(priceKmRef.current.value),
             email: emailRef.current.value,
             address: {
               type: addressTypeRef.current.value,
@@ -105,7 +103,7 @@ function UserProfileForm() {
               number: addressNumberRef.current.value,
               city: addressCityRef.current.value,
               state: addressStateRef.current.value,
-              zipCode: addressZipCodeRef.current.value,
+              zipCode: removeMask(addressZipCodeRef.current.value),
             },
             password: passwordRef.current.value,
           }
@@ -168,12 +166,14 @@ function UserProfileForm() {
                   label={"CNPJ"}
                   freeSize={false}
                   defaultValue={previousData.cnpj}
+                  mask="99.999.999/9999-99"
                   disabled
                 />
                 <Input
                   name="price_km"
                   ref={priceKmRef}
                   label={"Preço do Km"}
+                  mask={"R$ 9,99"}
                 />
               </div>
               
@@ -198,6 +198,7 @@ function UserProfileForm() {
                   ref={addressZipCodeRef}
                   label={"CEP"}
                   freeSize={false}
+                  mask={"99999-999"}
                 />
                 <Input
                   name="address_type"
@@ -245,6 +246,7 @@ function UserProfileForm() {
                   ref={phoneNumberRef}
                   label={"Telefone"}
                   freeSize={false}
+                  mask="(99) 99999-9999"
                 />
               ) : (
                 <Input
