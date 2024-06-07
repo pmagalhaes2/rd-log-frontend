@@ -1,70 +1,131 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# RD Log Web
 
-## Available Scripts
+This is a web application for managing a logistics module. It allows transportation companies to register, log in, edit their details, and accept or decline orders assigned to them.
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+-   [Technologies](#technologies)
+-   [Dependencies](#dependencies)
+-   [Installation and Usage](#installation-and-usage)
+-   [API Endpoints](#api-endpoints)
+-   [Environment Variables](#environment-variables)
+-   [Contributing](#contributing)
+-   [License](#license)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🚀 Technologies
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+-   **Frontend**: JavaScript, React
+-   **Backend**: Java, Spring
+-   **Database**: PostgreSQL
+-   **Mock API**: JSON Server (for order data)
 
-### `npm test`
+## ⚠️ Dependencies
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Before you begin, ensure you have the following tools installed on your machine:
 
-### `npm run build`
+-   [Git](https://git-scm.com)
+-   [Node.js](https://nodejs.org/)
+-   [npm](https://www.npmjs.com/)
+-   [Java](https://www.java.com/)
+-   [Maven](https://maven.apache.org/)
+-   [PostgreSQL](https://www.postgresql.org/)
+-   An editor like [IntelliJ](https://www.jetbrains.com/idea/) or [Visual Studio Code](https://code.visualstudio.com/) (optional, but recommended for development)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📥  Installation  and usage
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash  
+  # Clone this repository  
+$ git clone https://github.com/thamirescandidabarbosa/rd-log-web
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# Access the project folder in your terminal
+$ cd rd-log-web
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Install frontend dependencies 
+$ npm install
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+# Start the React application 
+$ npm start
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# The application will be accessible at http://localhost:3000/
 
-### Code Splitting
+```  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+##  📖 API Endpoints
 
-### Analyzing the Bundle Size
+### Authentication
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+The backend API handles company, admin operations and is implemented with Java + Spring. The order data is handled by a mock API using JSON Server. The backend API's repository can be found [here](https://github.com/pmagalhaes2/rd-log-api).
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Logistic Companies
 
-### Advanced Configuration
+-   `GET /logistic-companies`: Retrieves a list of all logistic companies.
+-   `GET /logistic-companies/{id}`: Retrieves a logistic company by ID.
+-   `POST /logistic-companies`: Registers a new logistic company.
+-   `POST /logistic-companies/login`: Login using the new logistic company registration.
+-   `PUT /logistic-companies/{id}`: Updates a logistic company's information.
+-   `DELETE /logistic-companies/{id}`: Deletes a logistic company.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Orders (Mock API)
 
-### Deployment
+-   `GET /orders`: Retrieves a list of all orders.
+-   `GET /orders/{id}`: Retrieves an order by ID.
+-   `PUT /orders/{id}`: Updates an order's status (accept or decline).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+To start the mock API server for orders:
+```bash
+$ npm run server
+```
 
-### `npm run build` fails to minify
+## 🔧 Environment Variables
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+To run the application, you will need to configure the following environment variables:
+
+### Backend (Spring)
+
+-   `DB_URL`: URL of the database connection.
+-   `DB_USERNAME`: Database username.
+-   `DB_PASSWORD`: Database password.
+
+Example configuration in a `.env` file:
+
+```bash
+DB_URL=jdbc:postgresql://localhost:5432/logistic
+DB_USERNAME=postgres
+DB_PASSWORD=password
+```
+
+### Frontend (React)
+
+-   `REACT_APP_API_URL`: URL of the backend API.
+-   `REACT_APP_ORDER_API_URL`: URL of the mock order API.
+
+Example `.env` file for frontend:
+
+
+```bash 
+REACT_APP_API_URL=http://localhost:8080
+REACT_APP_ORDER_API_URL=http://localhost:3001
+```
+
+## Contributing
+
+If you would like to contribute to this project, please follow these steps:
+
+1.  Fork the repository.
+2.  Create a new branch with your feature or fix: `git checkout -b my-feature`.
+3.  Commit your changes: `git commit -m 'Add some feature'`.
+4.  Push to the branch: `git push origin my-feature`.
+5.  Open a pull request.
+
+Please make sure to update tests as appropriate.
+
+  ---
+
+Feito por [Patricia Magalhães](https://github.com/pmagalhaes2), [Cristina Giardini](https://github.com/cristina-giardini), [Thamires Barbosa](https://github.com/thamirescandidabarbosa), [Katherine Uchoas](https://github.com/katherineuchoas) e [Sophia Contesini](https://github.com/sophiacontesini) 💙
