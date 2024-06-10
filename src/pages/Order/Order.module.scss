@@ -16,15 +16,27 @@
   width: 100%;
 
   .tableSection {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
     width: 100%;
 
-    h2 {
-      padding: 10px;
-      margin-bottom: 10px;
-      color: #333;
-      font-size: 24px;
-      border-bottom: 2px solid #ddd;
-      padding-bottom: 5px;
+    .orders_heading {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      span {
+        display: flex;
+        gap: 1rem;
+        width: 100%;
+
+        h3 {
+          color: #333;
+          font-size: 1.25rem;
+        }
+      }
     }
 
     .tableContainer {
@@ -38,7 +50,6 @@
       .orderTable {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 20px;
 
         td {
           height: 3.125rem;

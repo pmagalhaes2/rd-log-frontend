@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./Menu.module.scss";
 import menuIcon from "../../assets/images/image 7.png";
 import dash from "../../assets/images/Dash.png";
-import pack from "../../assets/images/Pack.png";
 import truck from "../../assets/images/Truck.png";
 import faqs from "../../assets/images/FaQs.png";
 import history from "../../assets/images/history-icon.svg";
