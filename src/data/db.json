@@ -207,8 +207,8 @@
         "estado": "BA",
         "cep": "40080-002"
       },
-      "id_empresa_logistica": "20",
-      "status": "Entregue"
+      "id_empresa_logistica": "6",
+      "status": "Pendente"
     },
     {
       "id_pedido": 11,
@@ -228,8 +228,8 @@
         "estado": "CE",
         "cep": "60165-120"
       },
-      "id_empresa_logistica": "103",
-      "status": "Entregue"
+      "id_empresa_logistica": "6",
+      "status": "Pendente"
     },
     {
       "id_pedido": 12,
@@ -249,7 +249,7 @@
         "estado": "SP",
         "cep": "01310-100"
       },
-      "id_empresa_logistica": "3",
+      "id_empresa_logistica": "6",
       "status": "Pendente"
     }
   ]

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Order.module.scss";
 import MenuComponent from "../../Components/Menu/Menu";
+import { getAllOrders } from "../../services/ordersAPI.js";
 import { useUser } from "../../context/UserContext";
 import { Input } from "../../Components/Input";
 import { Button } from "../../Components/Button";
@@ -10,45 +11,7 @@ import acceptIcon from "@iconify-icons/mdi/check-thick";
 import rejectIcon from "@iconify-icons/mdi/close-thick";
 
 const Order = () => {
-  const [orders, setOrders] = useState([
-    {
-      id: 1,
-      date: "2024-05-20",
-      volume: 10,
-      status: "Em andamento",
-      type: "logistica",
-      solicitante: "Cliente A",
-      destinatario: "Destinatário A",
-    },
-    {
-      id: 2,
-      date: "2024-05-21",
-      volume: 15,
-      status: "Entregue",
-      type: "cliente",
-      solicitante: "Cliente B",
-      destinatario: "Destinatário B",
-    },
-    {
-      id: 3,
-      date: "2024-05-22",
-      volume: 8,
-      status: "Pendente",
-      type: "logistica",
-      solicitante: "Cliente C",
-      destinatario: "Destinatário C",
-    },
-    {
-      id: 4,
-      date: "2024-05-23",
-      volume: 12,
-      status: "Em andamento",
-      type: "cliente",
-      solicitante: "Cliente D",
-      destinatario: "Destinatário D",
-    },
-  ]);
-
+  const [orders, setOrders] = useState([]);
   const { user } = useUser();
   const [filter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -57,41 +20,25 @@ const Order = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setOrders([
-      {
-        id: 1,
-        date: "2024-05-20",
-        status: "Em andamento",
-        type: "logistica",
-        solicitante: "Cliente A",
-        destinatario: "Destinatário A",
-      },
-      {
-        id: 2,
-        date: "2024-05-21",
-        status: "Entregue",
-        type: "cliente",
-        solicitante: "Cliente B",
-        destinatario: "Destinatário B",
-      },
-      {
-        id: 3,
-        date: "2024-05-22",
-        status: "Pendente",
-        type: "logistica",
-        solicitante: "Cliente C",
-        destinatario: "Destinatário C",
-      },
-      {
-        id: 4,
-        date: "2024-05-23",
-        status: "Em andamento",
-        type: "cliente",
-        solicitante: "Cliente D",
-        destinatario: "Destinatário D",
-      },
-    ]);
-  }, []);
+    console.log("Fetching orders...");
+    getAllOrders()
+      .then((response) => {
+        console.log("API response:", response);
+        console.log("User data:", user);
+        if (user.role === "user_id") {
+          setOrders(response);
+        } else {
+          const filteredOrders = response.filter(
+            (item) => Number(item.id_empresa_logistica) === user.id
+          );
+          console.log("Filtered orders:", filteredOrders);
+          setOrders(filteredOrders);
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch orders:", error);
+      });
+  }, [user.id_empresa_logistica, user.role]);
 
   const handleCheckout = (order) => {
     const { id, date, volume, type, solicitante, destinatario } = order;
@@ -112,20 +59,30 @@ const Order = () => {
     }));
   };
 
-  const filteredOrders = (type) => {
-    return orders
-      .filter((order) => order.type === type)
-      .filter((order) => {
-        if (!searchTerm) return true;
-        return (
-          order.id.toString().includes(searchTerm) ||
-          order.date.includes(searchTerm) ||
-          order.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          order.solicitante.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          order.destinatario.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      });
+  const formatDate = (date) => {
+    const formattedDate = new Date(date);
+    const day = formattedDate.getDate().toString().padStart(2, "0");
+    const month = (formattedDate.getMonth() + 1).toString().padStart(2, "0");
+    const year = formattedDate.getFullYear();
+    return `${day}/${month}/${year}`;
   };
+
+  const filteredOrders = orders.filter(
+    (order) =>
+      order.id_pedido.toString().includes(searchTerm) ||
+      order.id_fornecedor.toString().includes(searchTerm) ||
+      order.endereco_origem.rua
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      order.endereco_destino.rua
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      order.endereco_origem.estado
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      order.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      formatDate(order.data_pedido).includes(searchTerm)
+  );
 
   return (
     <div className={styles.container}>
@@ -156,49 +113,68 @@ const Order = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredOrders("logistica").map((order) => (
-                      <tr key={order.id}>
-                        <td>{order.id}</td>
-                        <td>{order.date}</td>
-                        <td>{order.solicitante}</td>
-                        <td>{order.destinatario}</td>
-                        <td>{order.status}</td>
-
-                        <td>
-                          {user && user.role === "user" ? (
-                            <div className={styles.buttonGroup}>
-                              <button
-                                title="Aceitar"
-                                className={styles.green}
-                                onClick={() =>
-                                  handleStatusChange(order.id, "Aceito")
-                                }
-                                disabled={disabledButtons[order.id]}
+                    {filteredOrders.length > 0 ? (
+                      filteredOrders.map((order) => (
+                        <tr key={order.id_pedido}>
+                          <td>{order.id_pedido}</td>
+                          <td>{formatDate(order.data_pedido)}</td>
+                          <td>
+                            {order.endereco_origem.rua},{" "}
+                            {order.endereco_origem.numero}
+                          </td>
+                          <td>
+                            {order.endereco_destino.rua},{" "}
+                            {order.endereco_destino.numero}
+                          </td>
+                          <td>{order.status}</td>
+                          <td>
+                            {user && user.role === "user" ? (
+                              <div className={styles.buttonGroup}>
+                                <button
+                                  title="Aceitar"
+                                  className={styles.green}
+                                  onClick={() =>
+                                    handleStatusChange(
+                                      order.id_pedido,
+                                      "Aceito"
+                                    )
+                                  }
+                                  disabled={disabledButtons[order.id_pedido]}
+                                >
+                                  <Icon icon={acceptIcon} />
+                                </button>
+                                <button
+                                  title="Recusar"
+                                  className={styles.orange}
+                                  onClick={() =>
+                                    handleStatusChange(
+                                      order.id_pedido,
+                                      "Recusado"
+                                    )
+                                  }
+                                  disabled={disabledButtons[order.id_pedido]}
+                                >
+                                  <Icon icon={rejectIcon} />
+                                </button>
+                              </div>
+                            ) : (
+                              <Button
+                                title="Solicitar"
+                                onClick={() => handleCheckout(order)}
                               >
-                                <Icon icon={acceptIcon} />
-                              </button>
-                              <button
-                                title="Recusar"
-                                className={styles.orange}
-                                onClick={() =>
-                                  handleStatusChange(order.id, "Recusado")
-                                }
-                                disabled={disabledButtons[order.id]}
-                              >
-                                <Icon icon={rejectIcon} />
-                              </button>
-                            </div>
-                          ) : (
-                            <Button
-                              title="Solicitar"
-                              onClick={() => handleCheckout(order.id)}
-                            >
-                              Solicitar Envio
-                            </Button>
-                          )}
+                                Solicitar Envio
+                              </Button>
+                            )}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="6">
+                          Nenhum pedido encontrado com os critérios de busca.
                         </td>
                       </tr>
-                    ))}
+                    )}
                   </tbody>
                 </table>
               </div>
