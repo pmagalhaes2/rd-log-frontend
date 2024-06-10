@@ -36,16 +36,6 @@ function MenuComponent({ pageName }) {
             <img src={truck} alt="Pedidos" />
             Pedidos
           </NavLink>
-
-          {role === "admin" && (
-            <NavLink
-              to="/requests"
-              className={({ isActive }) => (isActive ? styles.active : "")}
-            >
-              <img src={pack} alt="Solicitações" />
-              Solicitações
-            </NavLink>
-          )}
           <NavLink
             to="/history"
             className={({ isActive }) => (isActive ? styles.active : "")}
