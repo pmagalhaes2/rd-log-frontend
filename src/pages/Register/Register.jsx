@@ -24,7 +24,7 @@ function Register() {
   const passwordRef = useRef(null);
   const passwordConfirmRef = useRef(null);
   const addressCepRef = useRef(null);
-  const addressTypeRef = useRef(null);
+  const addressComplementRef = useRef(null);
   const addressValueRef = useRef(null);
   const addressNumberRef = useRef(null);
   const addressCityRef = useRef(null);
@@ -49,7 +49,7 @@ function Register() {
       email: emailRef.current.value,
       password: passwordRef.current.value,
       address: {
-        type: addressTypeRef.current.value,
+        complement: addressComplementRef.current.value,
         value: addressValueRef.current.value,
         number: addressNumberRef.current.value,
         city: addressCityRef.current.value,
@@ -94,7 +94,7 @@ function Register() {
     phoneNumberRef.current.value = "";
     emailRef.current.value = "";
     passwordRef.current.value = "";
-    addressTypeRef.current.value = "";
+    addressComplementRef.current.value = "";
     addressValueRef.current.value = "";
     addressNumberRef.current.value = "";
     addressCityRef.current.value = "";
@@ -191,24 +191,25 @@ function Register() {
               mask={"99999-999"}
             />
             <Input
-              name="type"
-              label={"Tipo Logradouro"}
-              placeholder="ex: Rua"
-              ref={addressTypeRef}
+              name="value"
+              label={"Logradouro"}
+              placeholder="ex: Rua ABC"
+              ref={addressValueRef}
             />
           </div>
           <div className={styles["form-row"]}>
-            <Input
-              name="value"
-              label={"Logradouro"}
-              placeholder="ex: Praça da Sé"
-              ref={addressValueRef}
-            />
             <Input
               name="number"
               label={"Número"}
               placeholder="ex: 100"
               ref={addressNumberRef}
+            />
+            <Input
+              name="complement"
+              label={"Complemento"}
+              placeholder="ex: sala comercial 03"
+              ref={addressComplementRef}
+              required={false}
             />
           </div>
           <div className={styles["form-row"]}>

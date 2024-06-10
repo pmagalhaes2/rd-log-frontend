@@ -4,7 +4,7 @@
   gap: 3rem;
   justify-content: space-between;
   padding: 3.125rem 5rem;
-  width: 1250px;
+  width: 100%;
 
   .questions_container {
     background-color: #ffffff;
@@ -13,7 +13,7 @@
     flex-direction: column;
     gap: 4rem;
     padding: 2rem;
-    width: 65rem;
+    width: 100%;
 
     .questions_heading {
       align-items: center;

@@ -37,14 +37,21 @@ export const History = () => {
     return `${day}/${month}/${year}`;
   };
 
-  const filteredOrders = orders.filter((order) =>
-    order.id_pedido.toString().includes(searchTerm) ||
-    order.id_fornecedor.toString().includes(searchTerm) ||
-    order.endereco_origem.rua.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    order.endereco_destino.rua.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    order.endereco_origem.estado.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    order.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    formatDate(order.data_pedido).includes(searchTerm) // Aplicando o formato na busca por data
+  const filteredOrders = orders.filter(
+    (order) =>
+      order.id_pedido.toString().includes(searchTerm) ||
+      order.id_fornecedor.toString().includes(searchTerm) ||
+      order.endereco_origem.rua
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      order.endereco_destino.rua
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      order.endereco_origem.estado
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      order.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      formatDate(order.data_pedido).includes(searchTerm) // Aplicando o formato na busca por data
   );
 
   return (
@@ -52,76 +59,74 @@ export const History = () => {
       <div className={styles.container}>
         <MenuComponent pageName={"Histórico"} />
         <div className={styles.content}>
-          
-            {orders.length === 0 ? (
-              <div className={styles.not_found_container}>
-                <h2>Nenhum pedido encontrado</h2>
-                <p>
-                  Atualmente, não há pedidos registrados no histórico. Quando
-                  novos pedidos forem feitos, eles aparecerão aqui.
-                </p>
-              </div>
-            ) : (
-              <div className={styles.tableSection}>
-                <h2>Histórico de Pedidos</h2>
-                <Input
-                  type="text"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Faça sua busca aqui"
-                  className={styles.searchInput}
-                />
-                <div className={styles.tableContainer}>
-                  <div className={styles.tableWrapper}>
-                    <table className={styles.orderTable}>
-                      <thead>
-                        <tr>
-                          <th>ID Pedido</th>
-                          <th>Data do Pedido</th>
-                          <th>ID Fornecedor</th>
-                          <th>Solicitante</th>
-                          <th>Destinatário</th>
-                          <th>UF</th>
-                          <th>ID Logística</th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {filteredOrders.length > 0 ? (
-                          filteredOrders.map((order, index) => (
-                            <tr key={index}>
-                              <td>{order.id_pedido}</td>
-                              <td>{formatDate(order.data_pedido)}</td>
-                              <td>{order.id_fornecedor}</td>
-                              <td>
-                                {order.endereco_origem.rua},{" "}
-                                {order.endereco_origem.numero}
-                              </td>
-                              <td>
-                                {order.endereco_destino.rua},{" "}
-                                {order.endereco_destino.numero}
-                              </td>
-                              <td>{order.endereco_origem.estado}</td>
-                              <td>{order.id_empresa_logistica}</td>
-                              <td>{order.status}</td>
-                            </tr>
-                          ))
-                        ) : (
-                          <tr>
-                            <td colSpan="8">
-                              Nenhum pedido encontrado com os critérios de busca.
+          {orders.length === 0 ? (
+            <div className={styles.not_found_container}>
+              <h2>Nenhum pedido encontrado</h2>
+              <p>
+                Atualmente, não há pedidos registrados no histórico. Quando
+                novos pedidos forem feitos, eles aparecerão aqui.
+              </p>
+            </div>
+          ) : (
+            <div className={styles.tableSection}>
+              <h2>Histórico de Pedidos</h2>
+              <Input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Digite o dado do pedido para efetuar busca"
+                className={styles.searchInput}
+              />
+              <div className={styles.tableContainer}>
+                <div className={styles.tableWrapper}>
+                  <table className={styles.orderTable}>
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Data</th>
+                        <th>Fornecedor</th>
+                        <th>Origem</th>
+                        <th>Destino</th>
+                        <th>UF</th>
+                        <th>Logística</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredOrders.length > 0 ? (
+                        filteredOrders.map((order, index) => (
+                          <tr key={index}>
+                            <td>{order.id_pedido}</td>
+                            <td>{formatDate(order.data_pedido)}</td>
+                            <td>{order.id_fornecedor}</td>
+                            <td>
+                              {order.endereco_origem.rua},{" "}
+                              {order.endereco_origem.numero}
                             </td>
+                            <td>
+                              {order.endereco_destino.rua},{" "}
+                              {order.endereco_destino.numero}
+                            </td>
+                            <td>{order.endereco_origem.estado}</td>
+                            <td>{order.id_empresa_logistica}</td>
+                            <td>{order.status}</td>
                           </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan="8">
+                            Nenhum pedido encontrado com os critérios de busca.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
                 </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
+      </div>
     </>
   );
 };
-

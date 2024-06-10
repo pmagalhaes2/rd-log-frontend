@@ -21,9 +21,13 @@ import { formatTime } from "../../utils/formatters/formatDate";
 import { formatCurrency } from "../../utils/formatters/formatCurrency";
 import { removeMask } from "../../utils/formatters/removeMask";
 import { formatCnpj } from "../../utils/formatters/formatCnpj";
+import { formatCpf } from "../../utils/formatters/formatCpf";
+import states from "../Register/brazilian_states";
+import { getCep } from "../../services/cepAPI";
 
 function UserProfileForm() {
   const { user, setUser } = useUser();
+  const navigate = useNavigate();
 
   const nameRef = useRef(null);
   const openingHoursRef = useRef(null);
@@ -46,7 +50,9 @@ function UserProfileForm() {
   const [previousData, setPreviousData] = useState(null);
   const [fetchData, setFetchData] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
-  const navigate = useNavigate();
+  const [brazilianState, setBrazilianState] = useState("");
+  const [zipCode, setZipCode] = useState("");
+
 
   const getLogisticCompany = async (logisticCompanyId) => {
     const res = await getById(logisticCompanyId);
@@ -60,6 +66,26 @@ function UserProfileForm() {
     setFetchData(false);
   };
 
+  const handleCep = async () => {
+    try {
+      if (addressZipCodeRef.current.value.trim() === "") {
+        return;
+      } else {
+        const previousAddress = await getCep(addressZipCodeRef.current.value);
+        const { logradouro, localidade, uf } = previousAddress;
+        setZipCode(addressZipCodeRef.current.value); // Atualiza o estado do CEP
+        addressValueRef.current.value = logradouro;
+        addressCityRef.current.value = localidade;
+        setBrazilianState(uf);
+      }
+    } catch (error) {
+      console.error("Erro ao consultar CEP:", error);
+      setMessage("Erro ao buscar CEP. Por favor, tente novamente.");
+      setError(true);
+    }
+  };
+  
+
   useEffect(() => {
     if (user.role !== "admin") {
       getLogisticCompany(user.id);
@@ -70,18 +96,19 @@ function UserProfileForm() {
 
   useEffect(() => {
     if (previousData) {
-      nameRef.current.value = previousData.name;
-      openingHoursRef.current.value = previousData.opening_hours;
-      closingHoursRef.current.value = previousData.closing_hours;
-      phoneNumberRef.current.value = previousData.phone_number;
-      emailRef.current.value = previousData.email;
-      priceKmRef.current.value = previousData.price_km;
-      addressComplementRef.current.value = previousData.address?.complement;
-      addressValueRef.current.value = previousData.address?.value;
-      addressNumberRef.current.value = previousData.address?.number;
-      addressCityRef.current.value = previousData.address?.city;
-      addressStateRef.current.value = previousData.address?.state;
-      addressZipCodeRef.current.value = previousData.address?.zipCode;
+      if (nameRef.current) nameRef.current.value = previousData.name || "";
+      if (openingHoursRef.current) openingHoursRef.current.value = previousData.opening_hours || "";
+      if (closingHoursRef.current) closingHoursRef.current.value = previousData.closing_hours || "";
+      if (phoneNumberRef.current) phoneNumberRef.current.value = previousData.phone_number || "";
+      if (emailRef.current) emailRef.current.value = previousData.email || "";
+      if (priceKmRef.current) priceKmRef.current.value = previousData.price_km || "";
+      if (addressComplementRef.current) addressComplementRef.current.value = previousData.address?.complement || "";
+      if (addressValueRef.current) addressValueRef.current.value = previousData.address?.value || "";
+      if (addressNumberRef.current) addressNumberRef.current.value = previousData.address?.number || "";
+      if (addressCityRef.current) addressCityRef.current.value = previousData.address?.city || "";
+      if (addressStateRef.current) setBrazilianState(previousData.address?.state || "");
+      if (addressZipCodeRef.current) addressZipCodeRef.current.value = previousData.address?.zipCode || "";
+      if (addressZipCodeRef.current) setZipCode(previousData.address?.zipCode || ""); 
     }
   }, [previousData]);
 
@@ -91,29 +118,29 @@ function UserProfileForm() {
     const formData =
       user.role !== "admin"
         ? {
-            name: nameRef.current.value,
-            opening_hours: formatTime(openingHoursRef.current.value),
-            closing_hours: formatTime(closingHoursRef.current.value),
-            phone_number: removeMask(phoneNumberRef.current.value),
-            price_km: formatCurrency(priceKmRef.current.value),
-            email: emailRef.current.value,
+            name: nameRef.current ? nameRef.current.value : "",
+            opening_hours: openingHoursRef.current ? formatTime(openingHoursRef.current.value) : "",
+            closing_hours: closingHoursRef.current ? formatTime(closingHoursRef.current.value) : "",
+            phone_number: phoneNumberRef.current ? removeMask(phoneNumberRef.current.value) : "",
+            price_km: priceKmRef.current ? formatCurrency(priceKmRef.current.value) : "",
+            email: emailRef.current ? emailRef.current.value : "",
             address: {
-              complement: addressComplementRef.current.value,
-              value: addressValueRef.current.value,
-              number: addressNumberRef.current.value,
-              city: addressCityRef.current.value,
-              state: addressStateRef.current.value,
-              zipCode: removeMask(addressZipCodeRef.current.value),
+              complement: addressComplementRef.current ? addressComplementRef.current.value : "",
+              value: addressValueRef.current ? addressValueRef.current.value : "",
+              number: addressNumberRef.current ? addressNumberRef.current.value : "",
+              city: addressCityRef.current ? addressCityRef.current.value : "",
+              state: brazilianState,
+              zipCode: addressZipCodeRef.current ? removeMask(addressZipCodeRef.current.value) : "",
             },
-            password: passwordRef.current.value,
+            password: passwordRef.current ? passwordRef.current.value : "",
           }
         : {
-            name: nameRef.current.value,
-            email: emailRef.current.value,
-            password: passwordRef.current.value,
+            name: nameRef.current ? nameRef.current.value : "",
+            email: emailRef.current ? emailRef.current.value : "",
+            password: passwordRef.current ? passwordRef.current.value : "",
           };
 
-    if (formData.password !== passwordConfirmRef.current.value) {
+    if (passwordRef.current && passwordConfirmRef.current && formData.password !== passwordConfirmRef.current.value) {
       setMessage("As senhas não coincidem. Tente novamente!");
       setError(true);
       return;
@@ -142,8 +169,6 @@ function UserProfileForm() {
     setIsLoading(false);
   };
 
-
-
   return (
     <div className={styles.container}>
       <MenuComponent pageName={"Editar Perfil"} />
@@ -159,25 +184,24 @@ function UserProfileForm() {
               ref={nameRef}
               label={"Nome"}
             />
-
-            {user.role !== "admin" && (
-              <div className={styles["form-row"]}>
-                <Input
-                  name="cnpj"
-                  placeholder="CNPJ"
-                  label={"CNPJ"}
-                  freeSize={false}
-                  defaultValue={formatCnpj(previousData.cnpj)}
-                  disabled
-                />
-                <Input
-                  name="price_km"
-                  ref={priceKmRef}
-                  label={"Preço do Km"}
-                  mask={"R$ 9,99"}
-                />
-              </div>
-            )}
+        {user.role !== "admin" && (
+          <>
+            <div className={styles["form-row"]}>
+              <Input
+                name="cnpj"
+                placeholder="CNPJ"
+                label={"CNPJ"}
+                freeSize={false}
+                defaultValue={previousData ? formatCnpj(previousData.cnpj) : ""}
+                disabled
+              />
+              <Input
+                name="price_km"
+                ref={priceKmRef}
+                label={"Preço do Km"}
+                mask={"R$ 9,99"}
+              />
+            </div>
             <div className={styles["form-row"]}>
               <Input
                 type="time"
@@ -195,11 +219,15 @@ function UserProfileForm() {
             <div className={styles["form-row"]}>
               <Input
                 name="zipCode"
-                ref={addressZipCodeRef}
                 label={"CEP"}
-                freeSize={false}
+                placeholder="ex: 01001000"
+                ref={addressZipCodeRef}
+                searchInput
+                onClick={handleCep}
                 mask={"99999-999"}
                 alwaysShowMask
+                value={zipCode} 
+                onChange={(e) => setZipCode(e.target.value)} 
               />
               <Input
                 name="address_value"
@@ -208,7 +236,6 @@ function UserProfileForm() {
                 freeSize={false}
               />
             </div>
-
             <div className={styles["form-row"]}>
               <Input
                 name="address_number"
@@ -223,7 +250,6 @@ function UserProfileForm() {
                 freeSize={false}
               />
             </div>
-
             <div className={styles["form-row"]}>
               <Input
                 name="address_city"
@@ -231,74 +257,85 @@ function UserProfileForm() {
                 label={"Cidade"}
                 freeSize={false}
               />
-              <Input
-                name="address_state"
-                ref={addressStateRef}
-                label={"Estado"}
-                freeSize={false}
-              />
+              <div className={styles.state_container}>
+                <label>Estado</label>
+                <select
+                  value={brazilianState}
+                  onChange={(e) => setBrazilianState(e.target.value)}
+                  className={styles.state_select}
+                >
+                  <option value="">Selecione um estado</option>
+                  {states.map((state) => (
+                    <option key={state.sigla} value={state.sigla}>
+                      {state.nome}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-
-            <div className={styles["form-row"]}>
-              {user.role !== "admin" ? (
-                <Input
-                  name="phone_number"
-                  placeholder="Telefone"
-                  ref={phoneNumberRef}
-                  label={"Telefone"}
-                  freeSize={false}
-                  mask="(99) 99999-9999"
-                />
-              ) : (
-                <Input
-                  name="cpf"
-                  placeholder="CPF"
-                  label={"CPF"}
-                  freeSize={false}
-                  defaultValue={previousData.cpf}
-                  disabled
-                />
-              )}
-              <Input
-                type="email"
-                name="email"
-                placeholder="E-mail"
-                ref={emailRef}
-                label={"E-mail"}
-                freeSize={false}
-              />
-            </div>
-            <div className={styles["form-row"]}>
-              <Input
-                type="password"
-                name="password"
-                placeholder="Senha"
-                ref={passwordRef}
-                label={"Senha"}
-              />
-              <Input
-                type="password"
-                name="confirm_password"
-                label={"Confirmação senha"}
-                placeholder="Confirmação de senha"
-                ref={passwordConfirmRef}
-              />
-            </div>
-            <Button
-              type="submit"
-              disabled={isLoading}
-              title={isLoading ? "Enviando..." : "Salvar Alterações"}
-              customSize
-            />
-          </form>
+          </>
         )}
-        {showPopup && (
-          <Popup
-            alt={"Imagem de confirmação de alteração"}
-            imageUrl={successImg}
-            message={message}
-            onClick={() => navigate("/dashboard")}
-          />
+
+          <div className={styles["form-row"]}>
+                {user.role !== "admin" ? (
+                    <Input
+                        name="phone_number"
+                        placeholder="Telefone"
+                        ref={phoneNumberRef}
+                        label={"Telefone"}
+                        freeSize={false}
+                        mask="(99) 99999-9999"
+                    />
+                ) : (
+                    <Input
+                        name="cpf"
+                        placeholder="CPF"
+                        label={"CPF"}
+                        freeSize={false}
+                        defaultValue={previousData ? formatCpf(previousData.cpf) : ""}
+                        disabled
+                    />
+                )}
+                    <Input
+                        type="email"
+                        name="email"
+                        placeholder="E-mail"
+                        ref={emailRef}
+                        label={"E-mail"}
+                        freeSize={false}
+                    />
+              </div>
+                <div className={styles["form-row"]}>
+                    <Input
+                        type="password"
+                        name="password"
+                        placeholder="Senha"
+                        ref={passwordRef}
+                        label={"Senha"}
+                    />
+                    <Input
+                        type="password"
+                        name="confirm_password"
+                        label={"Confirmação senha"}
+                        placeholder="Confirmação de senha"
+                        ref={passwordConfirmRef}
+                    />
+                </div>
+                <Button
+                    type="submit"
+                    disabled={isLoading}
+                    title={isLoading ? "Enviando..." : "Salvar Alterações"}
+                    customSize
+                />
+                </form>
+                )}
+                {showPopup && (
+                <Popup
+                    alt={"Imagem de confirmação de alteração"}
+                    imageUrl={successImg}
+                    message={message}
+                    onClick={() => navigate("/dashboard")}
+                />
         )}
       </div>
     </div>
@@ -306,3 +343,5 @@ function UserProfileForm() {
 }
 
 export default UserProfileForm;
+
+
