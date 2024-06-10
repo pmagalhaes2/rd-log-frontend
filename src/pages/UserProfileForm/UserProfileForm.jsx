@@ -21,6 +21,7 @@ import { formatTime } from "../../utils/formatters/formatDate";
 import { formatCurrency } from "../../utils/formatters/formatCurrency";
 import { removeMask } from "../../utils/formatters/removeMask";
 import { formatCnpj } from "../../utils/formatters/formatCnpj";
+import { formatCpf } from "../../utils/formatters/formatCpf";
 import states from "../Register/brazilian_states";
 import { getCep } from "../../services/cepAPI";
 
@@ -183,25 +184,24 @@ function UserProfileForm() {
               ref={nameRef}
               label={"Nome"}
             />
-
-            {user.role !== "admin" && (
-              <div className={styles["form-row"]}>
-                <Input
-                  name="cnpj"
-                  placeholder="CNPJ"
-                  label={"CNPJ"}
-                  freeSize={false}
-                  defaultValue={formatCnpj(previousData.cnpj)}
-                  disabled
-                />
-                <Input
-                  name="price_km"
-                  ref={priceKmRef}
-                  label={"Preço do Km"}
-                  mask={"R$ 9,99"}
-                />
-              </div>
-            )}
+        {user.role !== "admin" && (
+          <>
+            <div className={styles["form-row"]}>
+              <Input
+                name="cnpj"
+                placeholder="CNPJ"
+                label={"CNPJ"}
+                freeSize={false}
+                defaultValue={previousData ? formatCnpj(previousData.cnpj) : ""}
+                disabled
+              />
+              <Input
+                name="price_km"
+                ref={priceKmRef}
+                label={"Preço do Km"}
+                mask={"R$ 9,99"}
+              />
+            </div>
             <div className={styles["form-row"]}>
               <Input
                 type="time"
@@ -217,18 +217,18 @@ function UserProfileForm() {
               />
             </div>
             <div className={styles["form-row"]}>
-            <Input
-              name="zipCode"
-              label={"CEP"}
-              placeholder="ex: 01001000"
-              ref={addressZipCodeRef}
-              searchInput
-              onClick={handleCep}
-              mask={"99999-999"}
-              alwaysShowMask
-              value={zipCode} 
-              onChange={(e) => setZipCode(e.target.value)} 
-            />
+              <Input
+                name="zipCode"
+                label={"CEP"}
+                placeholder="ex: 01001000"
+                ref={addressZipCodeRef}
+                searchInput
+                onClick={handleCep}
+                mask={"99999-999"}
+                alwaysShowMask
+                value={zipCode} 
+                onChange={(e) => setZipCode(e.target.value)} 
+              />
               <Input
                 name="address_value"
                 ref={addressValueRef}
@@ -236,7 +236,6 @@ function UserProfileForm() {
                 freeSize={false}
               />
             </div>
-
             <div className={styles["form-row"]}>
               <Input
                 name="address_number"
@@ -251,96 +250,96 @@ function UserProfileForm() {
                 freeSize={false}
               />
             </div>
+            <div className={styles["form-row"]}>
+              <Input
+                name="address_city"
+                ref={addressCityRef}
+                label={"Cidade"}
+                freeSize={false}
+              />
+              <div className={styles.state_container}>
+                <label>Estado</label>
+                <select
+                  value={brazilianState}
+                  onChange={(e) => setBrazilianState(e.target.value)}
+                  className={styles.state_select}
+                >
+                  <option value="">Selecione um estado</option>
+                  {states.map((state) => (
+                    <option key={state.sigla} value={state.sigla}>
+                      {state.nome}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </>
+        )}
 
-
-<div className={styles["form-row"]}>
-    <Input
-        name="address_city"
-        ref={addressCityRef}
-        label={"Cidade"}
-        freeSize={false}
-    />
-    <div className={styles.state_container}>
-        <label>Estado</label>
-        <select
-            value={brazilianState}
-            onChange={(e) => setBrazilianState(e.target.value)}
-            className={styles.state_select}
-        >
-            <option value="">Selecione um estado</option>
-            {states.map((state) => (
-                <option key={state.sigla} value={state.sigla}>
-                    {state.nome}
-                </option>
-            ))}
-        </select>
+          <div className={styles["form-row"]}>
+                {user.role !== "admin" ? (
+                    <Input
+                        name="phone_number"
+                        placeholder="Telefone"
+                        ref={phoneNumberRef}
+                        label={"Telefone"}
+                        freeSize={false}
+                        mask="(99) 99999-9999"
+                    />
+                ) : (
+                    <Input
+                        name="cpf"
+                        placeholder="CPF"
+                        label={"CPF"}
+                        freeSize={false}
+                        defaultValue={previousData ? formatCpf(previousData.cpf) : ""}
+                        disabled
+                    />
+                )}
+                    <Input
+                        type="email"
+                        name="email"
+                        placeholder="E-mail"
+                        ref={emailRef}
+                        label={"E-mail"}
+                        freeSize={false}
+                    />
+              </div>
+                <div className={styles["form-row"]}>
+                    <Input
+                        type="password"
+                        name="password"
+                        placeholder="Senha"
+                        ref={passwordRef}
+                        label={"Senha"}
+                    />
+                    <Input
+                        type="password"
+                        name="confirm_password"
+                        label={"Confirmação senha"}
+                        placeholder="Confirmação de senha"
+                        ref={passwordConfirmRef}
+                    />
+                </div>
+                <Button
+                    type="submit"
+                    disabled={isLoading}
+                    title={isLoading ? "Enviando..." : "Salvar Alterações"}
+                    customSize
+                />
+                </form>
+                )}
+                {showPopup && (
+                <Popup
+                    alt={"Imagem de confirmação de alteração"}
+                    imageUrl={successImg}
+                    message={message}
+                    onClick={() => navigate("/dashboard")}
+                />
+        )}
+      </div>
     </div>
-</div>
-
-<div className={styles["form-row"]}>
-    {user.role !== "admin" ? (
-        <Input
-            name="phone_number"
-            placeholder="Telefone"
-            ref={phoneNumberRef}
-            label={"Telefone"}
-            freeSize={false}
-            mask="(99) 99999-9999"
-        />
-    ) : (
-        <Input
-            name="cpf"
-            placeholder="CPF"
-            label={"CPF"}
-            freeSize={false}
-            defaultValue={previousData.cpf}
-            disabled
-        />
-    )}
-    <Input
-        type="email"
-        name="email"
-        placeholder="E-mail"
-        ref={emailRef}
-        label={"E-mail"}
-        freeSize={false}
-    />
-</div>
-<div className={styles["form-row"]}>
-    <Input
-        type="password"
-        name="password"
-        placeholder="Senha"
-        ref={passwordRef}
-        label={"Senha"}
-    />
-    <Input
-        type="password"
-        name="confirm_password"
-        label={"Confirmação senha"}
-        placeholder="Confirmação de senha"
-        ref={passwordConfirmRef}
-    />
-</div>
-<Button
-    type="submit"
-    disabled={isLoading}
-    title={isLoading ? "Enviando..." : "Salvar Alterações"}
-    customSize
-/>
-</form>
-)}
-{showPopup && (
-<Popup
-    alt={"Imagem de confirmação de alteração"}
-    imageUrl={successImg}
-    message={message}
-    onClick={() => navigate("/dashboard")}
-/>
-)}
-</div>
-</div>
-);
+  );
 }
 
 export default UserProfileForm;
