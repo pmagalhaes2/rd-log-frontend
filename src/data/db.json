@@ -19,7 +19,7 @@
         "cep": "01310-100"
       },
       "id_empresa_logistica": "1",
-      "status": "Pendente"
+      "status": "Aceito"
     },
     {
       "id": "6",
@@ -40,7 +40,7 @@
         "cep": "01310-100"
       },
       "id_empresa_logistica": "1",
-      "status": "Pendente"
+      "status": "Recusado"
     },
     {
       "id": "2",
@@ -165,8 +165,8 @@
         "estado": "SC",
         "cep": "88025-010"
       },
-      "id_empresa_logistica": "28",
-      "status": "Pendente"
+      "id_empresa_logistica": "12",
+      "status": "Aceito"
     },
     {
       "id": "8",

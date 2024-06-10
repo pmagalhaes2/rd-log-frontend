@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllOrders } from "../../services/ordersAPI.js";
 import MenuComponent from "../../Components/Menu/Menu.jsx";
 import { Input } from "../../Components/Input";
+import history from "../../assets/images/history-icon.svg";
 
 import styles from "./History.module.scss";
 import { useUser } from "../../context/UserContext.jsx";
@@ -16,10 +17,15 @@ export const History = () => {
     getAllOrders()
       .then((response) => {
         if (user.role === "admin") {
-          setOrders(response);
+          const filteredOrders = response.filter(
+            (order) => order.status !== "Pendente"
+          );
+          setOrders(filteredOrders);
         } else {
           const filteredOrders = response.filter(
-            (item) => Number(item.id_empresa_logistica) === user.id
+            (item) =>
+              Number(item.id_empresa_logistica) === user.id &&
+              item.status !== "Pendente"
           );
           setOrders(filteredOrders);
         }
@@ -69,14 +75,22 @@ export const History = () => {
             </div>
           ) : (
             <div className={styles.tableSection}>
-              <h2>Histórico de Pedidos</h2>
-              <Input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Digite o dado do pedido para efetuar busca"
-                className={styles.searchInput}
-              />
+              <div className={styles.history_heading}>
+                <span>
+                  <img src={history} alt="Ícone de histórico" />
+                  <h3>Histórico de Pedidos</h3>
+                </span>
+                <div>
+                  <Input
+                    searchInput={true}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Digite o dado do pedido para efetuar busca"
+                    className={styles.searchInput}
+                    freeSize={false}
+                  />
+                </div>
+              </div>
               <div className={styles.tableContainer}>
                 <div className={styles.tableWrapper}>
                   <table className={styles.orderTable}>

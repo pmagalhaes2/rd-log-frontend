@@ -25,6 +25,7 @@ function App() {
           <Route path="/" Component={Home} />
           <Route path="/login" Component={Login} />
           <Route path="/register" Component={Register} />
+          <Route path="*" Component={NotFound} />
           <Route element={<PrivateRoutes />}>
             <Route path="/requests/:orderId" Component={Requests} />
             <Route path="/support" Component={Support} />
@@ -33,7 +34,6 @@ function App() {
             <Route path="/edit-profile" element={<UserProfileForm />} />
             <Route path="/orders" element={<Order />} />
             <Route path="/checkout/:orderId" element={<Requests />} />
-            <Route path="*" Component={NotFound} />
           </Route>
         </Routes>
       </BrowserRouter>
