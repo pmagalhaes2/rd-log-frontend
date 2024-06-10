@@ -61,7 +61,7 @@
         "cep": "80530-000"
       },
       "id_empresa_logistica": "2",
-      "status": "Entregue"
+      "status": "Pendente"
     },
     {
       "id_pedido": 3,
@@ -82,7 +82,7 @@
         "cep": "30130-003"
       },
       "id_empresa_logistica": "4",
-      "status": "Entregue"
+      "status": "Pendente"
     },
     {
       "id_pedido": 4,
@@ -103,7 +103,7 @@
         "cep": "90160-093"
       },
       "id_empresa_logistica": "26",
-      "status": "Recusado"
+      "status": "Pendente"
     },
     {
       "id_pedido": 5,
@@ -124,7 +124,7 @@
         "cep": "51011-000"
       },
       "id_empresa_logistica": "29",
-      "status": "Recusado"
+      "status": "Pendente"
     },
     {
       "id_pedido": 10,
@@ -145,7 +145,7 @@
         "cep": "01430-000"
       },
       "id_empresa_logistica": "3",
-      "status": "Entregue"
+      "status": "Pendente"
     },
     {
       "id_pedido": 7,
@@ -166,7 +166,7 @@
         "cep": "88025-010"
       },
       "id_empresa_logistica": "28",
-      "status": "Entregue"
+      "status": "Pendente"
     },
     {
       "id_pedido": 8,
@@ -187,7 +187,7 @@
         "cep": "22070-002"
       },
       "id_empresa_logistica": "2",
-      "status": "Entregue"
+      "status": "Pendente"
     },
     {
       "id_pedido": 9,
