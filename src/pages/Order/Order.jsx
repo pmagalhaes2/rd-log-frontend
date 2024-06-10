@@ -43,7 +43,7 @@ const Order = () => {
   }, [user.id, user.role]);
 
   const handleCheckout = (order) => {
-    navigate(`/requests/${order.id}`);
+    navigate(`/requests/${order.id}`, { state: order });
   };
 
   const handleStatusChange = async (orderId, newStatus) => {

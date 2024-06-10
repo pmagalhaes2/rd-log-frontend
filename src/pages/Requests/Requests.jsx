@@ -5,6 +5,7 @@ import { Button } from "../../Components/Button";
 import { getAllLogisticCompanies } from "../../services/logisticCompaniesAPI.js";
 import { useLocation, useParams } from "react-router-dom";
 import { Loading } from "../../Components/Loading";
+import pack from "../../assets/images/Pack.png";
 
 export default function Requests() {
   const location = useLocation();
@@ -14,8 +15,8 @@ export default function Requests() {
   const [selectedCompany, setSelectedCompany] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [valorP, setValorP] = useState("R$ 00,00");
-  const [origem, setOrigem] = useState(orderData.solicitante || "");
-  const [destino, setDestino] = useState(orderData.destinatario || "");
+  const [origem, setOrigem] = useState(orderData.endereco_origem.rua || "");
+  const [destino, setDestino] = useState(orderData.endereco_destino.rua || "");
   const [data, setData] = useState(new Date().toLocaleDateString());
 
   const params = useParams();
@@ -59,9 +60,12 @@ export default function Requests() {
           {!showCompanies && <Loading />}
           {showCompanies && (
             <>
-              <h3>
-                Solicitação de Entrega: <span>#ID {orderId}</span>
-              </h3>
+              <span>
+                <img src={pack} alt="Ícone de pacote" />
+                <h3>
+                  Solicitação de Entrega: <span>#ID {orderId}</span>
+                </h3>
+              </span>
 
               <div className={styles.form}>
                 <div className={styles.calcRoute}>
