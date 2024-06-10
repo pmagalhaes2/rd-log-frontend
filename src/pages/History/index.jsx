@@ -16,10 +16,15 @@ export const History = () => {
     getAllOrders()
       .then((response) => {
         if (user.role === "admin") {
-          setOrders(response);
+          const filteredOrders = response.filter(
+            (order) => order.status !== "Pendente"
+          );
+          setOrders(filteredOrders);
         } else {
           const filteredOrders = response.filter(
-            (item) => Number(item.id_empresa_logistica) === user.id
+            (item) =>
+              Number(item.id_empresa_logistica) === user.id &&
+              item.status !== "Pendente"
           );
           setOrders(filteredOrders);
         }

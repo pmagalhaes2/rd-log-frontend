@@ -23,10 +23,15 @@ const Order = () => {
     getAllOrders()
       .then((response) => {
         if (user.role === "admin") {
-          setOrders(response);
+          const filteredOrders = response.filter(
+            (order) => order.status === "Pendente"
+          );
+          setOrders(filteredOrders);
         } else {
           const filteredOrders = response.filter(
-            (item) => Number(item.id_empresa_logistica) === user.id
+            (item) =>
+              Number(item.id_empresa_logistica) === user.id &&
+              item.status === "Pendente"
           );
           setOrders(filteredOrders);
         }
@@ -36,7 +41,7 @@ const Order = () => {
       });
   }, [user.id, user.role]);
 
-  const handleCheckout = (order) => {;
+  const handleCheckout = (order) => {
     navigate(`/requests/${order.id}`);
   };
 
@@ -46,7 +51,7 @@ const Order = () => {
         order.id === orderId ? { ...order, status: newStatus } : order
       )
     );
-    await updateOrderStatus(orderId, newStatus)
+    await updateOrderStatus(orderId, newStatus);
     setDisabledButtons((prevState) => ({
       ...prevState,
       [orderId]: true,
@@ -128,10 +133,7 @@ const Order = () => {
                                   title="Aceitar"
                                   className={styles.green}
                                   onClick={() =>
-                                    handleStatusChange(
-                                      order.id,
-                                      "Aceito"
-                                    )
+                                    handleStatusChange(order.id, "Aceito")
                                   }
                                   disabled={disabledButtons[order.id]}
                                 >
@@ -141,10 +143,7 @@ const Order = () => {
                                   title="Recusar"
                                   className={styles.orange}
                                   onClick={() =>
-                                    handleStatusChange(
-                                      order.id,
-                                      "Recusado"
-                                    )
+                                    handleStatusChange(order.id, "Recusado")
                                   }
                                   disabled={disabledButtons[order.id]}
                                 >
