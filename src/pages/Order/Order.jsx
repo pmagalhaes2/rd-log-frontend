@@ -9,7 +9,6 @@ import { Button } from "../../Components/Button";
 import { Icon } from "@iconify/react/dist/iconify";
 import acceptIcon from "@iconify-icons/mdi/check-thick";
 import rejectIcon from "@iconify-icons/mdi/close-thick";
-import truck from "../../assets/images/Truck.png";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -24,15 +23,10 @@ const Order = () => {
     getAllOrders()
       .then((response) => {
         if (user.role === "admin") {
-          const filteredOrders = response.filter(
-            (order) => order.status === "Pendente"
-          );
-          setOrders(filteredOrders);
+          setOrders(response);
         } else {
           const filteredOrders = response.filter(
-            (item) =>
-              Number(item.id_empresa_logistica) === user.id &&
-              item.status === "Pendente"
+            (item) => Number(item.id_empresa_logistica) === user.id
           );
           setOrders(filteredOrders);
         }
@@ -42,7 +36,7 @@ const Order = () => {
       });
   }, [user.id, user.role]);
 
-  const handleCheckout = (order) => {
+  const handleCheckout = (order) => {;
     navigate(`/requests/${order.id}`);
   };
 
@@ -52,7 +46,7 @@ const Order = () => {
         order.id === orderId ? { ...order, status: newStatus } : order
       )
     );
-    await updateOrderStatus(orderId, newStatus);
+    await updateOrderStatus(orderId, newStatus)
     setDisabledButtons((prevState) => ({
       ...prevState,
       [orderId]: true,
@@ -91,22 +85,14 @@ const Order = () => {
       <div className={styles.content}>
         {filter === "logistica" || filter === "" ? (
           <div className={styles.tableSection}>
-            <div className={styles.orders_heading}>
-              <span>
-                <img src={truck} alt="Ícone de pedidos" />
-                <h3>Listagem de Pedidos</h3>
-              </span>
-              <div>
-                <Input
-                  searchInput={true}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Digite o dado do pedido para efetuar busca"
-                  className={styles.searchInput}
-                  freeSize={false}
-                />
-              </div>
-            </div>
+            <h2>Listagem de Pedidos</h2>
+            <Input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Digite o dado do pedido para efetuar busca"
+              className={styles.searchInput}
+            />
             <div className={styles.tableContainer}>
               <div className={styles.tableWrapper}>
                 <table className={styles.orderTable}>
@@ -116,8 +102,8 @@ const Order = () => {
                       <th>Data</th>
                       <th>Origem</th>
                       <th>Destino</th>
-                      <th>UF</th>
                       <th>Status</th>
+                      <th>UF</th>
                       <th>Ações</th>
                     </tr>
                   </thead>
@@ -144,7 +130,10 @@ const Order = () => {
                                   title="Aceitar"
                                   className={styles.green}
                                   onClick={() =>
-                                    handleStatusChange(order.id, "Aceito")
+                                    handleStatusChange(
+                                      order.id,
+                                      "Aceito"
+                                    )
                                   }
                                   disabled={disabledButtons[order.id]}
                                 >
@@ -154,7 +143,10 @@ const Order = () => {
                                   title="Recusar"
                                   className={styles.orange}
                                   onClick={() =>
-                                    handleStatusChange(order.id, "Recusado")
+                                    handleStatusChange(
+                                      order.id,
+                                      "Recusado"
+                                    )
                                   }
                                   disabled={disabledButtons[order.id]}
                                 >
