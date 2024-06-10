@@ -26,7 +26,7 @@ function App() {
           <Route path="/login" Component={Login} />
           <Route path="/register" Component={Register} />
           <Route element={<PrivateRoutes />}>
-            <Route path="/requests" Component={Requests} />
+            <Route path="/requests/:orderId" Component={Requests} />
             <Route path="/support" Component={Support} />
             <Route path="/dashboard" Component={Dashboard} />
             <Route path="history" Component={History} />

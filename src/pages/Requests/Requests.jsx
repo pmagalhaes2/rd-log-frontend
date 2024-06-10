@@ -4,7 +4,8 @@ import MenuComponent from "../../Components/Menu/Menu";
 import { Input } from "../../Components/Input";
 import { Button } from "../../Components/Button";
 import { getAllLogisticCompanies } from "../../services/logisticCompaniesAPI.js";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from "react-router-dom";
+import { Loading } from "../../Components/Loading";
 
 export default function Requests() {
   const location = useLocation();
@@ -14,9 +15,12 @@ export default function Requests() {
   const [selectedCompany, setSelectedCompany] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [valorP, setValorP] = useState("R$ 00,00");
-  const [origem, setOrigem] = useState(orderData.solicitante || '');
-  const [destino, setDestino] = useState(orderData.destinatario || '');
+  const [origem, setOrigem] = useState(orderData.solicitante || "");
+  const [destino, setDestino] = useState(orderData.destinatario || "");
   const [data, setData] = useState(new Date().toLocaleDateString());
+
+  const params = useParams();
+  const {orderId} = params;
 
   useEffect(() => {
     getAllLogisticCompanies()
@@ -36,7 +40,6 @@ export default function Requests() {
     setSelectedCompany(event.target.value);
   };
 
-
   const handleOrigemChange = (event) => {
     setOrigem(event.target.value);
   };
@@ -54,52 +57,83 @@ export default function Requests() {
       <div className={styles.container}>
         <MenuComponent pageName={"Solicitações"} />
         <div className={styles.formContainer}>
-          <h3>Solicitação de Entrega: <span>Id {orderData.id}</span></h3>
-  
-          <div className={styles.form}>
-            <div className={styles.calcRoute}>
-              <label htmlFor="origem">Endereço de origem:</label>
-              <input id="origem" onChange={handleOrigemChange} value={origem} className={styles.inputLarge} />
-              <label className={styles.destinoLabel} htmlFor="destino">Endereço de destino:</label>
-              <input id="destino" onChange={handleDestinoChange} value={destino} className={styles.inputLarge} />
-              <div className={styles.dataValueInputs}>  
-                <label htmlFor="data">Data:</label>
-                <input type="text" id="data" value={data} onChange={handleDataChange} className={styles.inputSmall} />
-                <br />
-              </div>
-              <Button title='Calcular Rota' freeSize={true} className={styles.calcButton} onClick={handleCalculateRoute} />
-            </div>
-  
-            <div className={styles.findTransport}>
-              <div className={styles.detailsButton}>
-                <div className={styles.details}>
-                  <p>Distância: 0km</p>
-                  <p>Tempo estimado: 0hr</p>
-                  <p>Volume: {orderData.volume} m³</p>
-                  <p>Valor: </p>
+          {!showCompanies && <Loading />}
+          {showCompanies && (
+            <>
+              <h3>
+                Solicitação de Entrega: <span>#ID {orderId}</span>
+              </h3>
+
+              <div className={styles.form}>
+                <div className={styles.calcRoute}>
+                  <label htmlFor="origem">Endereço de origem:</label>
+                  <input
+                    id="origem"
+                    onChange={handleOrigemChange}
+                    value={origem}
+                    className={styles.inputLarge}
+                  />
+                  <label className={styles.destinoLabel} htmlFor="destino">
+                    Endereço de destino:
+                  </label>
+                  <input
+                    id="destino"
+                    onChange={handleDestinoChange}
+                    value={destino}
+                    className={styles.inputLarge}
+                  />
+                  <div className={styles.dataValueInputs}>
+                    <label htmlFor="data">Data:</label>
+                    <input
+                      type="text"
+                      id="data"
+                      value={data}
+                      onChange={handleDataChange}
+                      className={styles.inputSmall}
+                    />
+                    <br />
+                  </div>
+                  <Button
+                    title="Calcular Rota"
+                    freeSize={true}
+                    className={styles.calcButton}
+                    onClick={handleCalculateRoute}
+                  />
                 </div>
-  
-                {showCompanies && (
-                  <>
-                    <label htmlFor="dispTransp">Transportadoras Disponíveis:</label>
-                    <select onChange={handleSelectChange}>
-                      <option value="">Selecione uma transportadora</option>
-                      {companies.map((company) => (
-                        <option key={company.id} value={company.name}>
-                          {company.name}
-                        </option>
-                      ))}
-                    </select>
-                  </>
-                )}
+
+                <div className={styles.findTransport}>
+                  <div className={styles.detailsButton}>
+                    <div className={styles.details}>
+                      <p>Distância: 0km</p>
+                      <p>Tempo estimado: 0hr</p>
+                      <p>Valor: </p>
+                    </div>
+
+                    {showCompanies && (
+                      <>
+                        <label htmlFor="dispTransp">
+                          Transportadoras Disponíveis:
+                        </label>
+                        <select onChange={handleSelectChange}>
+                          <option value="">Selecione uma transportadora</option>
+                          {companies.map((company) => (
+                            <option key={company.id} value={company.name}>
+                              {company.name}
+                            </option>
+                          ))}
+                        </select>
+                      </>
+                    )}
+                  </div>
+                  <Button
+                    disabled={!selectedCompany}
+                    freeSize={true}
+                    title="Confirmar Solicitação"
+                  />
+                </div>
               </div>
-              <Button
-                disabled={!selectedCompany}
-                freeSize={true}
-                title="Confirmar Solicitação"
-              />
-            </div>
-          </div>
+            </>
+          )}
         </div>
       </div>
     </>

@@ -93,11 +93,9 @@ const Order = () => {
     ]);
   }, []);
 
-  const handleCheckout = (order) => {
-    const { id, date, volume, type, solicitante, destinatario } = order;
-    navigate("/requests", {
-      state: { id, date, volume, type, solicitante, destinatario },
-    });
+  const handleCheckout = (orderId) => {
+
+    navigate(`/requests/${orderId}`);
   };
 
   const handleStatusChange = (orderId, newStatus) => {
