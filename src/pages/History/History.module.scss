@@ -4,7 +4,7 @@
   gap: 3rem;
   justify-content: space-between;
   padding: 3.125rem 5rem;
-  width: 1250px;
+  width: 100%;
 
   .content {
     background-color: #ffffff;
@@ -37,7 +37,11 @@
         .orderTable {
           width: 100%;
           border-collapse: collapse;
-          margin-top: 20px;
+          margin-top: 2.5rem;
+
+          td {
+            height: 3.125rem;
+          }
 
           th,
           td {

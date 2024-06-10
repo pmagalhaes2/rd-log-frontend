@@ -10,9 +10,8 @@
 .container {
   background-color: #f4f4f4;
   display: flex;
-  gap: 5rem;
-  justify-content: space-between;
-  padding: 3.125rem 6.25rem;
+  justify-content: space-around;
+  padding: 3.125rem 5rem;
   width: 100%;
 
   .register-container {
