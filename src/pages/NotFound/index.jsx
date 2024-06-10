@@ -17,7 +17,7 @@ export const NotFound = () => {
           se preocupe, vamos ajudá-lo a voltar ao caminho certo!
         </p>
         </div>
-        <Link to="/login">
+        <Link to="/dashboard">
           <Button title="Voltar para a página principal" variant="tertiary" />
         </Link>
       </div>
