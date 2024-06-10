@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Requests.module.scss";
 import MenuComponent from "../../Components/Menu/Menu";
-import { Input } from "../../Components/Input";
 import { Button } from "../../Components/Button";
 import { getAllLogisticCompanies } from "../../services/logisticCompaniesAPI.js";
 import { useLocation, useParams } from "react-router-dom";
@@ -20,7 +19,7 @@ export default function Requests() {
   const [data, setData] = useState(new Date().toLocaleDateString());
 
   const params = useParams();
-  const {orderId} = params;
+  const { orderId } = params;
 
   useEffect(() => {
     getAllLogisticCompanies()

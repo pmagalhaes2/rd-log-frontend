@@ -20,29 +20,24 @@ const Order = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Fetching orders...");
     getAllOrders()
       .then((response) => {
-        console.log("API response:", response);
-        console.log("User data:", user);
-        if (user.role === "user_id") {
+        if (user.role === "admin") {
           setOrders(response);
         } else {
           const filteredOrders = response.filter(
             (item) => Number(item.id_empresa_logistica) === user.id
           );
-          console.log("Filtered orders:", filteredOrders);
           setOrders(filteredOrders);
         }
       })
       .catch((error) => {
         console.error("Failed to fetch orders:", error);
       });
-  }, [user.id_empresa_logistica, user.role]);
+  }, [user.id, user.role]);
 
-  const handleCheckout = (orderId) => {
-
-    navigate(`/requests/${orderId}`);
+  const handleCheckout = (order) => {;
+    navigate(`/requests/${order.id_pedido}`);
   };
 
   const handleStatusChange = (orderId, newStatus) => {
