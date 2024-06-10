@@ -36,14 +36,14 @@ const Order = () => {
       });
   }, [user.id, user.role]);
 
-  const handleCheckout = (order) => {;
+  const handleCheckout = (order) => {
     navigate(`/requests/${order.id_pedido}`);
   };
 
   const handleStatusChange = (orderId, newStatus) => {
     setOrders((prevOrders) =>
       prevOrders.map((order) =>
-        order.id === orderId ? { ...order, status: newStatus } : order
+        order.id_pedido === orderId ? { ...order, status: newStatus } : order
       )
     );
     setDisabledButtons((prevState) => ({
