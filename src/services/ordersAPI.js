@@ -10,7 +10,10 @@ export const getAllOrders = async () => {
   try {
     const response = await api.get(baseURL);
     return response.data;
+    const response = await api.get(baseURL);
+    return response.data;
   } catch (error) {
+    throw error.response;
     throw error.response;
   }
 };
