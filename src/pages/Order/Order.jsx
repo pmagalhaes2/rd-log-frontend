@@ -43,7 +43,9 @@ const Order = () => {
   }, [user.id, user.role]);
 
   const handleCheckout = (order) => {
-    navigate(`/requests/${order.id}`, { state: order });
+    navigate(`/requests/${order.id}`, {
+      state: { origin: order.endereco_origem.rua, destination: order.endereco_destino.rua }
+    });
   };
 
   const handleStatusChange = async (orderId, newStatus) => {
