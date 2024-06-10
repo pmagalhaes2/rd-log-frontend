@@ -39,7 +39,7 @@ export const History = () => {
 
   const filteredOrders = orders.filter(
     (order) =>
-      order.id_pedido.toString().includes(searchTerm) ||
+      order.id.toString().includes(searchTerm) ||
       order.id_fornecedor.toString().includes(searchTerm) ||
       order.endereco_origem.rua
         .toLowerCase()
@@ -96,7 +96,7 @@ export const History = () => {
                       {filteredOrders.length > 0 ? (
                         filteredOrders.map((order, index) => (
                           <tr key={index}>
-                            <td>{order.id_pedido}</td>
+                            <td>{order.id}</td>
                             <td>{formatDate(order.data_pedido)}</td>
                             <td>{order.id_fornecedor}</td>
                             <td>

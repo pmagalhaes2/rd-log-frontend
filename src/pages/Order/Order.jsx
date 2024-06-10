@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Order.module.scss";
 import MenuComponent from "../../Components/Menu/Menu";
-import { getAllOrders } from "../../services/ordersAPI.js";
+import { getAllOrders, updateOrderStatus } from "../../services/ordersAPI.js";
 import { useUser } from "../../context/UserContext";
 import { Input } from "../../Components/Input";
 import { Button } from "../../Components/Button";
@@ -37,15 +37,16 @@ const Order = () => {
   }, [user.id, user.role]);
 
   const handleCheckout = (order) => {;
-    navigate(`/requests/${order.id_pedido}`);
+    navigate(`/requests/${order.id}`);
   };
 
-  const handleStatusChange = (orderId, newStatus) => {
+  const handleStatusChange = async (orderId, newStatus) => {
     setOrders((prevOrders) =>
       prevOrders.map((order) =>
         order.id === orderId ? { ...order, status: newStatus } : order
       )
     );
+    await updateOrderStatus(orderId, newStatus)
     setDisabledButtons((prevState) => ({
       ...prevState,
       [orderId]: true,
@@ -62,7 +63,7 @@ const Order = () => {
 
   const filteredOrders = orders.filter(
     (order) =>
-      order.id_pedido.toString().includes(searchTerm) ||
+      order.id.toString().includes(searchTerm) ||
       order.id_fornecedor.toString().includes(searchTerm) ||
       order.endereco_origem.rua
         .toLowerCase()
@@ -108,8 +109,8 @@ const Order = () => {
                   <tbody>
                     {filteredOrders.length > 0 ? (
                       filteredOrders.map((order) => (
-                        <tr key={order.id_pedido}>
-                          <td>{order.id_pedido}</td>
+                        <tr key={order.id}>
+                          <td>{order.id}</td>
                           <td>{formatDate(order.data_pedido)}</td>
                           <td>
                             {order.endereco_origem.rua},{" "}
@@ -128,11 +129,11 @@ const Order = () => {
                                   className={styles.green}
                                   onClick={() =>
                                     handleStatusChange(
-                                      order.id_pedido,
+                                      order.id,
                                       "Aceito"
                                     )
                                   }
-                                  disabled={disabledButtons[order.id_pedido]}
+                                  disabled={disabledButtons[order.id]}
                                 >
                                   <Icon icon={acceptIcon} />
                                 </button>
@@ -141,11 +142,11 @@ const Order = () => {
                                   className={styles.orange}
                                   onClick={() =>
                                     handleStatusChange(
-                                      order.id_pedido,
+                                      order.id,
                                       "Recusado"
                                     )
                                   }
-                                  disabled={disabledButtons[order.id_pedido]}
+                                  disabled={disabledButtons[order.id]}
                                 >
                                   <Icon icon={rejectIcon} />
                                 </button>
