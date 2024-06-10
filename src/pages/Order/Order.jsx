@@ -99,9 +99,10 @@ const Order = () => {
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Data Pedido</th>
+                      <th>Data</th>
                       <th>Origem</th>
                       <th>Destino</th>
+                      <th>UF</th>
                       <th>Status</th>
                       <th>Ações</th>
                     </tr>
@@ -120,6 +121,7 @@ const Order = () => {
                             {order.endereco_destino.rua},{" "}
                             {order.endereco_destino.numero}
                           </td>
+                          <td>{order.endereco_origem.estado}</td>
                           <td>{order.status}</td>
                           <td>
                             {user && user.role === "user" ? (

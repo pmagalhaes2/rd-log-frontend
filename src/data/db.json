@@ -1,7 +1,7 @@
 {
   "orders": [
     {
-      "id": 1,
+      "id": "1",
       "data_pedido": "2024-05-01",
       "id_fornecedor": "F12345",
       "endereco_origem": {
@@ -22,7 +22,7 @@
       "status": "Pendente"
     },
     {
-      "id": 6,
+      "id": "6",
       "data_pedido": "2024-05-01",
       "id_fornecedor": "F12345",
       "endereco_origem": {
@@ -43,7 +43,7 @@
       "status": "Pendente"
     },
     {
-      "id": 2,
+      "id": "2",
       "data_pedido": "2024-05-02",
       "id_fornecedor": "F12346",
       "endereco_origem": {
@@ -64,7 +64,7 @@
       "status": "Pendente"
     },
     {
-      "id": 3,
+      "id": "3",
       "data_pedido": "2024-05-03",
       "id_fornecedor": "F12347",
       "endereco_origem": {
@@ -85,7 +85,7 @@
       "status": "Pendente"
     },
     {
-      "id": 4,
+      "id": "4",
       "data_pedido": "2024-05-04",
       "id_fornecedor": "F12348",
       "endereco_origem": {
@@ -106,7 +106,7 @@
       "status": "Pendente"
     },
     {
-      "id": 5,
+      "id": "5",
       "data_pedido": "2024-05-05",
       "id_fornecedor": "F12349",
       "endereco_origem": {
@@ -127,7 +127,7 @@
       "status": "Pendente"
     },
     {
-      "id": 10,
+      "id": "10",
       "data_pedido": "2024-05-06",
       "id_fornecedor": "F12350",
       "endereco_origem": {
@@ -148,7 +148,7 @@
       "status": "Aceito"
     },
     {
-      "id": 7,
+      "id": "7",
       "data_pedido": "2024-05-07",
       "id_fornecedor": "F12351",
       "endereco_origem": {
@@ -169,7 +169,7 @@
       "status": "Pendente"
     },
     {
-      "id": 8,
+      "id": "8",
       "data_pedido": "2024-05-08",
       "id_fornecedor": "F12352",
       "endereco_origem": {
@@ -190,7 +190,7 @@
       "status": "Pendente"
     },
     {
-      "id": 9,
+      "id": "9",
       "data_pedido": "2024-05-09",
       "id_fornecedor": "F12353",
       "endereco_origem": {
@@ -208,10 +208,10 @@
         "cep": "40080-002"
       },
       "id_empresa_logistica": "6",
-      "status": "Pendente"
+      "status": "Aceito"
     },
     {
-      "id": 11,
+      "id": "11",
       "data_pedido": "2024-05-10",
       "id_fornecedor": "F12354",
       "endereco_origem": {
@@ -229,10 +229,10 @@
         "cep": "60165-120"
       },
       "id_empresa_logistica": "6",
-      "status": "Pendente"
+      "status": "Recusado"
     },
     {
-      "id": 12,
+      "id": "12",
       "data_pedido": "2024-05-01",
       "id_fornecedor": "F12345",
       "endereco_origem": {
@@ -250,7 +250,7 @@
         "cep": "01310-100"
       },
       "id_empresa_logistica": "6",
-      "status": "Pendente"
+      "status": "Recusado"
     }
   ]
 }
