@@ -8,7 +8,6 @@ import { Loading } from "../../Components/Loading";
 import { Message } from "../../Components/Message";
 import pack from "../../assets/images/Pack.png";
 import { calculateDistanceAndDuration } from "../../services/distanceAPI.js";
-
 export default function Requests() {
   const location = useLocation();
   const orderData = location.state;
@@ -50,6 +49,10 @@ export default function Requests() {
       .catch((error) => console.error("Erro ao buscar companhias:", error));
   }, []);
 
+  const formatEstimatedValue = (value) => {
+    return value.replace("hour", "hora").replace("hours", "horas");
+  };
+
   const handleCalculateRoute = async () => {
     if (!origin || !destination) {
       setError("Por favor, preencha os campos de origem e destino.");
@@ -67,7 +70,7 @@ export default function Requests() {
         const estimatedTime =
           response.rows[0].elements[0].duration?.text || "0";
         setDistanceValue(distance);
-        setEstimatedTimeValue(estimatedTime);
+        setEstimatedTimeValue(formatEstimatedValue(estimatedTime));
         setPriceValue(`${priceValue || "00,00"}`);
         setError("");
       } else {
