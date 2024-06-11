@@ -37,7 +37,7 @@ export const Support = () => {
           <div>
             <Input
               searchInput={true}
-              placeholder={"Digite um campo para buscar"}
+              placeholder={"Digite um campo para filtrar"}
               onChange={handleSearch}
               freeSize={false}
             />
