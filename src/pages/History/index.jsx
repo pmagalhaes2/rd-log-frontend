@@ -85,7 +85,7 @@ export const History = () => {
                     searchInput={true}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Digite o dado do pedido para efetuar busca"
+                    placeholder="Digite o dado do pedido para filtrar"
                     className={styles.searchInput}
                     freeSize={false}
                   />

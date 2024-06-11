@@ -5,22 +5,41 @@ import { Button } from "../../Components/Button";
 import { getAllLogisticCompanies } from "../../services/logisticCompaniesAPI.js";
 import { useLocation, useParams } from "react-router-dom";
 import { Loading } from "../../Components/Loading";
+import { Message } from "../../Components/Message";
 import pack from "../../assets/images/Pack.png";
+import { calculateDistanceAndDuration } from "../../services/distanceAPI.js";
 
 export default function Requests() {
   const location = useLocation();
-  const orderData = location.state || {};
+  const orderData = location.state;
   const [companies, setCompanies] = useState([]);
   const [showCompanies, setShowCompanies] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState("");
-  const [inputValue, setInputValue] = useState("");
-  const [valorP, setValorP] = useState("R$ 00,00");
-  const [origem, setOrigem] = useState(orderData.endereco_origem.rua || "");
-  const [destino, setDestino] = useState(orderData.endereco_destino.rua || "");
+  const [priceValue, setPriceValue] = useState("00,00");
+  const [origin, setOrigin] = useState();
+  const [destination, setDestination] = useState();
   const [data, setData] = useState(new Date().toLocaleDateString());
+  const [distanceValue, setDistanceValue] = useState("");
+  const [estimatedTimeValue, setEstimatedTimeValue] = useState("");
+  const [error, setError] = useState("");
 
   const params = useParams();
   const { orderId } = params;
+
+  useEffect(() => {
+    setOrigin(
+      {
+        street: orderData.origin_street,
+        cep: orderData.origin_cep,
+      } || ""
+    );
+    setDestination(
+      {
+        street: orderData.destination_street,
+        cep: orderData.destination_cep,
+      } || ""
+    );
+  }, [orderData]);
 
   useEffect(() => {
     getAllLogisticCompanies()
@@ -31,21 +50,45 @@ export default function Requests() {
       .catch((error) => console.error("Erro ao buscar companhias:", error));
   }, []);
 
-  const handleCalculateRoute = () => {
-    setShowCompanies(true);
-    setValorP(`R$ ${inputValue || "00,00"}`);
+  const handleCalculateRoute = async () => {
+    if (!origin || !destination) {
+      setError("Por favor, preencha os campos de origem e destino.");
+      return;
+    }
+
+    try {
+      const response = await calculateDistanceAndDuration(
+        origin.cep,
+        destination.cep
+      );
+
+      if (response) {
+        const distance = response.rows[0].elements[0].distance?.text || "0";
+        const estimatedTime =
+          response.rows[0].elements[0].duration?.text || "0";
+        setDistanceValue(distance);
+        setEstimatedTimeValue(estimatedTime);
+        setPriceValue(`${priceValue || "00,00"}`);
+        setError("");
+      } else {
+        setError("Nao foi possível calcular a rota. Tente novamente!");
+      }
+    } catch (error) {
+      console.error("Erro ao calcular a rota:", error);
+      setError("Nao foi possível calcular a rota. Tente novamente!");
+    }
   };
 
   const handleSelectChange = (event) => {
     setSelectedCompany(event.target.value);
   };
 
-  const handleOrigemChange = (event) => {
-    setOrigem(event.target.value);
+  const handleOriginChange = (event) => {
+    setOrigin(event.target.value);
   };
 
-  const handleDestinoChange = (event) => {
-    setDestino(event.target.value);
+  const handleDestinationChange = (event) => {
+    setDestination(event.target.value);
   };
 
   const handleDataChange = (event) => {
@@ -67,13 +110,15 @@ export default function Requests() {
                 </h3>
               </span>
 
+              {error && <Message message={error} isError />}
+
               <div className={styles.form}>
                 <div className={styles.calcRoute}>
                   <label htmlFor="origem">Endereço de origem:</label>
                   <input
                     id="origem"
-                    onChange={handleOrigemChange}
-                    value={origem}
+                    onChange={handleOriginChange}
+                    value={origin.street}
                     className={styles.inputLarge}
                   />
                   <label className={styles.destinoLabel} htmlFor="destino">
@@ -81,8 +126,8 @@ export default function Requests() {
                   </label>
                   <input
                     id="destino"
-                    onChange={handleDestinoChange}
-                    value={destino}
+                    onChange={handleDestinationChange}
+                    value={destination.street}
                     className={styles.inputLarge}
                   />
                   <div className={styles.dataValueInputs}>
@@ -107,9 +152,9 @@ export default function Requests() {
                 <div className={styles.findTransport}>
                   <div className={styles.detailsButton}>
                     <div className={styles.details}>
-                      <p>Distância: 0km</p>
-                      <p>Tempo estimado: 0hr</p>
-                      <p>Valor: </p>
+                      <p>Distância: {distanceValue}</p>
+                      <p>Tempo estimado: {estimatedTimeValue}</p>
+                      <p>Valor: R$ {priceValue} </p>
                     </div>
 
                     {showCompanies && (
