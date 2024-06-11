@@ -105,6 +105,7 @@ DB_PASSWORD=password
 
 -   `REACT_APP_API_URL`: URL of the backend API.
 -   `REACT_APP_ORDER_API_URL`: URL of the mock order API.
+-   `REACT_APP_CALCULATE_DISTANCE_KEY`: API Key of Distance Matrix API. 
 
 Example `.env` file for frontend:
 
@@ -112,6 +113,7 @@ Example `.env` file for frontend:
 ```bash 
 REACT_APP_API_URL=http://localhost:8080
 REACT_APP_ORDER_API_URL=http://localhost:3001
+REACT_APP_CALCULATE_DISTANCE_KEY= 
 ```
 
 ## Contributing
