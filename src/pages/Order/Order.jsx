@@ -9,6 +9,7 @@ import { Button } from "../../Components/Button";
 import { Icon } from "@iconify/react/dist/iconify";
 import acceptIcon from "@iconify-icons/mdi/check-thick";
 import rejectIcon from "@iconify-icons/mdi/close-thick";
+import truck from "../../assets/images/Truck.png";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -38,7 +39,12 @@ const Order = () => {
 
   const handleCheckout = (order) => {
     navigate(`/requests/${order.id}`, {
-      state: { origin: order.endereco_origem.rua, destination: order.endereco_destino.rua }
+      state: { 
+        origin_cep: order.endereco_origem.cep, 
+        origin_street: order.endereco_origem.rua,
+        destination_cep: order.endereco_destino.cep,
+        destination_street: order.endereco_destino.rua
+       }
     });
   };
 
@@ -87,14 +93,22 @@ const Order = () => {
       <div className={styles.content}>
         {filter === "logistica" || filter === "" ? (
           <div className={styles.tableSection}>
-            <h2>Listagem de Pedidos</h2>
-            <Input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Digite o dado do pedido para efetuar busca"
-              className={styles.searchInput}
-            />
+            <div className={styles.orders_heading}>
+              <span>
+                <img src={truck} alt="Ícone de pedidos" />
+                <h3>Listagem de Pedidos</h3>
+              </span>
+              <div>
+                <Input
+                  searchInput={true}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Digite o dado do pedido para filtrar"
+                  className={styles.searchInput}
+                  freeSize={false}
+                />
+              </div>
+            </div>
             <div className={styles.tableContainer}>
               <div className={styles.tableWrapper}>
                 <table className={styles.orderTable}>
