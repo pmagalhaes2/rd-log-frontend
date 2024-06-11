@@ -26,6 +26,7 @@
 
 .form {
   display: flex;
+  gap: 3rem;
   justify-content: space-between;
   width: 100%;
 }
@@ -76,8 +77,9 @@
 }
 
 .findTransport {
-  margin-left: 40px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .findTransport select {
