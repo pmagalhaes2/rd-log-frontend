@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:3001/orders";
+const baseURL = `${process.env.REACT_APP_ORDER_API_URL}/orders`;
 
 const api = axios.create({
   baseURL: baseURL,
