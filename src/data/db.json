@@ -251,6 +251,27 @@
       },
       "id_empresa_logistica": "6",
       "status": "Aceito"
+    },
+    {
+      "id": "33",
+      "data_pedido": "2024-06-11",
+      "id_fornecedor": "F12344",
+      "endereco_origem": {
+        "rua": "Avenida Tupiniquins",
+        "numero": 150,
+        "cidade": "São Vicente",
+        "estado": "SP",
+        "cep": "11325-000"
+      },
+      "endereco_destino": {
+        "rua": "Avenida Corifeu de Azevedo Marques",
+        "numero": 1000,
+        "cidade": "São Paulo",
+        "estado": "SP",
+        "cep": "05339-000"
+      },
+      "id_empresa_logistica": "12",
+      "status": "Pendente"
     }
   ]
 }
