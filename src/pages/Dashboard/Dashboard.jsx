@@ -13,18 +13,18 @@ function Dashboard() {
     const fetchUserData = async () => {
       if (user.role === "admin") {
         setOrdersData([
-          { name: 'Edu Transportes LTDA.', Pendentes: 79, Aprovados: 7, Entregues: 3 },
-          { name: 'Chiquinho Transportes LTDA.', Pendentes: 8, Aprovados: 10, Entregues: 18 },
-          { name: 'The Best Transportes LTDA.', Pendentes: 9, Aprovados: 129, Entregues: 123 },
-          { name: 'Theodoro Transportes LTDA.', Pendentes: 11, Aprovados: 63, Entregues: 68 },
-          { name: 'Nuno Transportes LTDA.', Pendentes: 51, Aprovados: 16, Entregues: 13 },
-          { name: 'Tech Girls Transportes LTDA.', Pendentes: 6, Aprovados: 69, Entregues: 72 },
+          { name: 'Edu Transportes LTDA.', Atrasados: 79, Tempestivos: 7, Antecipados: 3 },
+          { name: 'Chiquinho Transportes LTDA.', Atrasados: 8, Tempestivos: 10, Antecipados: 18 },
+          { name: 'The Best Transportes LTDA.', Atrasados: 9, Tempestivos: 129, Antecipados: 123 },
+          { name: 'Theodoro Transportes LTDA.', Atrasados: 11, Tempestivos: 63, Antecipados: 68 },
+          { name: 'Nuno Transportes LTDA.', Atrasados: 51, Tempestivos: 16, Antecipados: 13 },
+          { name: 'Tech Girls Transportes LTDA.', Atrasados: 6, Tempestivos: 69, Antecipados: 72 },
         ]);
       } else {
         setOrdersData([
-          { name: 'Abril', Pendentes: 8, Aprovados: 10, Entregues: 18 },
-          { name: 'Maio', Pendentes: 11, Aprovados: 23, Entregues: 30 },
-          { name: 'Junho', Pendentes: 6, Aprovados: 68, Entregues: 72 },
+          { name: 'Abril', Atrasados: 8, Tempestivos: 10, Antecipados: 18 },
+          { name: 'Maio', Atrasados: 11, Tempestivos: 23, Antecipados: 30 },
+          { name: 'Junho', Atrasados: 6, Tempestivos: 68, Antecipados: 72 },
         ]);
       }
     };
@@ -43,7 +43,7 @@ function Dashboard() {
                 <div className={styles.cardWrapper}>
                   <Card
                     category={month.name}
-                    total={month.Pendentes + month.Aprovados + month.Entregues}
+                    total={month.Atrasados + month.Tempestivos + month.Antecipados}
                   />
                 </div>
                 {(index + 1) % 3 === 0 && index !== ordersData.length - 1 && (
@@ -62,9 +62,9 @@ function Dashboard() {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Area type="monotone" dataKey="Pendentes" stackId="1" stroke="#e9892f" fill="#e9892f" />
-                  <Area type="monotone" dataKey="Aprovados" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
-                  <Area type="monotone" dataKey="Entregues" stackId="1" stroke="#0a2f2a" fill="#0a2f2a" />
+                  <Area type="monotone" dataKey="Atrasados" stackId="1" stroke="#e9892f" fill="#e9892f" />
+                  <Area type="monotone" dataKey="Tempestivos" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
+                  <Area type="monotone" dataKey="Antecipados" stackId="1" stroke="#0a2f2a" fill="#0a2f2a" />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -73,7 +73,6 @@ function Dashboard() {
       </div>
     </div>
   );
-  
 }
 
 export default Dashboard;
