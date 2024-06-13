@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import styles from "./Requests.module.scss";
 import MenuComponent from "../../Components/Menu/Menu";
 import { Button } from "../../Components/Button";
+import { Input } from "../../Components/Input";
 import { useLocation, useParams } from "react-router-dom";
 import { Loading } from "../../Components/Loading";
 import { LogisticDeliveryCard } from "../../Components/LogisticDeliveryCard";
 import { Message } from "../../Components/Message";
 import pack from "../../assets/images/Pack.png";
+import lowPriceIcon from "../../assets/images/low-price-icon.svg";
+import inTransitIcon from "../../assets/images/in-transit-icon.svg";
 import { calculateDistanceAndDuration } from "../../services/distanceAPI.js";
 
 export default function Requests() {
@@ -17,8 +20,9 @@ export default function Requests() {
   const [selectedCompany, setSelectedCompany] = useState("");
   const [origin, setOrigin] = useState({ street: "", cep: "" });
   const [destination, setDestination] = useState({ street: "", cep: "" });
-  const [data, setData] = useState(new Date().toLocaleDateString());
+  const [data] = useState(new Date().toLocaleDateString());
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const params = useParams();
   const { orderId } = params;
@@ -57,38 +61,29 @@ export default function Requests() {
     }
 
     try {
+      setLoading(true);
       const response = await calculateDistanceAndDuration(
         origin.cep,
         destination.cep
       );
 
-      if (response) {
+      if (response && response.length > 0) {
         setCompanies(response);
         setShowCompanies(true);
         setError("");
       } else {
-        setError("Nao foi possível calcular a rota. Tente novamente!");
+        setError("Ocorreu um erro ao calcular a rota. Tente novamente!");
       }
     } catch (error) {
       console.error("Erro ao calcular a rota:", error);
-      setError("Nao foi possível calcular a rota. Tente novamente!");
+      setError(error.data.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSelectChange = (event) => {
     setSelectedCompany(event.target.value);
-  };
-
-  const handleOriginChange = (event) => {
-    setOrigin(event.target.value);
-  };
-
-  const handleDestinationChange = (event) => {
-    setDestination(event.target.value);
-  };
-
-  const handleDataChange = (event) => {
-    setData(event.target.value);
   };
 
   return (
@@ -104,61 +99,75 @@ export default function Requests() {
               </h3>
             </span>
 
-            {error && <Message message={error} isError />}
-
             <div className={styles.form}>
               <div className={styles.calcRoute}>
-                <label htmlFor="origem">Endereço de origem:</label>
-                <input
+                <Input
+                  label="Endereço de origem:"
                   id="origem"
-                  onChange={handleOriginChange}
                   value={origin.street}
-                  className={styles.inputLarge}
+                  disabled
                 />
-                <label className={styles.destinoLabel} htmlFor="destino">
-                  Endereço de destino:
-                </label>
-                <input
+                <Input
+                  label="Endereço de destino:"
                   id="destino"
-                  onChange={handleDestinationChange}
                   value={destination.street}
-                  className={styles.inputLarge}
+                  disabled
                 />
-                <div className={styles.dataValueInputs}>
-                  <label htmlFor="data">Data:</label>
-                  <input
-                    type="text"
-                    id="data"
-                    value={data}
-                    onChange={handleDataChange}
-                    className={styles.inputSmall}
+                <Input
+                  label="Data:"
+                  type="text"
+                  id="data"
+                  value={data}
+                  disabled
+                />
+
+                {error && <Message message={error} isError />}
+
+                {!showCompanies && (
+                  <Button
+                    title="Buscar Entrega"
+                    freeSize={true}
+                    className={styles.calcButton}
+                    onClick={handleSearchLogisticCompanies}
                   />
-                  <br />
-                </div>
-                <Button
-                  title="Buscar Entrega"
-                  freeSize={true}
-                  className={styles.calcButton}
-                  onClick={handleSearchLogisticCompanies}
-                />
+                )}
               </div>
 
               <div className={styles.findTransport}>
-                {showCompanies &&
-                  companies.map((company) => (
-                    <LogisticDeliveryCard
-                      urlImg={pack}
-                      logisticName={company.logistic_name}
-                      time={formatEstimatedValue(company.duration)}
-                      price={formatPrice(company.price_km)}
-                    />
-                  ))}
-
-                <Button
-                  disabled={!selectedCompany}
-                  freeSize={true}
-                  title="Confirmar Solicitação"
-                />
+                {loading ? (
+                  <Loading />
+                ) : (
+                  showCompanies &&
+                  companies.length > 0 && (
+                    <>
+                      {companies.map((company) => (
+                        <LogisticDeliveryCard
+                          key={company.logistic_name}
+                          urlImg={
+                            company.closest_company
+                              ? inTransitIcon
+                              : lowPriceIcon
+                          }
+                          alt=""
+                          logisticName={company.logistic_name}
+                          time={formatEstimatedValue(company.duration)}
+                          price={formatPrice(company.price_km)}
+                          id={company.logistic_id}
+                          value={company.logistic_id}
+                          onClick={handleSelectChange}
+                        />
+                      ))}
+                      <Button
+                        disabled={!selectedCompany}
+                        freeSize={true}
+                        title="Confirmar Solicitação"
+                        onClick={() =>
+                          console.log(`Empresa selecionada: ${selectedCompany}`)
+                        }
+                      />
+                    </>
+                  )
+                )}
               </div>
             </div>
           </>
