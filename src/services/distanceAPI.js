@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = `${process.env.REACT_APP_API_URL}/distance`;
+const baseURL = `${process.env.REACT_APP_API_URL}/delivery-details`;
 
 const api = axios.create({
   baseURL: baseURL,
