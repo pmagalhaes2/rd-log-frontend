@@ -272,6 +272,27 @@
       },
       "id_empresa_logistica": "12",
       "status": "Pendente"
+    },
+    {
+      "id": "24",
+      "data_pedido": "2024-06-11",
+      "id_fornecedor": "F12344",
+      "endereco_origem": {
+        "rua": "Rua Vitorino Carmilo",
+        "numero": 150,
+        "cidade": "São Paulo",
+        "estado": "SP",
+        "cep": "01153-000"
+      },
+      "endereco_destino": {
+        "rua": "Praça da Sé",
+        "numero": 1000,
+        "cidade": "São Paulo",
+        "estado": "SP",
+        "cep": "01001-000"
+      },
+      "id_empresa_logistica": "3",
+      "status": "Pendente"
     }
   ]
 }
