@@ -19,7 +19,13 @@
 
     &:disabled {
       background-color: #aeaeae;
+      border: none;
       cursor: not-allowed;
+
+      &:hover {
+        border: none;
+        background-color: #aeaeae;
+      }
     }
   }
 
