@@ -2,9 +2,12 @@ import styles from "./LogisticDeliveryCard.module.scss";
 
 export const LogisticDeliveryCard = ({
   urlImg,
-  logisticName = "Chiquinho Transportes LTDA",
-  time = "10",
-  price = "19,99",
+  logisticName,
+  time,
+  price,
+  id,
+  value,
+  onClick,
 }) => {
   return (
     <div className={styles.container}>
@@ -15,7 +18,13 @@ export const LogisticDeliveryCard = ({
       </div>
       <div className={styles.price_container}>
         <span>R${price}</span>
-        <input type="radio" name="logistic" id="logistic" />
+        <input
+          type="radio"
+          name="logistic"
+          value={value}
+          id={id}
+          onClick={onClick}
+        />
       </div>
     </div>
   );

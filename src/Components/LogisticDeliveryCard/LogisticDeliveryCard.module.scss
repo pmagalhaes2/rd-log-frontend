@@ -6,10 +6,7 @@
   gap: 2rem;
   padding: 1rem;
   width: 100%;
-
-  &:hover {
-    background-color: #abdec2;
-  }
+  transition: background-color 0.3s ease-in-out;
 
   span {
     color: #333333;
@@ -52,3 +49,4 @@
     }
   }
 }
+
