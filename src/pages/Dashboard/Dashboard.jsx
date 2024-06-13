@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './Dashboard.module.scss'; 
 import MenuComponent from '../../Components/Menu/Menu'; 
 import Card from '../../Components/Card/Card'; 
-import { AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area } from 'recharts';
+import { AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, BarChart, Bar } from 'recharts';
 import { useUser } from '../../context/UserContext';
 
 function Dashboard() {
@@ -56,16 +56,29 @@ function Dashboard() {
             <h2>Resumo dos Pedidos</h2>
             <div className={styles.chartContainer}>
               <ResponsiveContainer width="100%" height={400}>
-                <AreaChart data={ordersData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Area type="monotone" dataKey="Atrasados" stackId="1" stroke="#e9892f" fill="#e9892f" />
-                  <Area type="monotone" dataKey="Tempestivos" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
-                  <Area type="monotone" dataKey="Antecipados" stackId="1" stroke="#0a2f2a" fill="#0a2f2a" />
-                </AreaChart>
+                {user.role === "admin" ? (
+                  <BarChart data={ordersData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="Atrasados" fill="#e9892f" />
+                    <Bar dataKey="Tempestivos" fill="#82ca9d" />
+                    <Bar dataKey="Antecipados" fill="#0a2f2a" />
+                  </BarChart>
+                ) : (
+                  <AreaChart data={ordersData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Area type="monotone" dataKey="Atrasados" stackId="1" stroke="#e9892f" fill="#e9892f" />
+                    <Area type="monotone" dataKey="Tempestivos" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
+                    <Area type="monotone" dataKey="Antecipados" stackId="1" stroke="#0a2f2a" fill="#0a2f2a" />
+                  </AreaChart>
+                )}
               </ResponsiveContainer>
             </div>
           </div>
