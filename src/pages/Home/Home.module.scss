@@ -3,114 +3,183 @@
   flex-direction: column;
   padding: 0;
   margin: 0;
-
-
+  align-items: center;
 }
 
 .topSection {
   display: flex;
   flex-direction: row;
   margin: 3% 5% 0% 5%;
-  margin-bottom: 0;
-  width: 68.75rem;
+  width: 68.75%;
   padding-left: 3%;
-
-  
 }
 
 .homeBox {
   display: flex;
   align-items: center;
   background-color: #0f8143;
-  border-radius: 3.75rem;
-  width: 40.625rem;
-  height: 21.875rem;
+  border-radius: 2.75rem;
+  width: 100%;
+  height: 200%;
   flex-direction: row;
-
-
 }
 
 .rightSection {
   display: flex;
   flex-direction: column;
-  width: 26.563rem;
-  height: 16.875rem;
+  width: 100%;
+  height: 75%;
   background-color: #4CA15D;
-  border-radius: 3.75rem;
-
-
+  border-radius: 2.75rem;
 }
 
 .homeSide {
-  margin: 2rem;
-  padding-top: 2.25rem;
+  margin: 1.5rem;
   color: #ffffff;
- 
-  h2 {
-    font-weight: 400;
-  }
+}
 
-
+.homeSide h2 {
+  font-weight: 400;
 }
 
 .homeSpace {
   background-color: #D66E0F;
-  width: 26.563rem;
-  height: 5rem;
-  border-radius: 3.75rem;
-  margin-left: -0.156rem;
- 
- 
+  width: 101%;
+  height: 25%;
+  border-radius: 2.5rem;
+  margin-left: -0.2rem;
 }
 
 .homeContent {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 66.875rem;
-  height: 13.75rem;
+  width: 66.35%;
+  height: 13.75%;
   background-color: #0A2F2A;
-  border-radius: 3.75rem;
-  margin-right: 3rem;
-  margin-left: 6rem;
+  border-radius: 2.75rem;
+  margin-right: 2.5rem;
+  margin-left: 5rem;
   margin-top: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   align-items: center;
-  
-
-
+  align-self: center;
 }
 
 .textSection {
   text-align: left;
   color: #F4B16A;
- 
+}
 
-  h1{
-    font-weight: 500;
-  }
+.textSection h1 {
+  font-weight: 500;
+}
 
-  h3 {
-    color: #ffffff;
-    font-weight: 400;
-  }
-
+.textSection h3 {
+  color: #ffffff;
+  font-weight: 400;
 }
 
 .homeImage {
   width: 100%;
-  height: 10rem;
+  height: 10%;
   border-radius: 15%;
- 
-     
 }
-.carousel{
+
+.carousel {
   width: 30%;
+  padding: 20px;
 }
 
 .imagemCaminhao {
   max-width: 70%;
   height: auto;
   margin-left: 15%;
+  padding: 10px;
+}
 
+/* Media Queries para Responsividade */
+@media (max-width: 1200px) {
+  .topSection {
+    flex-direction: column;
+    width: 100%;
+    margin: 3% 0;
+  }
+
+  .homeContent {
+    width: 90%;
+    margin: 1rem 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .homeBox {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .rightSection {
+    height: auto;
+  }
+
+  .homeContent {
+    flex-direction: column;
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  .textSection h1, .textSection h3 {
+    text-align: center;
+  }
+
+  .carousel {
+    width: 80%;
+    padding: 10px;
+  }
+
+  .imagemCaminhao {
+    margin-left: 0;
+    max-width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .topSection, .homeContent, .carousel {
+    width: 80%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .homeBox, .rightSection, .homeSpace {
+    border-radius: 1.5rem;
+  }
+
+  .homeContent {
+    height: auto;
+    margin: 1rem 0;
+  }
+
+  .textSection h1 {
+    font-size: 1.5rem;
+  }
+
+  .textSection h3 {
+    font-size: 1rem;
+  }
+
+  .homeImage {
+    height: auto;
+    border-radius: 10%;
+  }
+
+  .carousel {
+    width: 60%;
+    padding: 5px;
+  }
+
+  .imagemCaminhao {
+    width: 60%;
+    margin: 0;
+    padding: 5px;
+  }
 }
