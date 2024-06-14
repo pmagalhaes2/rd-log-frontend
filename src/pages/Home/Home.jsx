@@ -37,26 +37,35 @@ function Home() {
         </div>
         <div className={styles.carousel}>
           <Carousel showThumbs={false} showStatus={false} autoPlay infiniteLoop>
-            <div>
+            <div className={styles.carouselItem}>
               <img
                 className={styles.homeImage}
                 src={cd1}
                 alt="Imagem 1"
               />
+              <div className={styles.overlay}>
+                <p>Cuidado desde a separação até a entrega</p>
+              </div>
             </div>
-            <div>
+            <div className={styles.carouselItem}>
               <img
                 className={styles.homeImage}
                 src={cd2}
                 alt="Imagem 2"
               />
+              <div className={styles.overlay}>
+                <p>Entregas com menos emissão de carbono</p>
+              </div>
             </div>
-            <div>
+            <div className={styles.carouselItem}>
               <img
                 className={styles.homeImage}
                 src={cd4}
                 alt="Imagem 3"
               />
+              <div className={styles.overlay}>
+                <p>Centro de Distribuição Unificado</p>
+              </div>
             </div>
           </Carousel>
         </div>
