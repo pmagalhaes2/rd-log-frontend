@@ -49,6 +49,16 @@
     border: 2px solid #004620;
     background-color: #004620;
   }
+
+  .orange {
+    border: 2px solid #D66E0F;
+    background-color: #D66E0F;
+
+    &:hover {
+      border: 2px solid #a4510a;
+      background-color: #a4510a;
+    }
+  }
 }
 
 .freeSize {
