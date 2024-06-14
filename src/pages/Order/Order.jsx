@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Order.module.scss";
 import MenuComponent from "../../Components/Menu/Menu";
-import { getAllOrders, updateOrderStatus } from "../../services/ordersAPI.js";
+import { getAllOrders, updateOrder} from "../../services/ordersAPI.js";
 import { useUser } from "../../context/UserContext";
 import { Input } from "../../Components/Input";
 import { Button } from "../../Components/Button";
@@ -17,26 +17,26 @@ const Order = () => {
   const [filter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [disabledButtons, setDisabledButtons] = useState({});
-
   const navigate = useNavigate();
 
   useEffect(() => {
     getAllOrders()
       .then((response) => {
+        let filteredOrders = [];
         if (user.role === "admin") {
-          const filteredOrders = response.filter(
+          filteredOrders = response.filter(
             (order) => order.status === "Pendente"
           );
-          setOrders(filteredOrders);
         } else {
-          const filteredOrders = response.filter(
+          filteredOrders = response.filter(
             (item) =>
               Number(item.id_empresa_logistica) === user.id &&
-              (item.status === "Pendente" ||
-              item.status === "Em andamento")
+            (item.status === "Pendente" 
+              || item.status === "Em andamento")  
+
           );
-          setOrders(filteredOrders);
         }
+        setOrders(filteredOrders);
       })
       .catch((error) => {
         console.error("Failed to fetch orders:", error);
@@ -55,16 +55,26 @@ const Order = () => {
   };
 
   const handleStatusChange = async (orderId, newStatus) => {
-    setOrders((prevOrders) =>
-      prevOrders.map((order) =>
-        order.id === orderId ? { ...order, status: newStatus } : order
-      )
-    );
-    await updateOrderStatus(orderId, newStatus);
-    setDisabledButtons((prevState) => ({
-      ...prevState,
-      [orderId]: true,
-    }));
+    try {
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.id === orderId ? { ...order, status: newStatus } : order
+        )
+      );
+
+      if (newStatus === "Recusado") {
+        newStatus = "Pendente" ;
+      }
+
+      await updateOrder(orderId, 0,  newStatus);
+
+      setDisabledButtons((prevState) => ({
+        ...prevState,
+        [orderId]: true,
+      }));
+    } catch (error) {
+      console.error("Failed to update order status:", error);
+    }
   };
 
   const formatDate = (date) => {
@@ -199,3 +209,7 @@ const Order = () => {
 };
 
 export default Order;
+
+
+
+
