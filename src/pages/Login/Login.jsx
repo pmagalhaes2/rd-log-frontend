@@ -101,13 +101,12 @@ export const Login = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles["login-box"]}>
-        <div className={styles["login-content"]}>
-          <div className={styles["login-image"]}>
-            <img src={loginImage} alt="Imagem de login" />
-          </div>
-          <div className={styles["login-form"]}>
-            <img
+    <div className={styles["login-box"]}>
+        <div className={styles["login-image"]}>
+        <img src={loginImage} alt="Imagem de login" />
+        </div>
+        <div className={styles["login-form"]}>
+        <img
               className={styles["login-logo"]}
               src={logoImage}
               alt="Login Logo"
@@ -142,9 +141,10 @@ export const Login = () => {
               Ainda não tem conta?
               <Link to="/register">Cadastre-se.</Link>
             </p>
-          </div>
-        </div>
       </div>
     </div>
+</div>
+         
+
   );
 };

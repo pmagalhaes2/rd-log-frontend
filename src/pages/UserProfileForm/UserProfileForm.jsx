@@ -53,6 +53,8 @@ function UserProfileForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [previousData, setPreviousData] = useState(null);
   const [fetchData, setFetchData] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
@@ -114,6 +116,7 @@ function UserProfileForm() {
       setError(true);
     }
   };
+
 
   const handleCep = async () => {
     try {
