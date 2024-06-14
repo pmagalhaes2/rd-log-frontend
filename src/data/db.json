@@ -278,21 +278,22 @@
       "data_pedido": "2024-06-11",
       "id_fornecedor": "F12344",
       "endereco_origem": {
-        "rua": "Rua Vitorino Carmilo",
-        "numero": 150,
-        "cidade": "São Paulo",
-        "estado": "SP",
-        "cep": "01153-000"
+        "rua": "Rua Governador Arthur Reis",
+        "numero": 350,
+        "cidade": "Rio Branco",
+        "estado": "AC",
+        "cep": "69900-000"
       },
       "endereco_destino": {
-        "rua": "Praça da Sé",
-        "numero": 1000,
-        "cidade": "São Paulo",
-        "estado": "SP",
-        "cep": "01001-000"
+        "rua": "Avenida Ceará",
+        "numero": 1200,
+        "cidade": "Rio Branco",
+        "estado": "AC",
+        "cep": "69915-000"
       },
       "id_empresa_logistica": "3",
       "status": "Pendente"
     }
+   
   ]
 }

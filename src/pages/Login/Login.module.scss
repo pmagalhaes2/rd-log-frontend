@@ -1,62 +1,69 @@
 .container {
-  padding: 3.125rem 6.25rem;
-  margin-top: -1.3rem;
-  margin-bottom: -1.3rem;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: space-around;
+  padding: 3.125rem 5rem;
+  width: 100%;
 }
 
 .login-box {
-  background-color: #ffffff;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
   width: 100%;
-  margin: 1.3rem auto;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #fff;
   border-radius: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  
 }
 
 .login-content {
   display: flex;
+  width: 60%;
+  justify-content: space-between; 
   align-items: center;
-  gap: 5rem;
+  gap:20%;
 }
 
 .login-image {
-  width: 40%;
-  padding-top: 1rem;
-  max-width: 100%;
-  margin: auto;
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  
 }
 
-.login-image img {
-  width: 100%;
-  height: 75%;
-}
 
 .login-form {
-  padding-right: 4rem;
-  padding-top: 1.5rem;
-  padding-left: 4rem;
+  display: flex;
+  width: 50%;
+  height: 100%;
   border-radius: 0px 20px 20px 0px;
   background-color: var(--light-grey);
-  width: 575px;
-  height: 100vh;
+  padding:20px;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  
 }
 
 .login-form button {
   width: 100%;
-  padding: 1rem;
-  margin-top: 1rem;
+  margin-top: 10%;
+  
 }
 
 .register-link {
   display: flex;
-  gap: 0.5rem;
+  gap: 2%;
   text-align: center;
-  margin-top: 15px;
-  font-size: 14px;
+  margin-top: 5%;
+  font-size: 16px;
   align-items: center;
   justify-content: center;
 
   a {
     text-decoration: underline;
+    cursor: pointer;
   }
 }
 
@@ -66,8 +73,9 @@
 }
 
 .login-logo {
-  width: 30vh;
-  height: 18vh;
+  width: 40%;
+  height: auto;
+
 }
 
 .role-select {
@@ -83,44 +91,3 @@
   width: 100%;
 }
 
-@media (max-width: 992px) {
-  .login-image {
-    display: none;
-  }
-
-  .login-box {
-    width: 90%;
-    height: auto;
-    margin-top: 1.5rem;
-    padding: 2rem;
-  }
-
-  .login-form button {
-    padding: 0.75rem;
-    margin-top: 1.5rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .login-box {
-    width: 90%;
-    height: auto;
-    margin-top: 1rem;
-    padding: 1rem;
-  }
-
-  .login-content {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .login-image {
-    width: 80%;
-    padding-top: 2rem;
-  }
-
-  .login-form button {
-    padding: 0.5rem;
-    margin-top: 1rem;
-  }
-}
