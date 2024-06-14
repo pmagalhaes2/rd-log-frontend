@@ -30,6 +30,7 @@ import { getCep } from "../../services/cepAPI";
 import { formatCep } from "../../utils/formatters/formatCep";
 import { formatPhone } from "../../utils/formatters/formatPhone";
 import { formatCurrencyBRL } from "../../utils/formatters/formatPrice";
+import { getPendentsOrdersByLogisticId } from "../../services/ordersAPI";
 
 function UserProfileForm() {
   const { user, setUser, logout } = useUser();
@@ -53,8 +54,6 @@ function UserProfileForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [previousData, setPreviousData] = useState(null);
   const [fetchData, setFetchData] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
@@ -99,24 +98,33 @@ function UserProfileForm() {
         setMessage("A senha atual fornecida está incorreta.");
         setError(true);
         return;
-      } else {
-        await deleteLogisticCompany(user.id);
-        setMessage("Conta excluída com sucesso!");
-        setDeleteButtonClicked(true);
-        setShowPopup(true);
-        setTimeout(() => {
-          setShowPopup(false);
-          logout();
-          navigate("/");
-        }, 5000);
       }
+
+      const pendentsOrders = await getPendentsOrdersByLogisticId(user.id);
+
+      if (pendentsOrders && pendentsOrders.length > 0) {
+        setError(true);
+        setMessage(
+          "Erro ao excluir conta. A empresa possui pedidos pendentes!"
+        );
+        return;
+      }
+
+      await deleteLogisticCompany(user.id);
+      setMessage("Conta excluída com sucesso!");
+      setDeleteButtonClicked(true);
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+        logout();
+        navigate("/");
+      }, 5000);
     } catch (error) {
       console.error("Erro ao excluir conta:", error);
       setMessage("Erro ao excluir conta. Por favor, tente novamente.");
       setError(true);
     }
   };
-
 
   const handleCep = async () => {
     try {
