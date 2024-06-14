@@ -32,7 +32,8 @@ const Order = () => {
           const filteredOrders = response.filter(
             (item) =>
               Number(item.id_empresa_logistica) === user.id &&
-              item.status === "Pendente"
+              (item.status === "Pendente" ||
+              item.status === "Em andamento")
           );
           setOrders(filteredOrders);
         }
