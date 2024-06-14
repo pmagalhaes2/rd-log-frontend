@@ -6,23 +6,14 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({
     role: "",
     username: "",
-    id: "",
-    id_empresa_logistica: "",
-  });
-  const [user, setUser] = useState({
-    role: "",
-    username: "",
     id: ""
   });
 
   const login = (role, username, id) => {
     setUser({ role, username, id });
-  const login = (role, username, id) => {
-    setUser({ role, username, id });
   };
 
   const logout = () => {
-    setUser({ role: "", username: "", id: "" });
     setUser({ role: "", username: "", id: "" });
   };
 
