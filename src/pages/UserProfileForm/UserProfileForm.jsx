@@ -52,6 +52,8 @@ function UserProfileForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [previousData, setPreviousData] = useState(null);
   const [fetchData, setFetchData] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
@@ -75,11 +77,12 @@ function UserProfileForm() {
   const handleDeleteLogisticCompany = async () => {
     try {
       await deleteLogisticCompany(user.id);
-      setMessage("Conta excluída com sucesso!");
-      setShowPopup(true);
+      setShowDeletePopup(true); 
+      setMessage("Perfil excluido com sucesso!");
       setTimeout(() => {
-        setShowPopup(false);
-        navigate("/");
+        setShowDeletePopup(false);
+        setUser({ role: "", username: "", id: "" }); 
+        navigate("/"); 
       }, 5000);
     } catch (error) {
       console.error("Erro ao excluir conta:", error);
@@ -87,6 +90,7 @@ function UserProfileForm() {
       setError(true);
     }
   };
+
 
   const handleCep = async () => {
     try {
@@ -393,40 +397,49 @@ function UserProfileForm() {
               />
             </div>
             <div className={styles.buttonContainer}>
-              <Button
-                type="submit"
-                disabled={isLoading}
-                title={isLoading ? "Enviando..." : "Salvar Alterações"}
-                customSize
-              />
-              {showPopup && (
-                <Popup
-                  alt={"Imagem de confirmação de alteração"}
-                  imageUrl={successImg}
-                  message={message}
-                  onClick={() => navigate("/dashboard")}
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  title={isLoading ? "Enviando..." : "Salvar Alterações"}
+                  customSize
                 />
-              )}
-              {user.role === "user" && (
-                <div className={styles.deleteButtonContainer}>
-                  <Button
-                    type="button"
-                    onClick={handleDeleteLogisticCompany}
-                    title="Excluir Conta"
-                    customSize
-                    orangeButton
+                {showSuccessPopup && (
+                  <Popup
+                    alt={"Imagem de confirmação de alteração"}
+                    imageUrl={successImg}
+                    message={message}
+                    onClick={() => {
+                      setShowSuccessPopup(false);
+                      navigate("/dashboard");
+                    }}
                   />
-                  {showPopup && (
-                    <Popup
-                      alt={"Imagem de confirmação de exclusão"}
-                      imageUrl={deleteImg}
-                      message={message}
-                      onClick={() => navigate("/dashboard")}
+                )}
+                {user.role === "user" && (
+                  <div className={styles.deleteButtonContainer}>
+                    <Button
+                      type="button"
+                      onClick={handleDeleteLogisticCompany}
+                      title="Excluir Conta"
+                      customSize
+                      orangeButton 
+                     
                     />
-                  )}
-                </div>
-              )}
-            </div>
+                    {showDeletePopup && (
+                      <Popup
+                        alt={"Imagem de confirmação de exclusão"}
+                        imageUrl={deleteImg}
+                        message={message}
+                        onClick={() => {
+                          setShowDeletePopup(false);
+                          
+                          navigate("/home");
+                        }}
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+
           </form>
         )}
       </div>
