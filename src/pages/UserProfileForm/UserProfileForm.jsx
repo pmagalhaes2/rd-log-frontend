@@ -13,7 +13,7 @@ import deleteImg from "../../assets/images/encerrado.svg";
 import {
   getById,
   updateLogisticCompany,
-  deleteLogisticCompany
+  deleteLogisticCompany,
 } from "../../services/logisticCompaniesAPI";
 import {
   getAdministratorById,
@@ -26,6 +26,9 @@ import { formatCnpj } from "../../utils/formatters/formatCnpj";
 import { formatCpf } from "../../utils/formatters/formatCpf";
 import states from "../Register/brazilian_states";
 import { getCep } from "../../services/cepAPI";
+import { formatCep } from "../../utils/formatters/formatCep";
+import { formatPhone } from "../../utils/formatters/formatPhone";
+import { formatCurrencyBRL } from "../../utils/formatters/formatPrice";
 
 function UserProfileForm() {
   const { user, setUser } = useUser();
@@ -54,6 +57,8 @@ function UserProfileForm() {
   const [showPopup, setShowPopup] = useState(false);
   const [brazilianState, setBrazilianState] = useState("");
   const [zipCode, setZipCode] = useState("");
+  const [phone, setPhone] = useState("");
+  const [price, setPrice] = useState("");
 
   const getLogisticCompany = async (logisticCompanyId) => {
     const res = await getById(logisticCompanyId);
@@ -82,7 +87,7 @@ function UserProfileForm() {
       setError(true);
     }
   };
-  
+
   const handleCep = async () => {
     try {
       if (addressZipCodeRef.current.value.trim() === "") {
@@ -90,7 +95,7 @@ function UserProfileForm() {
       } else {
         const previousAddress = await getCep(addressZipCodeRef.current.value);
         const { logradouro, localidade, uf } = previousAddress;
-        setZipCode(addressZipCodeRef.current.value); 
+        setZipCode(addressZipCodeRef.current.value);
         addressValueRef.current.value = logradouro;
         addressCityRef.current.value = localidade;
         setBrazilianState(uf);
@@ -113,40 +118,78 @@ function UserProfileForm() {
   useEffect(() => {
     if (previousData) {
       if (nameRef.current) nameRef.current.value = previousData.name || "";
-      if (openingHoursRef.current) openingHoursRef.current.value = previousData.opening_hours || "";
-      if (closingHoursRef.current) closingHoursRef.current.value = previousData.closing_hours || "";
-      if (phoneNumberRef.current) phoneNumberRef.current.value = previousData.phone_number || "";
+      if (openingHoursRef.current)
+        openingHoursRef.current.value = previousData.opening_hours || "";
+      if (closingHoursRef.current)
+        closingHoursRef.current.value = previousData.closing_hours || "";
+      if (phoneNumberRef.current)
+        setPhone(
+          previousData.phone_number
+            ? formatPhone(previousData.phone_number)
+            : ""
+        );
       if (emailRef.current) emailRef.current.value = previousData.email || "";
-      if (priceKmRef.current) priceKmRef.current.value = previousData.price_km || "";
-      if (addressComplementRef.current) addressComplementRef.current.value = previousData.address?.complement || "";
-      if (addressValueRef.current) addressValueRef.current.value = previousData.address?.value || "";
-      if (addressNumberRef.current) addressNumberRef.current.value = previousData.address?.number || "";
-      if (addressCityRef.current) addressCityRef.current.value = previousData.address?.city || "";
-      if (addressStateRef.current) setBrazilianState(previousData.address?.state || "");
-      if (addressZipCodeRef.current) addressZipCodeRef.current.value = previousData.address?.zipCode || "";
-      if (addressZipCodeRef.current) setZipCode(previousData.address?.zipCode || ""); 
+      if (priceKmRef.current)
+        setPrice(
+          previousData.price_km ? formatCurrencyBRL(previousData.price_km) : ""
+        );
+      if (addressComplementRef.current)
+        addressComplementRef.current.value =
+          previousData.address?.complement || "";
+      if (addressValueRef.current)
+        addressValueRef.current.value = previousData.address?.value || "";
+      if (addressNumberRef.current)
+        addressNumberRef.current.value = previousData.address?.number || "";
+      if (addressCityRef.current)
+        addressCityRef.current.value = previousData.address?.city || "";
+      if (addressStateRef.current)
+        setBrazilianState(previousData.address?.state || "");
+      if (addressZipCodeRef.current)
+        setZipCode(formatCep(previousData.address?.zipCode) || "");
     }
   }, [previousData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!nameRef.current || !emailRef.current || !passwordRef.current) {
+      setMessage("Por favor, preencha os campos obrigatórios.");
+      setError(true);
+      return;
+    }
+
     const formData =
       user.role !== "admin"
         ? {
             name: nameRef.current ? nameRef.current.value : "",
-            opening_hours: openingHoursRef.current ? formatTime(openingHoursRef.current.value) : "",
-            closing_hours: closingHoursRef.current ? formatTime(closingHoursRef.current.value) : "",
-            phone_number: phoneNumberRef.current ? removeMask(phoneNumberRef.current.value) : "",
-            price_km: priceKmRef.current ? formatCurrency(priceKmRef.current.value) : "",
+            opening_hours: openingHoursRef.current
+              ? formatTime(openingHoursRef.current.value)
+              : "",
+            closing_hours: closingHoursRef.current
+              ? formatTime(closingHoursRef.current.value)
+              : "",
+            phone_number: phoneNumberRef.current
+              ? removeMask(phoneNumberRef.current.value)
+              : "",
+            price_km: priceKmRef.current
+              ? formatCurrency(priceKmRef.current.value)
+              : "",
             email: emailRef.current ? emailRef.current.value : "",
             address: {
-              complement: addressComplementRef.current ? addressComplementRef.current.value : "",
-              value: addressValueRef.current ? addressValueRef.current.value : "",
-              number: addressNumberRef.current ? addressNumberRef.current.value : "",
+              complement: addressComplementRef.current
+                ? addressComplementRef.current.value
+                : "",
+              value: addressValueRef.current
+                ? addressValueRef.current.value
+                : "",
+              number: addressNumberRef.current
+                ? addressNumberRef.current.value
+                : "",
               city: addressCityRef.current ? addressCityRef.current.value : "",
               state: brazilianState,
-              zipCode: addressZipCodeRef.current ? removeMask(addressZipCodeRef.current.value) : "",
+              zipCode: addressZipCodeRef.current
+                ? removeMask(addressZipCodeRef.current.value)
+                : "",
             },
             password: passwordRef.current ? passwordRef.current.value : "",
           }
@@ -156,7 +199,11 @@ function UserProfileForm() {
             password: passwordRef.current ? passwordRef.current.value : "",
           };
 
-    if (passwordRef.current && passwordConfirmRef.current && formData.password !== passwordConfirmRef.current.value) {
+    if (
+      passwordRef.current &&
+      passwordConfirmRef.current &&
+      formData.password !== passwordConfirmRef.current.value
+    ) {
       setMessage("As senhas não coincidem. Tente novamente!");
       setError(true);
       return;
@@ -208,7 +255,9 @@ function UserProfileForm() {
                     placeholder="CNPJ"
                     label={"CNPJ"}
                     freeSize={false}
-                    defaultValue={previousData ? formatCnpj(previousData.cnpj) : ""}
+                    defaultValue={
+                      previousData ? formatCnpj(previousData.cnpj) : ""
+                    }
                     disabled
                   />
                   <Input
@@ -216,6 +265,8 @@ function UserProfileForm() {
                     ref={priceKmRef}
                     label={"Preço do Km"}
                     mask={"R$ 9,99"}
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
                   />
                 </div>
                 <div className={styles["form-row"]}>
@@ -242,8 +293,8 @@ function UserProfileForm() {
                     onClick={handleCep}
                     mask={"99999-999"}
                     alwaysShowMask
-                    value={zipCode} 
-                    onChange={(e) => setZipCode(e.target.value)} 
+                    value={zipCode}
+                    onChange={(e) => setZipCode(e.target.value)}
                   />
                   <Input
                     name="address_value"
@@ -264,6 +315,7 @@ function UserProfileForm() {
                     ref={addressComplementRef}
                     label={"Complemento"}
                     freeSize={false}
+                    required={false}
                   />
                 </div>
                 <div className={styles["form-row"]}>
@@ -276,6 +328,7 @@ function UserProfileForm() {
                   <div className={styles.state_container}>
                     <label>Estado</label>
                     <select
+                      ref={addressStateRef}
                       value={brazilianState}
                       onChange={(e) => setBrazilianState(e.target.value)}
                       className={styles.state_select}
@@ -301,6 +354,8 @@ function UserProfileForm() {
                   label={"Telefone"}
                   freeSize={false}
                   mask="(99) 99999-9999"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                 />
               ) : (
                 <Input
@@ -359,7 +414,7 @@ function UserProfileForm() {
                     onClick={handleDeleteLogisticCompany}
                     title="Excluir Conta"
                     customSize
-                    orangeButton 
+                    orangeButton
                   />
                   {showPopup && (
                     <Popup
