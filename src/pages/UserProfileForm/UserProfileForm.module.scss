@@ -40,14 +40,6 @@
     }
   }
 
-  .form-row {
-    align-items: center;
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    width: 100%;
-  }
-
   .state_container {
     display: flex;
     flex-direction: column;
@@ -67,6 +59,7 @@
 .buttonContainer {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .deleteButtonContainer {

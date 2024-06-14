@@ -20,7 +20,9 @@ export const Button = ({
             ? styles.primary
             : variant === "secondary"
             ? styles.secondary
-            : styles.tertiary
+            : variant === "tertiary" ?
+            styles.tertiary :
+            styles.orange
         }`}
         disabled={disabled}
         onClick={onClick}

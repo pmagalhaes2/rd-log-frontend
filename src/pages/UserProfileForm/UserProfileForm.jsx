@@ -14,6 +14,7 @@ import {
   getById,
   updateLogisticCompany,
   deleteLogisticCompany,
+  checkPassword,
 } from "../../services/logisticCompaniesAPI";
 import {
   getAdministratorById,
@@ -31,7 +32,7 @@ import { formatPhone } from "../../utils/formatters/formatPhone";
 import { formatCurrencyBRL } from "../../utils/formatters/formatPrice";
 
 function UserProfileForm() {
-  const { user, setUser } = useUser();
+  const { user, setUser, logout } = useUser();
   const navigate = useNavigate();
 
   const nameRef = useRef(null);
@@ -61,6 +62,7 @@ function UserProfileForm() {
   const [zipCode, setZipCode] = useState("");
   const [phone, setPhone] = useState("");
   const [price, setPrice] = useState("");
+  const [deleteButtonClicked, setDeleteButtonClicked] = useState(false);
 
   const getLogisticCompany = async (logisticCompanyId) => {
     const res = await getById(logisticCompanyId);
@@ -75,15 +77,39 @@ function UserProfileForm() {
   };
 
   const handleDeleteLogisticCompany = async () => {
+    if (!passwordRef.current.value || !passwordConfirmRef.current.value) {
+      setMessage(
+        "Por favor, preencha a senha para prosseguir com a solicitação."
+      );
+      setError(true);
+      return;
+    }
+
+    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+      setMessage("As senhas não coincidem. Tente novamente!");
+      setError(true);
+      return;
+    }
+
     try {
-      await deleteLogisticCompany(user.id);
-      setShowDeletePopup(true); 
-      setMessage("Perfil excluido com sucesso!");
-      setTimeout(() => {
-        setShowDeletePopup(false);
-        setUser({ role: "", username: "", id: "" }); 
-        navigate("/"); 
-      }, 5000);
+      const currentPassword = passwordConfirmRef.current.value;
+      const isValidPassword = await checkPassword(user.id, currentPassword);
+
+      if (!isValidPassword) {
+        setMessage("A senha atual fornecida está incorreta.");
+        setError(true);
+        return;
+      } else {
+        await deleteLogisticCompany(user.id);
+        setMessage("Conta excluída com sucesso!");
+        setDeleteButtonClicked(true);
+        setShowPopup(true);
+        setTimeout(() => {
+          setShowPopup(false);
+          logout();
+          navigate("/");
+        }, 5000);
+      }
     } catch (error) {
       console.error("Erro ao excluir conta:", error);
       setMessage("Erro ao excluir conta. Por favor, tente novamente.");
@@ -397,49 +423,32 @@ function UserProfileForm() {
               />
             </div>
             <div className={styles.buttonContainer}>
-                <Button
-                  type="submit"
-                  disabled={isLoading}
-                  title={isLoading ? "Enviando..." : "Salvar Alterações"}
-                  customSize
-                />
-                {showSuccessPopup && (
-                  <Popup
-                    alt={"Imagem de confirmação de alteração"}
-                    imageUrl={successImg}
-                    message={message}
-                    onClick={() => {
-                      setShowSuccessPopup(false);
-                      navigate("/dashboard");
-                    }}
+              {user.role === "user" && (
+                <div className={styles.deleteButtonContainer}>
+                  <Button
+                    type="button"
+                    onClick={handleDeleteLogisticCompany}
+                    title="Excluir Conta"
+                    customSize
+                    variant={"orange"}
                   />
-                )}
-                {user.role === "user" && (
-                  <div className={styles.deleteButtonContainer}>
-                    <Button
-                      type="button"
-                      onClick={handleDeleteLogisticCompany}
-                      title="Excluir Conta"
-                      customSize
-                      orangeButton 
-                     
-                    />
-                    {showDeletePopup && (
-                      <Popup
-                        alt={"Imagem de confirmação de exclusão"}
-                        imageUrl={deleteImg}
-                        message={message}
-                        onClick={() => {
-                          setShowDeletePopup(false);
-                          
-                          navigate("/home");
-                        }}
-                      />
-                    )}
-                  </div>
-                )}
-              </div>
-
+                </div>
+              )}
+              <Button
+                type="submit"
+                disabled={isLoading}
+                title={isLoading ? "Enviando..." : "Salvar Alterações"}
+                customSize
+              />
+              {showPopup && (
+                <Popup
+                  alt={`Imagem de confirmação de ${deleteButtonClicked} ? exclusão : alteração`}
+                  imageUrl={deleteButtonClicked ? deleteImg : successImg}
+                  message={message}
+                  onClick={() => navigate("/dashboard")}
+                />
+              )}
+            </div>
           </form>
         )}
       </div>
