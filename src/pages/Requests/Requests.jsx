@@ -3,7 +3,7 @@ import styles from "./Requests.module.scss";
 import MenuComponent from "../../Components/Menu/Menu";
 import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Loading } from "../../Components/Loading";
 import { LogisticDeliveryCard } from "../../Components/LogisticDeliveryCard";
 import { Message } from "../../Components/Message";
@@ -11,6 +11,9 @@ import pack from "../../assets/images/Pack.png";
 import lowPriceIcon from "../../assets/images/low-price-icon.svg";
 import inTransitIcon from "../../assets/images/in-transit-icon.svg";
 import { calculateDistanceAndDuration } from "../../services/distanceAPI.js";
+import { updateOrder } from "../../services/ordersAPI.js";
+import { Popup } from "../../Components/Popup/index.jsx";
+import deliveryImage from "../../assets/images/delivery-location.svg";
 
 export default function Requests() {
   const location = useLocation();
@@ -23,9 +26,12 @@ export default function Requests() {
   const [data] = useState(new Date().toLocaleDateString());
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const params = useParams();
   const { orderId } = params;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setOrigin(
@@ -84,6 +90,22 @@ export default function Requests() {
 
   const handleSelectChange = (event) => {
     setSelectedCompany(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await updateOrder(
+        orderId,
+        selectedCompany,
+        "Em andamento"
+      );
+
+      if (response) {
+        setShowPopup(!showPopup);
+      }
+    } catch (error) {
+      setError("Ocorreu um erro ao calcular a rota. Tente novamente!");
+    }
   };
 
   return (
@@ -161,9 +183,7 @@ export default function Requests() {
                         disabled={!selectedCompany}
                         freeSize={true}
                         title="Confirmar Solicitação"
-                        onClick={() =>
-                          console.log(`Empresa selecionada: ${selectedCompany}`)
-                        }
+                        onClick={handleSubmit}
                       />
                     </>
                   )
@@ -173,6 +193,15 @@ export default function Requests() {
           </>
         </div>
       </div>
+
+      {showPopup && (
+        <Popup
+          alt={"Imagem de confirmação de solicitação"}
+          imageUrl={deliveryImage}
+          message={"Solicitação enviada com sucesso!"}
+          onClick={() => navigate("/orders")}
+        />
+      )}
     </>
   );
 }
