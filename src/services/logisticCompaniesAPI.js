@@ -70,3 +70,21 @@ export const updateLogisticCompany = async (id, formData) => {
     throw error.response;
   }
 };
+
+export const deleteLogisticCompany = async (id, username, password) => {
+  const basicAuth = {
+    username: "Admin",
+    password: "Admin@1."
+  };
+
+  const config = {
+    auth: basicAuth
+  };
+
+  try {
+    const response = await axios.delete(`${baseURL}/${id}`, config);
+    return response.data;
+  } catch (error) {
+    throw error.response;
+  }
+};

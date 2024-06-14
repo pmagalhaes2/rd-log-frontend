@@ -9,9 +9,11 @@ import { useUser } from "../../context/UserContext";
 import { Loading } from "../../Components/Loading";
 import { Popup } from "../../Components/Popup";
 import successImg from "../../assets/images/success-image.svg";
+import deleteImg from "../../assets/images/encerrado.svg";
 import {
   getById,
   updateLogisticCompany,
+  deleteLogisticCompany
 } from "../../services/logisticCompaniesAPI";
 import {
   getAdministratorById,
@@ -53,7 +55,6 @@ function UserProfileForm() {
   const [brazilianState, setBrazilianState] = useState("");
   const [zipCode, setZipCode] = useState("");
 
-
   const getLogisticCompany = async (logisticCompanyId) => {
     const res = await getById(logisticCompanyId);
     setPreviousData(res);
@@ -66,6 +67,22 @@ function UserProfileForm() {
     setFetchData(false);
   };
 
+  const handleDeleteLogisticCompany = async () => {
+    try {
+      await deleteLogisticCompany(user.id);
+      setMessage("Conta excluída com sucesso!");
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+        navigate("/");
+      }, 5000);
+    } catch (error) {
+      console.error("Erro ao excluir conta:", error);
+      setMessage("Erro ao excluir conta. Por favor, tente novamente.");
+      setError(true);
+    }
+  };
+  
   const handleCep = async () => {
     try {
       if (addressZipCodeRef.current.value.trim() === "") {
@@ -73,7 +90,7 @@ function UserProfileForm() {
       } else {
         const previousAddress = await getCep(addressZipCodeRef.current.value);
         const { logradouro, localidade, uf } = previousAddress;
-        setZipCode(addressZipCodeRef.current.value); // Atualiza o estado do CEP
+        setZipCode(addressZipCodeRef.current.value); 
         addressValueRef.current.value = logradouro;
         addressCityRef.current.value = localidade;
         setBrazilianState(uf);
@@ -84,7 +101,6 @@ function UserProfileForm() {
       setError(true);
     }
   };
-  
 
   useEffect(() => {
     if (user.role !== "admin") {
@@ -184,158 +200,179 @@ function UserProfileForm() {
               ref={nameRef}
               label={"Nome"}
             />
-        {user.role !== "admin" && (
-          <>
-            <div className={styles["form-row"]}>
-              <Input
-                name="cnpj"
-                placeholder="CNPJ"
-                label={"CNPJ"}
-                freeSize={false}
-                defaultValue={previousData ? formatCnpj(previousData.cnpj) : ""}
-                disabled
-              />
-              <Input
-                name="price_km"
-                ref={priceKmRef}
-                label={"Preço do Km"}
-                mask={"R$ 9,99"}
-              />
-            </div>
-            <div className={styles["form-row"]}>
-              <Input
-                type="time"
-                name="opening_hours"
-                ref={openingHoursRef}
-                label={"Horário de Abertura"}
-              />
-              <Input
-                type="time"
-                name="closing_hours"
-                ref={closingHoursRef}
-                label={"Horário de Fechamento"}
-              />
-            </div>
-            <div className={styles["form-row"]}>
-              <Input
-                name="zipCode"
-                label={"CEP"}
-                placeholder="ex: 01001000"
-                ref={addressZipCodeRef}
-                searchInput
-                onClick={handleCep}
-                mask={"99999-999"}
-                alwaysShowMask
-                value={zipCode} 
-                onChange={(e) => setZipCode(e.target.value)} 
-              />
-              <Input
-                name="address_value"
-                ref={addressValueRef}
-                label={"Logradouro"}
-                freeSize={false}
-              />
-            </div>
-            <div className={styles["form-row"]}>
-              <Input
-                name="address_number"
-                ref={addressNumberRef}
-                label={"Número"}
-                freeSize={false}
-              />
-              <Input
-                name="address_complement"
-                ref={addressComplementRef}
-                label={"Complemento"}
-                freeSize={false}
-              />
-            </div>
-            <div className={styles["form-row"]}>
-              <Input
-                name="address_city"
-                ref={addressCityRef}
-                label={"Cidade"}
-                freeSize={false}
-              />
-              <div className={styles.state_container}>
-                <label>Estado</label>
-                <select
-                  value={brazilianState}
-                  onChange={(e) => setBrazilianState(e.target.value)}
-                  className={styles.state_select}
-                >
-                  <option value="">Selecione um estado</option>
-                  {states.map((state) => (
-                    <option key={state.sigla} value={state.sigla}>
-                      {state.nome}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </>
-        )}
-
-          <div className={styles["form-row"]}>
-                {user.role !== "admin" ? (
-                    <Input
-                        name="phone_number"
-                        placeholder="Telefone"
-                        ref={phoneNumberRef}
-                        label={"Telefone"}
-                        freeSize={false}
-                        mask="(99) 99999-9999"
-                    />
-                ) : (
-                    <Input
-                        name="cpf"
-                        placeholder="CPF"
-                        label={"CPF"}
-                        freeSize={false}
-                        defaultValue={previousData ? formatCpf(previousData.cpf) : ""}
-                        disabled
-                    />
-                )}
-                    <Input
-                        type="email"
-                        name="email"
-                        placeholder="E-mail"
-                        ref={emailRef}
-                        label={"E-mail"}
-                        freeSize={false}
-                    />
-              </div>
+            {user.role !== "admin" && (
+              <>
                 <div className={styles["form-row"]}>
-                    <Input
-                        type="password"
-                        name="password"
-                        placeholder="Senha"
-                        ref={passwordRef}
-                        label={"Senha"}
-                    />
-                    <Input
-                        type="password"
-                        name="confirm_password"
-                        label={"Confirmação senha"}
-                        placeholder="Confirmação de senha"
-                        ref={passwordConfirmRef}
-                    />
+                  <Input
+                    name="cnpj"
+                    placeholder="CNPJ"
+                    label={"CNPJ"}
+                    freeSize={false}
+                    defaultValue={previousData ? formatCnpj(previousData.cnpj) : ""}
+                    disabled
+                  />
+                  <Input
+                    name="price_km"
+                    ref={priceKmRef}
+                    label={"Preço do Km"}
+                    mask={"R$ 9,99"}
+                  />
                 </div>
-                <Button
-                    type="submit"
-                    disabled={isLoading}
-                    title={isLoading ? "Enviando..." : "Salvar Alterações"}
-                    customSize
+                <div className={styles["form-row"]}>
+                  <Input
+                    type="time"
+                    name="opening_hours"
+                    ref={openingHoursRef}
+                    label={"Horário de Abertura"}
+                  />
+                  <Input
+                    type="time"
+                    name="closing_hours"
+                    ref={closingHoursRef}
+                    label={"Horário de Fechamento"}
+                  />
+                </div>
+                <div className={styles["form-row"]}>
+                  <Input
+                    name="zipCode"
+                    label={"CEP"}
+                    placeholder="ex: 01001000"
+                    ref={addressZipCodeRef}
+                    searchInput
+                    onClick={handleCep}
+                    mask={"99999-999"}
+                    alwaysShowMask
+                    value={zipCode} 
+                    onChange={(e) => setZipCode(e.target.value)} 
+                  />
+                  <Input
+                    name="address_value"
+                    ref={addressValueRef}
+                    label={"Logradouro"}
+                    freeSize={false}
+                  />
+                </div>
+                <div className={styles["form-row"]}>
+                  <Input
+                    name="address_number"
+                    ref={addressNumberRef}
+                    label={"Número"}
+                    freeSize={false}
+                  />
+                  <Input
+                    name="address_complement"
+                    ref={addressComplementRef}
+                    label={"Complemento"}
+                    freeSize={false}
+                  />
+                </div>
+                <div className={styles["form-row"]}>
+                  <Input
+                    name="address_city"
+                    ref={addressCityRef}
+                    label={"Cidade"}
+                    freeSize={false}
+                  />
+                  <div className={styles.state_container}>
+                    <label>Estado</label>
+                    <select
+                      value={brazilianState}
+                      onChange={(e) => setBrazilianState(e.target.value)}
+                      className={styles.state_select}
+                    >
+                      <option value="">Selecione um estado</option>
+                      {states.map((state) => (
+                        <option key={state.sigla} value={state.sigla}>
+                          {state.nome}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </>
+            )}
+
+            <div className={styles["form-row"]}>
+              {user.role !== "admin" ? (
+                <Input
+                  name="phone_number"
+                  placeholder="Telefone"
+                  ref={phoneNumberRef}
+                  label={"Telefone"}
+                  freeSize={false}
+                  mask="(99) 99999-9999"
                 />
-                </form>
-                )}
-                {showPopup && (
+              ) : (
+                <Input
+                  name="cpf"
+                  placeholder="CPF"
+                  label={"CPF"}
+                  freeSize={false}
+                  defaultValue={previousData ? formatCpf(previousData.cpf) : ""}
+                  disabled
+                />
+              )}
+              <Input
+                type="email"
+                name="email"
+                placeholder="E-mail"
+                ref={emailRef}
+                label={"E-mail"}
+                freeSize={false}
+              />
+            </div>
+            <div className={styles["form-row"]}>
+              <Input
+                type="password"
+                name="password"
+                placeholder="Senha"
+                ref={passwordRef}
+                label={"Senha"}
+              />
+              <Input
+                type="password"
+                name="confirm_password"
+                label={"Confirmação senha"}
+                placeholder="Confirmação de senha"
+                ref={passwordConfirmRef}
+              />
+            </div>
+            <div className={styles.buttonContainer}>
+              <Button
+                type="submit"
+                disabled={isLoading}
+                title={isLoading ? "Enviando..." : "Salvar Alterações"}
+                customSize
+              />
+              {showPopup && (
                 <Popup
-                    alt={"Imagem de confirmação de alteração"}
-                    imageUrl={successImg}
-                    message={message}
-                    onClick={() => navigate("/dashboard")}
+                  alt={"Imagem de confirmação de alteração"}
+                  imageUrl={successImg}
+                  message={message}
+                  onClick={() => navigate("/dashboard")}
                 />
+              )}
+              {user.role === "user" && (
+                <div className={styles.deleteButtonContainer}>
+                  <Button
+                    type="button"
+                    onClick={handleDeleteLogisticCompany}
+                    title="Excluir Conta"
+                    customSize
+                    orangeButton 
+                  />
+                  {showPopup && (
+                    <Popup
+                      alt={"Imagem de confirmação de exclusão"}
+                      imageUrl={deleteImg}
+                      message={message}
+                      onClick={() => navigate("/dashboard")}
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+          </form>
         )}
       </div>
     </div>
@@ -343,5 +380,3 @@ function UserProfileForm() {
 }
 
 export default UserProfileForm;
-
-
