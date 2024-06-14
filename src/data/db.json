@@ -18,7 +18,7 @@
         "estado": "SP",
         "cep": "01310-100"
       },
-      "id_empresa_logistica": "2",
+      "id_empresa_logistica": "0",
       "status": "Pendente"
     },
     {
@@ -39,7 +39,7 @@
         "estado": "SP",
         "cep": "01310-100"
       },
-      "id_empresa_logistica": "2",
+      "id_empresa_logistica": "0",
       "status": "Pendente"
     },
     {
@@ -60,7 +60,7 @@
         "estado": "PR",
         "cep": "80530-000"
       },
-      "id_empresa_logistica": "2",
+      "id_empresa_logistica": "0",
       "status": "Pendente"
     },
     {
@@ -81,7 +81,7 @@
         "estado": "MG",
         "cep": "30130-003"
       },
-      "id_empresa_logistica": "4",
+      "id_empresa_logistica": "0",
       "status": "Pendente"
     },
     {
@@ -102,7 +102,7 @@
         "estado": "RS",
         "cep": "90160-093"
       },
-      "id_empresa_logistica": "26",
+      "id_empresa_logistica": "0",
       "status": "Pendente"
     },
     {
@@ -123,7 +123,7 @@
         "estado": "PE",
         "cep": "51011-000"
       },
-      "id_empresa_logistica": "29",
+      "id_empresa_logistica": "0",
       "status": "Pendente"
     },
     {
@@ -144,8 +144,8 @@
         "estado": "SP",
         "cep": "01430-000"
       },
-      "id_empresa_logistica": "3",
-      "status": "Aceito"
+      "id_empresa_logistica": "0",
+      "status": "Pendente"
     },
     {
       "id": "7",
@@ -165,8 +165,8 @@
         "estado": "SC",
         "cep": "88025-010"
       },
-      "id_empresa_logistica": "12",
-      "status": "Aceito"
+      "id_empresa_logistica": "0",
+      "status": "Pendente"
     },
     {
       "id": "8",
@@ -186,29 +186,8 @@
         "estado": "RJ",
         "cep": "22070-002"
       },
-      "id_empresa_logistica": "2",
+      "id_empresa_logistica": "0",
       "status": "Pendente"
-    },
-    {
-      "id": "9",
-      "data_pedido": "2024-05-09",
-      "id_fornecedor": "F12353",
-      "endereco_origem": {
-        "rua": "Rua Sete de Setembro",
-        "numero": 110,
-        "cidade": "Salvador",
-        "estado": "BA",
-        "cep": "40060-000"
-      },
-      "endereco_destino": {
-        "rua": "Avenida Sete de Setembro",
-        "numero": 900,
-        "cidade": "Salvador",
-        "estado": "BA",
-        "cep": "40080-002"
-      },
-      "id_empresa_logistica": "6",
-      "status": "Aceito"
     },
     {
       "id": "11",
@@ -228,8 +207,8 @@
         "estado": "CE",
         "cep": "60165-120"
       },
-      "id_empresa_logistica": "6",
-      "status": "Recusado"
+      "id_empresa_logistica": "0",
+      "status": "Pendente"
     },
     {
       "id": "12",
@@ -249,8 +228,8 @@
         "estado": "SP",
         "cep": "01310-100"
       },
-      "id_empresa_logistica": "6",
-      "status": "Aceito"
+      "id_empresa_logistica": "0",
+      "status": "Pendente"
     },
     {
       "id": "33",
@@ -270,30 +249,73 @@
         "estado": "SP",
         "cep": "05339-000"
       },
-      "id_empresa_logistica": "1",
-      "status": "Em andamento"
+      "id_empresa_logistica": "0",
+      "status": "Pendente"
     },
     {
-      "id": "24",
-      "data_pedido": "2024-06-11",
-      "id_fornecedor": "F12344",
+      "id": "9",
+      "data_pedido": "2024-06-14",
+      "id_fornecedor": "F54321",
       "endereco_origem": {
-        "rua": "Rua Governador Arthur Reis",
-        "numero": 350,
+        "rua": "Rua Marechal Deodoro",
+        "numero": 550,
         "cidade": "Rio Branco",
         "estado": "AC",
-        "cep": "69900-000"
+        "cep": "69900-300"
       },
       "endereco_destino": {
         "rua": "Avenida Ceará",
-        "numero": 1200,
+        "numero": 1500,
         "cidade": "Rio Branco",
         "estado": "AC",
-        "cep": "69915-000"
+        "cep": "69901-770"
       },
-      "id_empresa_logistica": "3",
+      "id_empresa_logistica": "0",
+      "status": "Pendente"
+    },
+
+    {
+      "id": "13",
+      "data_pedido": "2024-06-20",
+      "id_fornecedor": "F24680",
+      "endereco_origem": {
+        "rua": "Rua XV de Novembro",
+        "numero": 500,
+        "cidade": "Curitiba",
+        "estado": "PR",
+        "cep": "80020-310"
+      },
+      "endereco_destino": {
+        "rua": "Rua Visconde do Rio Branco",
+        "numero": 200,
+        "cidade": "Curitiba",
+        "estado": "PR",
+        "cep": "80410-000"
+      },
+      "id_empresa_logistica": "0",
+      "status": "Pendente"
+    },
+
+    {
+      "id": "15",
+      "data_pedido": "2024-06-22",
+      "id_fornecedor": "F54321",
+      "endereco_origem": {
+        "rua": "Rua XV de Novembro",
+        "numero": 800,
+        "cidade": "Maringá",
+        "estado": "PR",
+        "cep": "87013-230"
+      },
+      "endereco_destino": {
+        "rua": "Avenida Cerro Azul",
+        "numero": 600,
+        "cidade": "Maringá",
+        "estado": "PR",
+        "cep": "87005-040"
+      },
+      "id_empresa_logistica": "0",
       "status": "Pendente"
     }
-   
   ]
 }
