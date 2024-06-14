@@ -74,16 +74,33 @@ export const updateLogisticCompany = async (id, formData) => {
 export const deleteLogisticCompany = async (id, username, password) => {
   const basicAuth = {
     username: "Admin",
-    password: "Admin@1."
+    password: "Admin@1.",
   };
 
   const config = {
-    auth: basicAuth
+    auth: basicAuth,
   };
 
   try {
     const response = await axios.delete(`${baseURL}/${id}`, config);
     return response.data;
+  } catch (error) {
+    throw error.response;
+  }
+};
+
+export const checkPassword = async (id, password) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/${id}/check-password`,
+      password,
+      {
+        headers: {
+          "Content-Type": "text/plain",
+        },
+      }
+    );
+    return response.status === 200;
   } catch (error) {
     throw error.response;
   }
