@@ -10,7 +10,6 @@ import { useUser } from "../../context/UserContext.jsx";
 export const History = () => {
   const [orders, setOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filter] = useState("");
   const { user } = useUser();
 
   useEffect(() => {
@@ -25,7 +24,8 @@ export const History = () => {
           const filteredOrders = response.filter(
             (item) =>
               Number(item.id_empresa_logistica) === user.id &&
-              item.status !== "Pendente"
+              item.status !== "Pendente" &&
+              item.status !== "Em andamento"
           );
           setOrders(filteredOrders);
         }
@@ -57,7 +57,7 @@ export const History = () => {
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
       order.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      formatDate(order.data_pedido).includes(searchTerm) // Aplicando o formato na busca por data
+      formatDate(order.data_pedido).includes(searchTerm)
   );
 
   return (

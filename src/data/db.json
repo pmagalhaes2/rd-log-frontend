@@ -18,8 +18,8 @@
         "estado": "SP",
         "cep": "01310-100"
       },
-      "id_empresa_logistica": "1",
-      "status": "Aceito"
+      "id_empresa_logistica": "2",
+      "status": "Pendente"
     },
     {
       "id": "6",
@@ -39,8 +39,8 @@
         "estado": "SP",
         "cep": "01310-100"
       },
-      "id_empresa_logistica": "1",
-      "status": "Recusado"
+      "id_empresa_logistica": "2",
+      "status": "Pendente"
     },
     {
       "id": "2",
@@ -270,8 +270,8 @@
         "estado": "SP",
         "cep": "05339-000"
       },
-      "id_empresa_logistica": "12",
-      "status": "Pendente"
+      "id_empresa_logistica": "1",
+      "status": "Em andamento"
     },
     {
       "id": "24",

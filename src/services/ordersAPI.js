@@ -37,3 +37,23 @@ export const updateOrderStatus = async (orderId, newStatus) => {
     );
   }
 };
+
+export const updateOrder = async (orderId, logisticCompanyId, newStatus) => {
+  try {
+    const response = await axios.patch(
+      `${baseURL}/${orderId}`,
+      {
+        id_empresa_logistica: logisticCompanyId,
+        status: newStatus,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response;
+  }
+};
