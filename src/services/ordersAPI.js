@@ -8,8 +8,22 @@ const api = axios.create({
 
 export const getAllOrders = async () => {
   try {
-    const response = await api.get(baseURL);
+    const response = await api.get("/");
     return response.data;
+  } catch (error) {
+    throw error.response;
+  }
+};
+
+export const getPendentsOrdersByLogisticId = async (logisticId) => {
+  try {
+    const response = await api.get(
+      `/?id_empresa_logistica=${logisticId}&status=Pendente&status=Em andamento`
+    );
+    const filtered = response.data.filter(
+      (order) => order.status === "Pendente" || order.status === "Em andamento"
+    );
+    return filtered;
   } catch (error) {
     throw error.response;
   }
@@ -17,8 +31,8 @@ export const getAllOrders = async () => {
 
 export const updateOrderStatus = async (orderId, newStatus) => {
   try {
-    const response = await axios.patch(
-      `${baseURL}/${orderId}`,
+    const response = await api.patch(
+      `/${orderId}`,
       {
         status: newStatus,
       },
@@ -40,8 +54,8 @@ export const updateOrderStatus = async (orderId, newStatus) => {
 
 export const updateOrder = async (orderId, logisticCompanyId, newStatus) => {
   try {
-    const response = await axios.patch(
-      `${baseURL}/${orderId}`,
+    const response = await api.patch(
+      `/${orderId}`,
       {
         id_empresa_logistica: logisticCompanyId,
         status: newStatus,
