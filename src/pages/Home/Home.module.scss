@@ -119,6 +119,10 @@
 }
 
 .overlay {
+  display:flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   font-size:x-large;
   bottom: 0;
@@ -136,8 +140,12 @@
 }
 
 .carouselItem:hover .overlay {
+  display: flex;
   visibility: visible;
+  height: 100%;
   opacity: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 
