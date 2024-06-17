@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Order.module.scss";
 import MenuComponent from "../../Components/Menu/Menu";
-import { getAllOrders, updateOrder} from "../../services/ordersAPI.js";
+import { getAllOrders, updateOrder } from "../../services/ordersAPI.js";
 import { useUser } from "../../context/UserContext";
 import { Input } from "../../Components/Input";
 import { Button } from "../../Components/Button";
@@ -17,6 +17,7 @@ const Order = () => {
   const [filter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [disabledButtons, setDisabledButtons] = useState({});
+  const [recused, setRecused] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,9 +32,7 @@ const Order = () => {
           filteredOrders = response.filter(
             (item) =>
               Number(item.id_empresa_logistica) === user.id &&
-            (item.status === "Pendente" 
-              || item.status === "Em andamento")  
-
+              (item.status === "Pendente" || item.status === "Em andamento")
           );
         }
         setOrders(filteredOrders);
@@ -63,10 +62,11 @@ const Order = () => {
       );
 
       if (newStatus === "Recusado") {
-        newStatus = "Pendente" ;
+        setRecused(true);
+        await updateOrder(orderId, 0, "Pendente");
+      } else {
+        await updateOrder(orderId, user.id, "Aceito");
       }
-
-      await updateOrder(orderId, 0,  newStatus);
 
       setDisabledButtons((prevState) => ({
         ...prevState,
@@ -154,7 +154,7 @@ const Order = () => {
                             {order.endereco_destino.numero}
                           </td>
                           <td>{order.endereco_origem.estado}</td>
-                          <td>{order.status}</td>
+                          <td>{recused ? "Recusado" : order.status}</td>
                           <td>
                             {user && user.role === "user" ? (
                               <div className={styles.buttonGroup}>
@@ -209,7 +209,3 @@ const Order = () => {
 };
 
 export default Order;
-
-
-
-
