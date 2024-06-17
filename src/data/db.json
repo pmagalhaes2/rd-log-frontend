@@ -22,27 +22,6 @@
       "status": "Pendente"
     },
     {
-      "id": "6",
-      "data_pedido": "2024-05-01",
-      "id_fornecedor": "F12345",
-      "endereco_origem": {
-        "rua": "Rua da Liberdade",
-        "numero": 45,
-        "cidade": "São Paulo",
-        "estado": "SP",
-        "cep": "01045-010"
-      },
-      "endereco_destino": {
-        "rua": "Avenida Paulista",
-        "numero": 1000,
-        "cidade": "São Paulo",
-        "estado": "SP",
-        "cep": "01310-100"
-      },
-      "id_empresa_logistica": "2",
-      "status": "Pendente"
-    },
-    {
       "id": "2",
       "data_pedido": "2024-05-02",
       "id_fornecedor": "F12346",
@@ -60,7 +39,7 @@
         "estado": "PR",
         "cep": "80530-000"
       },
-      "id_empresa_logistica": "2",
+      "id_empresa_logistica": "0",
       "status": "Pendente"
     },
     {
@@ -211,27 +190,6 @@
       "status": "Pendente"
     },
     {
-      "id": "12",
-      "data_pedido": "2024-05-01",
-      "id_fornecedor": "F12345",
-      "endereco_origem": {
-        "rua": "Rua da Liberdade",
-        "numero": 45,
-        "cidade": "São Paulo",
-        "estado": "SP",
-        "cep": "01045-010"
-      },
-      "endereco_destino": {
-        "rua": "Avenida Paulista",
-        "numero": 1000,
-        "cidade": "São Paulo",
-        "estado": "SP",
-        "cep": "01310-100"
-      },
-      "id_empresa_logistica": "0",
-      "status": "Pendente"
-    },
-    {
       "id": "33",
       "data_pedido": "2024-06-11",
       "id_fornecedor": "F12344",
@@ -273,17 +231,16 @@
       "id_empresa_logistica": "0",
       "status": "Pendente"
     },
-
     {
       "id": "13",
       "data_pedido": "2024-06-20",
       "id_fornecedor": "F24680",
       "endereco_origem": {
-        "rua": "Rua XV de Novembro",
+        "rua": "Rua Dr. Dalton Dória Pinto",
         "numero": 500,
         "cidade": "Curitiba",
         "estado": "PR",
-        "cep": "80020-310"
+        "cep": "81630-030"
       },
       "endereco_destino": {
         "rua": "Rua Visconde do Rio Branco",
@@ -292,27 +249,26 @@
         "estado": "PR",
         "cep": "80410-000"
       },
-      "id_empresa_logistica": "0",
+      "id_empresa_logistica": 0,
       "status": "Pendente"
     },
-
     {
       "id": "15",
       "data_pedido": "2024-06-22",
       "id_fornecedor": "F54321",
       "endereco_origem": {
-        "rua": "Rua XV de Novembro",
-        "numero": 800,
-        "cidade": "Maringá",
-        "estado": "PR",
-        "cep": "87013-230"
-      },
-      "endereco_destino": {
         "rua": "Avenida Cerro Azul",
         "numero": 600,
         "cidade": "Maringá",
         "estado": "PR",
         "cep": "87005-040"
+      },
+      "endereco_destino": {
+        "rua": "Rua Jacamim-verde",
+        "numero": 800,
+        "cidade": "Arapongas",
+        "estado": "PR",
+        "cep": "86706-770"
       },
       "id_empresa_logistica": "0",
       "status": "Pendente"
