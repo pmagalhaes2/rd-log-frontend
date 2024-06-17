@@ -106,7 +106,7 @@
       "status": "Pendente"
     },
     {
-      "id": "10",
+      "id": "6",
       "data_pedido": "2024-05-06",
       "id_fornecedor": "F12350",
       "endereco_origem": {
@@ -169,7 +169,7 @@
       "status": "Pendente"
     },
     {
-      "id": "11",
+      "id": "9",
       "data_pedido": "2024-05-10",
       "id_fornecedor": "F12354",
       "endereco_origem": {
@@ -190,7 +190,7 @@
       "status": "Pendente"
     },
     {
-      "id": "33",
+      "id": "10",
       "data_pedido": "2024-06-11",
       "id_fornecedor": "F12344",
       "endereco_origem": {
@@ -211,7 +211,7 @@
       "status": "Pendente"
     },
     {
-      "id": "9",
+      "id": "11",
       "data_pedido": "2024-06-14",
       "id_fornecedor": "F54321",
       "endereco_origem": {
@@ -232,7 +232,7 @@
       "status": "Pendente"
     },
     {
-      "id": "13",
+      "id": "12",
       "data_pedido": "2024-06-20",
       "id_fornecedor": "F24680",
       "endereco_origem": {
@@ -249,16 +249,16 @@
         "estado": "PR",
         "cep": "80410-000"
       },
-      "id_empresa_logistica": 0,
+      "id_empresa_logistica": "0",
       "status": "Pendente"
     },
     {
-      "id": "15",
+      "id": "13",
       "data_pedido": "2024-06-22",
       "id_fornecedor": "F54321",
       "endereco_origem": {
         "rua": "Avenida Cerro Azul",
-        "numero": 600,
+        "numero": 150,
         "cidade": "Maringá",
         "estado": "PR",
         "cep": "87005-040"
@@ -269,6 +269,90 @@
         "cidade": "Arapongas",
         "estado": "PR",
         "cep": "86706-770"
+      },
+      "id_empresa_logistica": "0",
+      "status": "Pendente"
+    },
+    {
+      "id": "14",
+      "data_pedido": "2024-06-23",
+      "id_fornecedor": "F67890",
+      "endereco_origem": {
+        "rua": "Avenida Paulista",
+        "numero": 1578,
+        "cidade": "São Paulo",
+        "estado": "SP",
+        "cep": "01310-200"
+      },
+      "endereco_destino": {
+        "rua": "Rua da Consolação",
+        "numero": 1234,
+        "cidade": "São Paulo",
+        "estado": "SP",
+        "cep": "01302-001"
+      },
+      "id_empresa_logistica": "0",
+      "status": "Pendente"
+    },
+    {
+      "id": "15",
+      "data_pedido": "2024-06-24",
+      "id_fornecedor": "F13579",
+      "endereco_origem": {
+        "rua": "Avenida Tiradentes",
+        "numero": 500,
+        "cidade": "Guarulhos",
+        "estado": "SP",
+        "cep": "07090-000"
+      },
+      "endereco_destino": {
+        "rua": "Rua Nove de Julho",
+        "numero": 900,
+        "cidade": "Guarulhos",
+        "estado": "SP",
+        "cep": "07093-000"
+      },
+      "id_empresa_logistica": "0",
+      "status": "Pendente"
+    },
+    {
+      "id": "16",
+      "data_pedido": "2024-06-25",
+      "id_fornecedor": "F24681",
+      "endereco_origem": {
+        "rua": "Avenida Litorânea",
+        "numero": 1500,
+        "cidade": "São Luís",
+        "estado": "MA",
+        "cep": "65076-170"
+      },
+      "endereco_destino": {
+        "rua": "Rua do Sol",
+        "numero": 700,
+        "cidade": "São Luís",
+        "estado": "MA",
+        "cep": "65020-590"
+      },
+      "id_empresa_logistica": "0",
+      "status": "Pendente"
+    },
+    {
+      "id": "17",
+      "data_pedido": "2024-06-26",
+      "id_fornecedor": "F97531",
+      "endereco_origem": {
+        "rua": "Avenida Getúlio Vargas",
+        "numero": 800,
+        "cidade": "Imperatriz",
+        "estado": "MA",
+        "cep": "65900-410"
+      },
+      "endereco_destino": {
+        "rua": "Rua Floriano Peixoto",
+        "numero": 900,
+        "cidade": "Imperatriz",
+        "estado": "MA",
+        "cep": "65901-060"
       },
       "id_empresa_logistica": "0",
       "status": "Pendente"
