@@ -120,17 +120,19 @@
 
 .overlay {
   position: absolute;
+  font-size:x-large;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   text-align: center;
-  padding: 10px;
+  align-items: center;
+  padding: 20px;
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.3s, visibility 0.3s;
-  border-radius: 100px;
+  border-radius: 20px;
 }
 
 .carouselItem:hover .overlay {
@@ -171,7 +173,7 @@
 
   .homeSide{
     h2{
-      font-size: 1.5rem;
+      font-size: xx-large;
       margin-top: 0;
     }
   }
