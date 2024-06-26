@@ -1,14 +1,20 @@
 import axios from "axios";
 
-const baseURL = `${process.env.REACT_APP_ORDER_API_URL}/orders`;
+const localBaseURL = `${process.env.REACT_APP_ORDER_API_URL}/orders`;
+
+const baseURL = `${process.env.REACT_APP_API_URL}/orders`;
+
+const api_local = axios.create({
+  baseURL: localBaseURL,
+});
 
 const api = axios.create({
-  baseURL: baseURL,
-});
+  baseURL: baseURL
+})
 
 export const getAllOrders = async () => {
   try {
-    const response = await api.get("/");
+    const response = await api.get();
     return response.data;
   } catch (error) {
     throw error.response;
@@ -17,7 +23,7 @@ export const getAllOrders = async () => {
 
 export const getPendentsOrdersByLogisticId = async (logisticId) => {
   try {
-    const response = await api.get(
+    const response = await api_local.get(
       `/?id_empresa_logistica=${logisticId}&status=Pendente&status=Em andamento`
     );
     const filtered = response.data.filter(
@@ -32,7 +38,7 @@ export const getPendentsOrdersByLogisticId = async (logisticId) => {
 export const updateOrderStatus = async (orderId, newStatus) => {
   try {
     const response = await api.patch(
-      `/${orderId}`,
+      `/${orderId}/status`,
       {
         status: newStatus,
       },
@@ -57,7 +63,7 @@ export const updateOrder = async (orderId, logisticCompanyId, newStatus) => {
     const response = await api.patch(
       `/${orderId}`,
       {
-        id_empresa_logistica: logisticCompanyId,
+        logistic_company_id: logisticCompanyId,
         status: newStatus,
       },
       {

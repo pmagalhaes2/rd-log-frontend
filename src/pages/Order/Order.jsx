@@ -45,10 +45,10 @@ const Order = () => {
   const handleCheckout = (order) => {
     navigate(`/requests/${order.id}`, {
       state: {
-        origin_cep: order.endereco_origem.cep,
-        origin_street: order.endereco_origem.rua,
-        destination_cep: order.endereco_destino.cep,
-        destination_street: order.endereco_destino.rua,
+        origin_cep: order.origin_address.zipCode,
+        origin_street: order.origin_address.value,
+        destination_cep: order.destination_address.zipCode,
+        destination_street: order.destination_address.value,
       },
     });
   };
@@ -144,16 +144,16 @@ const Order = () => {
                       filteredOrders.map((order) => (
                         <tr key={order.id}>
                           <td>{order.id}</td>
-                          <td>{formatDate(order.data_pedido)}</td>
+                          <td>{formatDate(order.created_at)}</td>
                           <td>
-                            {order.endereco_origem.rua},{" "}
-                            {order.endereco_origem.numero}
+                            {order.origin_address.value},{" "}
+                            {order.origin_address.number}
                           </td>
                           <td>
-                            {order.endereco_destino.rua},{" "}
-                            {order.endereco_destino.numero}
+                            {order.destination_address.value},{" "}
+                            {order.destination_address.number}
                           </td>
-                          <td>{order.endereco_origem.estado}</td>
+                          <td>{order.origin_address.state}</td>
                           <td>{recused ? "Recusado" : order.status}</td>
                           <td>
                             {user && user.role === "user" ? (

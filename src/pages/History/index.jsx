@@ -46,18 +46,18 @@ export const History = () => {
   const filteredOrders = orders.filter(
     (order) =>
       order.id.toString().includes(searchTerm) ||
-      order.id_fornecedor.toString().includes(searchTerm) ||
-      order.endereco_origem.rua
+      order.supplier_id.toString().includes(searchTerm) ||
+      order.origin_address.value
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
-      order.endereco_destino.rua
+      order.destination_address.value
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
-      order.endereco_origem.estado
+      order.origin_address.state
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
       order.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      formatDate(order.data_pedido).includes(searchTerm)
+      formatDate(order.created_at).includes(searchTerm)
   );
 
   return (
@@ -111,18 +111,18 @@ export const History = () => {
                         filteredOrders.map((order, index) => (
                           <tr key={index}>
                             <td>{order.id}</td>
-                            <td>{formatDate(order.data_pedido)}</td>
-                            <td>{order.id_fornecedor}</td>
+                            <td>{formatDate(order.created_at)}</td>
+                            <td>{order.supplier_id}</td>
                             <td>
-                              {order.endereco_origem.rua},{" "}
-                              {order.endereco_origem.numero}
+                              {order.origin_address.value},{" "}
+                              {order.origin_address.number}
                             </td>
                             <td>
-                              {order.endereco_destino.rua},{" "}
-                              {order.endereco_destino.numero}
+                              {order.destination_address.value},{" "}
+                              {order.destination_address.number}
                             </td>
-                            <td>{order.endereco_origem.estado}</td>
-                            <td>{order.id_empresa_logistica}</td>
+                            <td>{order.origin_address.estado}</td>
+                            <td>{order.logistic_company_id}</td>
                             <td>{order.status}</td>
                           </tr>
                         ))
