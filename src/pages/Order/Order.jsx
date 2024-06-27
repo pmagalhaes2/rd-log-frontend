@@ -31,7 +31,7 @@ const Order = () => {
         } else {
           filteredOrders = response.filter(
             (item) =>
-              Number(item.id_empresa_logistica) === user.id &&
+              Number(item.logistic_company_id) === user.id &&
               (item.status === "Pendente" || item.status === "Em andamento")
           );
         }
@@ -63,7 +63,7 @@ const Order = () => {
 
       if (newStatus === "Recusado") {
         setRecused(true);
-        await updateOrder(orderId, 0, "Pendente");
+        await updateOrder(orderId, null, "Pendente");
       } else {
         await updateOrder(orderId, user.id, "Aceito");
       }
@@ -88,18 +88,18 @@ const Order = () => {
   const filteredOrders = orders.filter(
     (order) =>
       order.id.toString().includes(searchTerm) ||
-      order.id_fornecedor.toString().includes(searchTerm) ||
-      order.endereco_origem.rua
+      order.supplier_id.toString().includes(searchTerm) ||
+      order.origin_address.value
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
-      order.endereco_destino.rua
+      order.destination_address.value
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
-      order.endereco_origem.estado
+      order.origin_address.state
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
       order.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      formatDate(order.data_pedido).includes(searchTerm)
+      formatDate(order.created_at).includes(searchTerm)
   );
 
   return (
