@@ -17,7 +17,7 @@ const Order = () => {
   const [filter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [disabledButtons, setDisabledButtons] = useState({});
-  const [recused, setRecused] = useState(false);
+  const [recusedOrderId, setRecusedOrderId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const Order = () => {
       );
 
       if (newStatus === "Recusado") {
-        setRecused(true);
+        setRecusedOrderId(orderId);
         await updateOrder(orderId, null, "Pendente");
       } else {
         await updateOrder(orderId, user.id, "Aceito");
@@ -154,7 +154,7 @@ const Order = () => {
                             {order.destination_address.number}
                           </td>
                           <td>{order.origin_address.state}</td>
-                          <td>{recused ? "Recusado" : order.status}</td>
+                          <td>{recusedOrderId === order.id ? "Recusado" : order.status}</td>
                           <td>
                             {user && user.role === "user" ? (
                               <div className={styles.buttonGroup}>
