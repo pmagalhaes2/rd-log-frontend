@@ -1,12 +1,6 @@
 import axios from "axios";
 
-const localBaseURL = `${process.env.REACT_APP_ORDER_API_URL}/orders`;
-
 const baseURL = `${process.env.REACT_APP_API_URL}/orders`;
-
-const api_local = axios.create({
-  baseURL: localBaseURL,
-});
 
 const api = axios.create({
   baseURL: baseURL
@@ -23,13 +17,10 @@ export const getAllOrders = async () => {
 
 export const getPendentsOrdersByLogisticId = async (logisticId) => {
   try {
-    const response = await api_local.get(
-      `/?id_empresa_logistica=${logisticId}&status=Pendente&status=Em andamento`
+    const response = await api.get(
+      `pendents?logisticCompanyId=${logisticId}`
     );
-    const filtered = response.data.filter(
-      (order) => order.status === "Pendente" || order.status === "Em andamento"
-    );
-    return filtered;
+    return response.data;
   } catch (error) {
     throw error.response;
   }
