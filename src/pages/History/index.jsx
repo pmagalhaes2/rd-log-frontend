@@ -25,7 +25,7 @@ export const History = () => {
         } else {
           const filteredOrders = response.filter(
             (item) =>
-              Number(item.id_empresa_logistica) === user.id &&
+              Number(item.logistic_company_id) === user.id &&
               item.status !== "Pendente" &&
               item.status !== "Em andamento"
           );
